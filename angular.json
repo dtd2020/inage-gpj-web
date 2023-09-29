@@ -173,7 +173,6 @@
       }
     }
   },
-  "defaultProject": "pd-pro-angularcli",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
