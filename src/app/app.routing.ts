@@ -1,52 +1,73 @@
 import { Routes } from '@angular/router';
 
-import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
-import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import { BackOfficeLayoutComponent } from './layouts/back-office-layout/back-office-layout.component';
+import { CitezenLayoutComponent } from './layouts/citezen-layout/citezen-layout.component';
+import { GuestLayoutComponent } from './layouts/guest-layout/guest-layout.component';
+import { AuthGuard } from './security/guards/auth-guard';
 
-export const AppRoutes: Routes = [{
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full',
-      },{
-        path: '',
-        component: AdminLayoutComponent,
-        children: [{
-            path: '',
-            loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-        },{
-            path: 'components',
-            loadChildren: () => import('./components/components.module').then(m => m.ComponentsModule)
-        },{
-            path: 'forms',
-            loadChildren: () => import('./forms/forms.module').then(m => m.Forms)
-        },{
-            path: 'tables',
-            loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule)
-        },{
-            path: 'maps',
-            loadChildren: () => import('./maps/maps.module').then(m => m.MapsModule)
-        },{
-            path: 'charts',
-            loadChildren: () => import('./charts/charts.module').then(m => m.ChartsModule)
-        },{
-            path: 'calendar',
-            loadChildren: () => import('./calendar/calendar.module').then(m => m.CalendarModule)
-        },{
-            path: '',
-            loadChildren: () => import('./userpage/user.module').then(m => m.UserModule)
-        },{
-            path: '',
-            loadChildren: () => import('./timeline/timeline.module').then(m => m.TimelineModule)
-        },{
-            path: '',
-            loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule)
-        }]
-        },{
-            path: '',
-            component: AuthLayoutComponent,
-            children: [{
-                path: 'pages',
-                loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
-            }]
-        }
+export const AppRoutes: Routes = [
+  {
+    path: "",
+    redirectTo: "guest",
+    pathMatch: "full",
+  },
+
+  {
+    path: "guest",
+    component: GuestLayoutComponent,
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("app/layouts/guest-layout/guest-layout.module").then(
+            (m) => m.GuestLayoutModule
+          ),
+      },
+    ],
+  },
+
+  {
+    path: "auth",
+    component: AuthLayoutComponent,
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("app/layouts/auth-layout/auth-layout.module").then(
+            (m) => m.AuthLayoutModule
+          ),
+      },
+    ],
+  },
+
+  {
+    path: "citezen",
+    component: CitezenLayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("app/layouts/citezen-layout/citezen-layout.module").then(
+            (m) => m.CitezenLayoutModule
+          ),
+      },
+    ],
+  },
+
+  {
+    path: "back-office",
+    component: BackOfficeLayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import(
+            "app/layouts/back-office-layout/back-office-layout.module"
+          ).then((m) => m.BackOfficeLayoutModule),
+      },
+    ],
+  },
 ];

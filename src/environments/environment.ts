@@ -4,5 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  GPJ_API: 'http://localhost:8081',
+  GPJ_VERSION: '01.00.00'
 };

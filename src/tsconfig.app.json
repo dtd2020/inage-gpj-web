@@ -4,7 +4,7 @@
     "declaration": false,
     "moduleResolution": "node",
     "experimentalDecorators": true,
-    "target": "es2020",
+    "target": "ES2022",
     "lib": [
       "es2016",
       "dom"
@@ -12,7 +12,8 @@
     "outDir": "../out-tsc/app",
     "module": "es2020",
     "baseUrl": "",
-    "types": []
+    "types": ["jquery"],
+    "useDefineForClassFields": false
   },
   "exclude": [
     "test.ts",

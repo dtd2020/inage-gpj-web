@@ -1,0 +1,51 @@
+import { JwtHelperService } from '@auth0/angular-jwt';
+
+import { Injectable } from '@angular/core';
+import { DecodedTokenModel } from '../models/auth-model';
+import { LocalUserModel } from '../models/local-user';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SecurityUtilService {
+
+  constructor(private jwt: JwtHelperService) { }
+
+  public test() {
+    return 'Test'
+  }
+
+  public getToken() : string {
+    return localStorage.getItem('token');
+  }
+
+  public setToken(token : string) {
+    localStorage.setItem('token', token);
+  }
+
+  public removeToken() : void {
+    localStorage.removeItem('token');
+  }
+
+  public isTokenExpired() : boolean {
+    return this.jwt.isTokenExpired(this.getToken());
+  }
+
+  public getDecodedToken() {
+    return this.jwt.decodeToken(this.getToken()) as DecodedTokenModel;
+  }
+
+  public getLocalUserFromToken() : LocalUserModel {
+    if(this.getToken()) {
+      return this.getDecodedToken()?.user;
+    } else {
+      return null;
+    }
+    
+  }
+
+  public getLocalUserDetailsByToken(token : string) : LocalUserModel {
+    return this.getDecodedToken()?.user;
+    
+  }
+}

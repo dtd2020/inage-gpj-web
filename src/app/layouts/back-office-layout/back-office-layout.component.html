@@ -1,0 +1,15 @@
+
+<div class="wrapper">
+    <div class="sidebar" data-color="brown" data-active-color="danger">
+        <back-office-sidebar></back-office-sidebar>
+    </div>
+    <div class="main-panel">
+        <back-office-navbar></back-office-navbar>
+        <router-outlet></router-outlet>
+        <div *ngIf="!isMap()">
+            <!-- <footer-cmp></footer-cmp> -->
+        </div>
+    </div>
+
+</div>
+<!-- <fixedplugin-cmp></fixedplugin-cmp> -->

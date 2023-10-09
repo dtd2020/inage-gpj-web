@@ -1,0 +1,16 @@
+
+<div class="wrapper">
+    <div class="sidebar" data-color="brown" data-active-color="danger">
+        <citezen-sidebar></citezen-sidebar>
+    </div>
+    <div class="main-panel">
+        <citezen-navbar></citezen-navbar>
+        <router-outlet></router-outlet>
+        <div *ngIf="!isMap()">
+            <!-- <footer-cmp></footer-cmp> -->
+        </div>
+        
+    </div>
+
+</div>
+<!-- <fixedplugin-cmp></fixedplugin-cmp> -->
