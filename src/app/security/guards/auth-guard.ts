@@ -8,6 +8,7 @@ import {
   UrlTree,
 } from "@angular/router";
 import { Observable } from "rxjs";
+import { SwalManagementService } from "app/shared/swal-management.service";
 
 @Injectable({
   providedIn: "root",
@@ -15,6 +16,7 @@ import { Observable } from "rxjs";
 export class AuthGuard implements CanActivate {
   constructor(
     private securityService: SecurityService,
+    private swalManagService: SwalManagementService,
     private router: Router
   ) {}
   canActivate(
@@ -30,6 +32,7 @@ export class AuthGuard implements CanActivate {
         return true;
       } else {
         // TODO: refresh token
+        this.swalManagService.sweetAlterError("A sua sessão expirou!");
         this.securityService.logout();
         this.router.navigate["/auth/login"];
       }

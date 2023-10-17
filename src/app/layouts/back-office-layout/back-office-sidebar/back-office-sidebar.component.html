@@ -97,7 +97,7 @@
         </ul>
     </div> -->
         <ul class="nav">
-            <li routerLinkActive="active" *ngFor="let menuitem of menuItems">
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" *ngFor="let menuitem of menuItems">
                 <!--If is a single link-->
                 <a [routerLink]="[menuitem.path]" *ngIf="menuitem.type === 'link'">
                     <i class="{{menuitem.icontype}}"></i>

@@ -171,7 +171,7 @@ export class BackOfficeNavbarComponent implements OnInit {
         }
       }
     }
-    return "Citezen Dashboard";
+    // return "Citezen Dashboard";
   }
 
   getPath() {

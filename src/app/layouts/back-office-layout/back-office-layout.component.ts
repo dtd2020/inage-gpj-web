@@ -27,7 +27,7 @@ export class BackOfficeLayoutComponent implements OnInit{
 
   ngOnInit() {
     const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
-    const elemSidebar = <HTMLElement>document.querySelector('.back-office-sidebar .sidebar-wrapper');
+    const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
     this.location.subscribe((ev:PopStateEvent) => {
         this.lastPoppedUrl = ev.url;
     });

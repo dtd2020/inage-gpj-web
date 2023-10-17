@@ -1,12 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { ProcessModule } from 'app/modules/process/process.module';
+import { UserModule } from 'app/modules/user/user.module';
+
 import { BackOfficeLayoutRouting } from './back-office-layout-routing';
+import { BackOfficeLayoutComponent } from './back-office-layout.component';
 import { BackOfficeNavbarComponent } from './back-office-navbar/back-office-navbar.component';
 import { BackOfficeSidebarComponent } from './back-office-sidebar/back-office-sidebar.component';
-import { BackOfficeLayoutComponent } from './back-office-layout.component';
-import { ProcessModule } from 'app/modules/process/process.module';
 
 
 @NgModule({
@@ -18,7 +20,10 @@ import { ProcessModule } from 'app/modules/process/process.module';
   imports: [
     CommonModule,
     RouterModule.forChild(BackOfficeLayoutRouting),
-    ProcessModule
+    FormsModule,
+    ReactiveFormsModule,
+    ProcessModule,
+    UserModule
   ]
 })
 export class BackOfficeLayoutModule { }

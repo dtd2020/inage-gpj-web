@@ -1,0 +1,6 @@
+{
+    "users": [
+        {"id": 1, "username": "133792147", "profiles": [{ "id": 1, "code": "ADMI" }]},
+        {"id": 1, "username": "133792148", "profiles": [{ "id": 1, "code": "USER" }]}
+    ]
+}

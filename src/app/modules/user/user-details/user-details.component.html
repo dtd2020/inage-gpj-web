@@ -1,0 +1,54 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label for="">Perfis</label>
+                            <span class="badge badge-pill badge-default ml-2" *ngFor="let profile of user?.profiles; let i = index">{{profile.description}}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row user-details">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="">Nome</label>
+                                    <span>{{user?.name}}</span>
+                                </div>
+                                <div class="col-sm-12">
+                                    <label for="">Telefone</label>
+                                    <span>{{user?.mobile}}</span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="">Utilizador</label>
+                                    <span>{{user?.username}}</span>
+                                </div>
+                                <div class="col-sm-12">
+                                    <label for="">Email</label>
+                                    <span>{{user?.email}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="#" class="btn btn-info btn-round" routerLink="/back-office/users/list">Lista de utilizadores</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

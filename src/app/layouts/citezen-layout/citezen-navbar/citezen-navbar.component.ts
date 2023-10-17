@@ -169,7 +169,7 @@ export class CitezenNavbarComponent implements OnInit{
                 }
             }
         }
-        return 'Citezen Dashboard';
+        // return 'Citezen Dashboard';
     }
 
     getPath(){

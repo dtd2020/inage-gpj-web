@@ -2,7 +2,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { Injectable } from '@angular/core';
 import { DecodedTokenModel } from '../models/auth-model';
-import { LocalUserModel } from '../models/local-user';
+import { LocalUserModel, ProfileModel } from '../models/local-user';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +37,8 @@ export class SecurityUtilService {
 
   public getLocalUserFromToken() : LocalUserModel {
     if(this.getToken()) {
+      console.log(this.getDecodedToken());
+      
       return this.getDecodedToken()?.user;
     } else {
       return null;
@@ -47,5 +49,16 @@ export class SecurityUtilService {
   public getLocalUserDetailsByToken(token : string) : LocalUserModel {
     return this.getDecodedToken()?.user;
     
+  }
+
+  public isIncludedProfile(profiles: ProfileModel[], profileCode: string) {
+    let result: boolean = false;
+    profiles.forEach((profile) => {
+      if (profile.code == profileCode) {
+        result = true;
+      }
+    });
+
+    return result;
   }
 }

@@ -9,14 +9,20 @@ import { SecurityService } from "app/security/services/security.service";
 })
 export class BackOfficeSidebarComponent implements OnInit {
   private readonly ROUTES: any[] = [
+    // {
+    //   path: "/back-office",
+    //   title: "Inicio",
+    //   type: "link",
+    //   icontype: "nc-icon nc-bank",
+    // },
     {
-      path: "/back-office",
-      title: "Inicio",
+      path: "/back-office/users/list",
+      title: "Utilizadores",
       type: "link",
-      icontype: "nc-icon nc-bank",
+      icontype: "nc-icon nc-single-copy-04",
     },
     {
-      path: "/back-office/process/list",
+      path: "/back-office/processes/list",
       title: "Processos",
       type: "link",
       icontype: "nc-icon nc-single-copy-04",
