@@ -11,13 +11,15 @@ import {
 } from "../models/auth-model";
 import { SecurityUtilService } from "../utils/security-util.service";
 import { LocalUserModel, ProfileModel } from "../models/local-user";
+import { UserModel, UserRequestModel } from "app/models/user-model";
 
 @Injectable({
   providedIn: "root",
 })
 export class SecurityService {
   private localUser$ = new BehaviorSubject<LocalUserModel>(null);
-  public localUser = this.localUser$.asObservable();
+  public localUserObservar = this.localUser$.asObservable();
+  public localUser: LocalUserModel;
 
   constructor(
     private http: HttpClient,
@@ -39,10 +41,20 @@ export class SecurityService {
         (response) => {
           this.setToken(response.token);
           this.localUser$.next(this.getLocalUserFromToken());
-          
+          this.localUser = this.getLocalUserFromToken();
           this.redirectAfterLogin(this.getLocalUserFromToken());
         }
       );
+  }
+
+  public register(user: UserRequestModel) {
+    this.http.post<LoginResponseModel>(this.clientService.urlAuthWS(`/auth/self-register`), user).pipe(take(1)).subscribe(
+      (response) => {
+        this.setToken(response.token);
+        this.localUser$.next(this.getLocalUserFromToken());       
+        this.redirectAfterLogin(this.getLocalUserFromToken());
+      }
+    )
   }
 
   public getToken(): string {
@@ -66,13 +78,26 @@ export class SecurityService {
   }
 
   private redirectAfterLogin(user: LocalUserModel) {
-    if (this.securityUtil.isIncludedProfile(user?.profiles, "ADMIN")) {
-      this.router.navigate(["/back-office"]);
-    } else if (this.securityUtil.isIncludedProfile(user?.profiles, "USER")) {
-      this.router.navigate(["/citezen"]);
+    console.log(user);
+    
+    // if ((this.securityUtil.isIncludedProfile(user?.profiles, "ADMIN") || this.securityUtil.isIncludedProfile(user?.profiles, "STAFF"))) {
+    //   this.router.navigate(["/back-office"]);
+    // } else if (this.securityUtil.isIncludedProfile(user?.profiles, "COMPLAINER")) {
+    //   this.router.navigate(["/citezen"]);
+    // } else {
+    //   this.router.navigate(["/auth/login"]);
+    // }
+
+    if(user?.profiles.length > 0) { 
+      if(this.securityUtil.isIncludedProfile(user?.profiles, "COMPLAINER")) {
+        this.router.navigate(["/citezen"]);
+      } else {
+        this.router.navigate(["/back-office"]);
+      }
     } else {
       this.router.navigate(["/auth/login"]);
     }
+    
   }
 
 

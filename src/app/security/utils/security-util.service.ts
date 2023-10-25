@@ -37,7 +37,6 @@ export class SecurityUtilService {
 
   public getLocalUserFromToken() : LocalUserModel {
     if(this.getToken()) {
-      console.log(this.getDecodedToken());
       
       return this.getDecodedToken()?.user;
     } else {

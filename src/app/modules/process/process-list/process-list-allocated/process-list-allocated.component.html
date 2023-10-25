@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="text-primary">
+                            <tr>
+                                <th class="text-center">
+                                    Processo
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th class="text-center">
+                                    Requerente
+                                </th>
+                                <th class="text-right">
+                                    Accoes
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let process of processes">
+                                <td class="text-center">
+                                    {{process?.code}}
+                                </td>
+                                <td>
+                                    {{process?.processType}}
+                                </td>
+                                <td>
+                                    {{process?.closureStatus}}
+                                </td>
+                                <td class="text-center">
+                                    {{process?.complainer?.name}}
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" rel="tooltip"
+                                        class="btn btn-info btn-icon btn-sm   btn-neutral  ">
+                                        <i class="fa fa-eye"></i>
+                                    </button>
+                                    <!-- <button type="button" rel="tooltip"
+                                        class="btn btn-success btn-icon btn-sm   btn-neutral  ">
+                                        <i class="fa fa-pencil"></i>
+                                    </button> -->
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 export interface LocalUserModel {
+    id: number;
     username: string;
     role: string;
     enabled: boolean;

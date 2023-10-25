@@ -1,0 +1,73 @@
+<div class="card ">
+    <div class="card-body ">
+        <form [formGroup]="form" method="#" action="#" *ngIf="canShowForm">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <legend class="legend">
+                        Dados do processo
+                    </legend>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <label>Tipo de processo</label>
+                    <div class="form-group">
+                        <select formControlName="processType" class="form-control custom-select">
+                            <option value="">Seleccione o tipo</option>
+                            <option *ngFor="let processType of processTypes" [ngValue]="processType.key">
+                                {{processType.value}}</option>
+                        </select>
+                        <error-msg [control]="getFormControl(form, 'processType')"
+                            label="Tipo do Processo"></error-msg>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label>Tipo de queixoso</label>
+                    <div class="form-group">
+                        <select formControlName="complaintType" class="form-control custom-select">
+                            <option value="">Seleccione o tipo</option>
+                            <option *ngFor="let complaintType of complaintTypes"
+                                [ngValue]="complaintType.key">
+                                {{complaintType.value}}</option>
+                        </select>
+                        <error-msg [control]="getFormControl(form, 'complaintType')"
+                            label="Tipo do Processo"></error-msg>
+                    </div>
+                </div>
+
+
+            </div>
+
+            
+
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Descrição</label>
+                    <div class="form-group">
+                        <textarea rows="4" cols="80" class="form-control textarea"
+                            formControlName="description"
+                            placeholder="Escreva neste espa a descrição"></textarea>
+                        <error-msg [control]="getFormControl(form, 'description')"
+                            label="Descrição"></error-msg>
+                    </div>
+                </div>
+            </div>
+
+           
+        </form>
+    </div>
+    <div class="card-footer" *ngIf="step">
+        <!-- <button type="button" class="btn btn-info btn-round mr-2" (click)="previous()">Anterior</button> -->
+        <button type="button" class="btn btn-default btn-round mr-2" (click)="onPrevious()">Anterior</button>
+        <button type="submit" class="btn btn-default btn-round mr-2" (click)="onNext()">Avançar</button>
+        <!-- <a href="#" class="btn btn-warning btn-round ml-4" routerLink="/back-office/users/list">Cancelar</a> -->
+    </div>
+    
+    <div class="card-footer" *ngIf="!step">
+        <a href="#" class="btn btn-warning btn-round ml-4" routerLink="/back-office/users/list">Cancelar</a>
+    </div>
+</div>

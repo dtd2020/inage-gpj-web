@@ -17,6 +17,8 @@ export class WhiteListService {
 
   public build() {
     this.whiteListRoutes.set(this.clientService.urlAuthWS('/auth/login'), this.POST);
+    this.whiteListRoutes.set(this.clientService.urlAuthWS('/auth/self-register'), this.POST);
+    this.whiteListRoutes.set(this.clientService.urlAuthWS('/users/fetch-resources'), this.GET);
   }
 
   isWhiteListRoute(path: string, method: string) : boolean {

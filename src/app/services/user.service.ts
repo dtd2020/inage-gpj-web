@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserModel, UserResourceModel } from 'app/models/user-model';
+import { UserModel, UserRequestModel, UserResourceModel } from 'app/models/user-model';
 import { ClientService } from 'app/security/services/client.service';
 import { Observable, take } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class UserService {
     return this.http.get<UserModel>(this.url).pipe(take(1));
   }
 
-  public saveUser(user: UserModel): Observable<UserModel> {
+  public saveUser(user: UserRequestModel): Observable<UserModel> {
     if(user?.id) {
       return this.updateUser(user);
     } else {
@@ -31,12 +31,12 @@ export class UserService {
     }
   }
 
-  public updateUser(user: UserModel): Observable<UserModel> {
+  public updateUser(user: UserRequestModel): Observable<UserModel> {
     this.url = this.clientService.urlAuthWS(`${this.userContext}/update/${user?.id}`);
     return this.http.put<UserModel>(this.url, user).pipe(take(1));
   }
 
-  public createUser(user: UserModel): Observable<UserModel> {
+  public createUser(user: UserRequestModel): Observable<UserModel> {
     this.url = this.clientService.urlAuthWS(`${this.userContext}/create`);
     return this.http.post<UserModel>(this.url, user).pipe(take(1));
   }

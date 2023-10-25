@@ -1,0 +1,44 @@
+<div class="main-content">
+
+  <div class="row justify-content-center">
+
+    <ul class="nav nav-pills nav-pills-primary nav-pills-icons justify-content-center mb-4" [ngClass]="{'disabled': false}">
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active': canShowComplaintForm}" data-toggle="tab" href="#" (click)="showComplainerForm()" >
+          <i class="now-ui-icons shopping_shop"></i> Queixoso
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link "  [ngClass]="{'active': canShowProcessDataForm}" data-toggle="tab" href="#" (click)="showProcessDataForm()">
+          <i class="now-ui-icons objects_umbrella-13"></i> Dados do processo 
+        </a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active': canShowAttachmentForm}" data-toggle="tab" href="#" (click)="showAttachmentForm()">
+          <i class="now-ui-icons ui-2_settings-90"></i> Ficheiros
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [ngClass]="{'active': canShowDetails}" data-toggle="tab" href="#" (click)="showDetails()">
+          <i class="now-ui-icons ui-2_settings-90"></i> Detalhes
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <complainer-form *ngIf="canShowComplaintForm" [step]="true" [complainer]="process?.complainer" (outputData)="onComplainerForm($any($event))"></complainer-form>
+      <process-data-form *ngIf="canShowProcessDataForm" [step]="true" [process]="process" (outputData)="onProcessDataForm($any($event))"></process-data-form>
+      <attachment-form *ngIf="canShowAttachmentForm" [step]="true" [attachments]="process?.attachments" (outputData)="onAttachmentForm($any($event))"></attachment-form>
+      <process-details *ngIf="canShowDetails" [step]="true" [process]="process" (outputData)="onDetails($any($event))"></process-details>
+
+    </div>
+  </div>
+  <div class="row" *ngIf="canShowDetails">
+    <div class="col-md-12">
+      <button type="button" class="btn btn-info btn-round" (click)="onSubmit()">Salvar</button>
+      <a href="#" class="btn btn-warning btn-round ml-4" routerLink="/back-office/users/list">Cancelar</a>
+    </div>
+  </div>
+</div>

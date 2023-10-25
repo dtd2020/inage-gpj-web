@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  GPJ_API: 'http://localhost:8081',
+  GPJ_API: 'http://localhost:8080',
   GPJ_VERSION: '01.00.00'
 };

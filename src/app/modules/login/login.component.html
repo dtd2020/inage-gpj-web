@@ -8,7 +8,7 @@
           <span class="navbar-toggler-bar bar3"></span>
         </button>
       </div>
-      <a class="navbar-brand" routerLinkActive="active" [routerLink]="['/dashboard']">Paper Dashboard PRO Angular</a>
+      <a class="navbar-brand" routerLinkActive="active" [routerLink]="['/dashboard']">Gabinete do provedor de justiça</a>
     </div>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
       aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,8 +24,8 @@
           </a>
         </li>
         <li class="nav-item ">
-          <a routerLinkActive="active" [routerLink]="" class="nav-link">
-            <i class="nc-icon nc-book-bookmark"></i> Auto-registo
+          <a routerLinkActive="active" [routerLink]="['/guest/self-register']" class="nav-link">
+            <i class="nc-icon nc-book-bookmark"></i> Registo
           </a>
         </li>
       </ul>
@@ -34,7 +34,7 @@
 </nav>
 
 <div class="wrapper wrapper-full-page ">
-  <div class="full-page section-image" filter-color="black" data-image="./assets/img/bg/fabio-mangione.jpg">
+  <div class="full-page section-image" filter-color="black" data-image="./assets/img/bg/gpj/martelo_caderno.jpg">
     <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
     <div class="content">
       <div class="container">
@@ -92,7 +92,7 @@
     <footer class="footer footer-black  footer-white ">
       <div class="container">
         <div class="row">
-          <nav class="footer-nav">
+          <!-- <nav class="footer-nav">
             <ul>
               <li>
                 <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
@@ -104,7 +104,7 @@
                 <a href="https://www.creative-tim.com/license" target="_blank">Licenses</a>
               </li>
             </ul>
-          </nav>
+          </nav> -->
           <div class="credits ml-auto">
             <span class="copyright">
               &copy; {{test | date: 'yyyy'}}, Desenvolvido por <i class="fa fa-heart heart"></i> INAGE

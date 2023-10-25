@@ -13,6 +13,10 @@ export class ClientService {
   }
 
   public urlAuthWS(resource: string): string {
-    return this.url(`/v1/auth-service${resource}`)
+    return this.url(`/authws${resource}`)
+  }
+  
+  public urlProcessingWS(resource: string): string {
+    return this.url(`/complainws${resource}`)
   }
 }

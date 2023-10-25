@@ -9,6 +9,7 @@ import { BackOfficeLayoutRouting } from './back-office-layout-routing';
 import { BackOfficeLayoutComponent } from './back-office-layout.component';
 import { BackOfficeNavbarComponent } from './back-office-navbar/back-office-navbar.component';
 import { BackOfficeSidebarComponent } from './back-office-sidebar/back-office-sidebar.component';
+import { AllocationModule } from 'app/modules/allocation/allocation.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { BackOfficeSidebarComponent } from './back-office-sidebar/back-office-si
     FormsModule,
     ReactiveFormsModule,
     ProcessModule,
+    AllocationModule,
     UserModule
   ]
 })

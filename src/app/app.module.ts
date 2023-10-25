@@ -12,14 +12,14 @@ import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 import { AuthTokenInterceptor } from './security/interceptors/auth-token.interceptor';
 import { ErrorHandlerInterceptor } from './security/interceptors/error-handler.interceptor';
+import { SpinnerInterceptor } from './security/interceptors/spinner.interceptor';
 import { tokenGetter } from './security/utils/jwt-util.service';
 import { FixedPluginModule } from './shared/fixedplugin/fixedplugin.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { GenericComponent } from './shared/generic/generic.component';
 import { NavbarModule } from './shared/navbar/navbar.module';
-import { SidebarModule } from './sidebar/sidebar.module';
-import { SpinnerInterceptor } from './security/interceptors/spinner.interceptor';
 import { SpinnerModule } from './shared/spinner/spinner.module';
+import { SidebarModule } from './sidebar/sidebar.module';
 
 @NgModule({
     imports: [
@@ -45,7 +45,8 @@ import { SpinnerModule } from './shared/spinner/spinner.module';
     ],
     declarations: [
         AppComponent,
-        GenericComponent
+        GenericComponent,
+        
     ],
     providers: [
         {

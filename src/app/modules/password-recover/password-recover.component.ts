@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { LocalUserModel } from "app/security/models/local-user";
+import { SecurityService } from "app/security/services/security.service";
 
 @Component({
   selector: "password-recover",
@@ -15,17 +17,32 @@ export class PasswordRecoverComponent implements OnInit {
   private sidebarVisible: boolean;
   private nativeElement: Node;
 
+  public loggedUser: LocalUserModel;
+  public canShowBackOfficeSection: boolean = false;
+  public canShowCitezenSection: boolean = false;
+
   form: FormGroup;
 
-  constructor(private element: ElementRef, private formBuilder: FormBuilder) {
+  constructor(private element: ElementRef, private formBuilder: FormBuilder, private securityService: SecurityService) {
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
   }
 
   ngOnInit() {
 
+    this.securityService.localUserObservar.subscribe((user) => {
+      this.loggedUser = user;
+      let profiles = this.loggedUser.profiles;
+      if (profiles.some((profile) => profile.code === 'COMPLAINER')) {
+        this.canShowCitezenSection = true;
+      } else {
+        this.canShowBackOfficeSection = true;
+        this.canShowCitezenSection = true;
+      }
+    })
+
     this.createForm();
-    
+
     // ****************************
     this.checkFullPageBackgroundImage();
 
@@ -39,8 +56,8 @@ export class PasswordRecoverComponent implements OnInit {
   }
 
 
-  public createForm() : void {
-    this.form = this.formBuilder.group({  
+  public createForm(): void {
+    this.form = this.formBuilder.group({
       username: [""],
       email: [""],
       celular: [""]

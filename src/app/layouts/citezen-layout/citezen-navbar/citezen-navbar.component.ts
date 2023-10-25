@@ -54,7 +54,7 @@ export class CitezenNavbarComponent implements OnInit{
 
     ngOnInit(){
 
-        this.securityService.localUser.subscribe(
+        this.securityService.localUserObservar.subscribe(
             (user: LocalUserModel) => {
                 this.loggedUser = user;
             }

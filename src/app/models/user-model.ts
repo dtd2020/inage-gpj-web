@@ -9,6 +9,18 @@ export interface UserModel {
     permissions: PermissionModel[];
 }
 
+
+export interface UserRequestModel {
+    id: number;
+    name: string;
+    mobile: string;
+    username: string;
+    email: string;
+    active: boolean;
+    profileIds: number[];
+    permissionIds: number[];
+}
+
 export interface ProfileModel {
     id: number;
     code: string;
@@ -25,4 +37,9 @@ export interface PermissionModel {
 export interface UserResourceModel {
     profiles: ProfileModel[];
     permissions: PermissionModel[];
+}
+
+export interface UserTypeModel {
+    key: string;
+    value: string;
 }

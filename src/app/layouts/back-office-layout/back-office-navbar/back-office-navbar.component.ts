@@ -76,7 +76,7 @@ export class BackOfficeNavbarComponent implements OnInit {
       });
     // ******************************************************************
 
-    this.securityService.localUser.subscribe((user) => {
+    this.securityService.localUserObservar.subscribe((user) => {
       this.loggedUser = user;
     });
   }

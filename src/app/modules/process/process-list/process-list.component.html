@@ -1,64 +1,43 @@
 <div class="main-content">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title"> Simple Table</h4>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead class="text-primary">
-                                <th class="text-center">
-                                    Processo
-                                </th>
-                                <th>
-                                    Tipo
-                                </th>
-                                <th>
-                                    Estado
-                                </th>
-                                <th class="text-center">
-                                    Requerente
-                                </th>
-                                <th class="text-right">
-                                    Accoes
-                                </th>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let process of processes">
-                                    <td class="text-center">
-                                        {{process.processId}}
-                                    </td>
-                                    <td>
-                                        {{process.type}}
-                                    </td>
-                                    <td>
-                                        {{process.status}}
-                                    </td>
-                                    <td class="text-center">
-                                        {{process.requester}}
-                                    </td>
-                                    <td class="text-right">
-                                        <button type="button" rel="tooltip"
-                                            class="btn btn-info btn-icon btn-sm   btn-neutral  ">
-                                            <i class="fa fa-user"></i>
-                                        </button>
-                                        <button type="button" rel="tooltip"
-                                            class="btn btn-success btn-icon btn-sm   btn-neutral  ">
-                                            <i class="fa fa-edit"></i>
-                                        </button>
-                                        <!-- <button type="button" rel="tooltip"
-                                            class="btn btn-danger btn-icon btn-sm   btn-neutral  ">
-                                            <i class="fa fa-times"></i>
-                                        </button> -->
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+    <div class="row justify-content-center">
+      <!-- <ul class="nav nav-pills nav-pills-primary nav-pills-icons justify-content-center mb-4" [ngClass]="{'disabled': false}" *ngIf="citezenSection">
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{'active': getRouter.url.includes('citezen')}" data-toggle="tab" href="#" (click)="fetchComplainerProcesses()" >
+            <i class="now-ui-icons shopping_shop"></i> Meus processos
+          </a>
+        </li>
+
+      </ul> -->
+
+      <button class="btn btn-primary btn-round" *ngIf="citezenSection" (click)="fetchComplainerProcesses()"> Meus processos</button>
+
+        <ul class="nav nav-pills nav-pills-primary nav-pills-icons justify-content-center mb-4" [ngClass]="{'disabled': false}" *ngIf="staffSection">
+          
+            
+          
+          <li class="nav-item">
+            <a class="nav-link" [ngClass]="{'active': getRouter.url.includes('back-office')}" data-toggle="tab" href="#" (click)="fetchAllProcesses()" >
+              <i class="now-ui-icons shopping_shop"></i> Todos processos
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link "  [ngClass]="{'active': false}" data-toggle="tab" href="#" (click)="findAllProcessesToAllocate()">
+              <i class="now-ui-icons objects_umbrella-13"></i> Por alocar 
+            </a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" [ngClass]="{'active': false}" data-toggle="tab" href="#" (click)="fetchAllAllocatedProcesses()">
+              <i class="now-ui-icons ui-2_settings-90"></i> Alocados
+            </a>
+          </li>
+        </ul>
+      </div>
+
+    <process-list-all *ngIf="canShowAllProcesses"></process-list-all>
+    <process-list-to-allocate *ngIf="canShowAllAlailableToAllocate"></process-list-to-allocate>
+    <process-list-allocated *ngIf="canShowAllAAllocated"></process-list-allocated>
+    <process-list-complainer *ngIf="canShowComplainerProcesses"></process-list-complainer>
 </div>

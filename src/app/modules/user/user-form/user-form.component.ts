@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -7,11 +8,17 @@ import {
   Validators,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { PermissionModel, ProfileModel, UserModel } from "app/models/user-model";
+import { ComplainerModel } from "app/models/complainer-model";
+import { UserTypeEnum } from "app/models/enums/user-type-enum";
+import { StaffModel } from 'app/models/staff-model';
+import { PermissionModel, ProfileModel, UserModel, UserRequestModel } from "app/models/user-model";
+import { ComplainerService } from "app/services/complainer.service";
+import { StaffService } from 'app/services/staff.service';
 import { UserService } from "app/services/user.service";
 import { FormValidation } from "app/shared/form-validation/form-validation.component";
 import { GenericComponent } from "app/shared/generic/generic.component";
 import { SwalManagementService } from "app/shared/swal-management.service";
+import { isEmpty } from "app/shared/utils/utils";
 import Swal from "sweetalert2";
 @Component({
   selector: "user-form",
@@ -25,6 +32,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
 
   private user: UserModel;
   private userId: number;
+  private userType : string;
   public profiles: ProfileModel[] = [];
   public permissions: PermissionModel[] = [];
 
@@ -32,6 +40,8 @@ export class UserFormComponent extends GenericComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private complainerService: ComplainerService,
+    private staffService: StaffService,
     private route: ActivatedRoute,
     private router: Router,
     private swalManagService: SwalManagementService
@@ -47,6 +57,10 @@ export class UserFormComponent extends GenericComponent implements OnInit {
         if (params.userId != null && params.userId != undefined && params.userId != "") {
           this.userId = params.userId;
         }
+        
+        if (params.userType != null && params.userType != undefined && params.userType != "") {
+          this.userType = params.userType;
+        }
       }
     );
 
@@ -60,10 +74,19 @@ export class UserFormComponent extends GenericComponent implements OnInit {
         this.profiles = resources.profiles;
         this.permissions = resources.permissions;
 
+        
 
         if (this.userId) {
           this.fetchUser(this.userId);
         } else {
+
+          if(!isEmpty(this.userType) && this.userType === UserTypeEnum.CITEZEN.key) {
+            this.profiles = this.profiles.filter(p => p.code === 'COMPLAINER')
+            
+          } else if(!isEmpty(this.userType) && this.userType !== UserTypeEnum.CITEZEN.key) {
+            this.profiles = this.profiles.filter(p => p.code !== 'COMPLAINER')
+          }
+
           this.createForm();
           this.canShowForm = true;
         }
@@ -202,22 +225,45 @@ export class UserFormComponent extends GenericComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.isValidForm(this.form)) {
-      let requestUserData: UserModel = this.getFormRequestData(this.form);
+      let requestUserData: UserRequestModel = this.getFormDataRequest(this.form);
+      // this.createComplainer(this.getComplainerDataRequest(this.form, 52));
+      // return;
       this.userService.saveUser(requestUserData).subscribe(
         (user) => {
+          if(this.userType === UserTypeEnum.CITEZEN.key) {
+            this.createComplainer(this.getComplainerDataRequest(this.form, user?.id));
+          } else {
+            this.createStaff(this.getStaffDataRequest(this.form, user?.id));
+          }
           this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
         }
       );
     } else {
       return;
     }
-
-
   }
 
-  private getFormRequestData(form: any) {
+  public createComplainer(complainer: ComplainerModel) : void {
+    this.complainerService.saveComplainer(complainer).subscribe(
+      (complainer) => {
+        this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
+      }
+    )
+  }
 
-    let formRequestData: UserModel = form.value;
+  public createStaff(staff: StaffModel) : void {
+    this.staffService.saveStaff(staff).subscribe(
+      (staff) => {
+        this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
+      }
+    )
+  }
+
+  private getFormDataRequest(form: any) {
+
+    let formRequestData: UserRequestModel = form.value;
+    let tempProfileIds: number[] = [];
+      let tempPermissionIds: number[] = [];
 
     var tempProfiles = this.profiles.slice();
     const selectedProfileIds = this.form.value.profiles
@@ -242,10 +288,48 @@ export class UserFormComponent extends GenericComponent implements OnInit {
       }
     }
 
-    formRequestData.profiles = tempProfiles;
-    formRequestData.permissions = tempPermissions;
-    formRequestData.email = form.value.email.toLowerCase();
+    
+    tempProfiles.forEach(temProfile => {
+      tempProfileIds.push(temProfile.id);
+    })
+
+    tempPermissions.forEach(temPermission => {
+      tempPermissionIds.push(temPermission.id);
+    })
+
+
+    formRequestData.profileIds = tempProfileIds;
+    formRequestData.permissionIds = tempPermissionIds;
+    formRequestData.email =  isEmpty(form.value?.email) ? null : form.value?.email.toLowerCase();
 
     return formRequestData;
+  }
+
+
+  public getComplainerDataRequest(form: any, userId: number) {
+    let formComplainerDataRequest: ComplainerModel = {
+      id: null,
+      name: form?.value?.name,
+      nuit: form?.value?.username,
+      email: form?.value?.email,
+      mobile: form?.value?.mobile,
+      address: form?.value?.address,
+      userId: userId
+    };
+    
+    return formComplainerDataRequest;
+  }
+
+  public getStaffDataRequest(form: any, userId: number) {
+    let formStaffDataRequest: StaffModel = {
+      id: null,
+      name: form?.value?.name,
+      nuit: form?.value?.username,
+      email: form?.value?.email,
+      mobile: form?.value?.mobile,
+      address: form?.value?.address,
+      userId: userId
+    }
+    return formStaffDataRequest;
   }
 }

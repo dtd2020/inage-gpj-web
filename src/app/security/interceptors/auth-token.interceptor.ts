@@ -11,9 +11,10 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   constructor(private securityService: SecurityService, private whiteListService: WhiteListService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (this.whiteListService.isWhiteListRoute(request.url, request.method)) {
+    if (this.whiteListService.isWhiteListRoute(request.url, request.method)) {      
       return next.handle(request);
     }
+
     request = request.clone({
       setHeaders: {
         'Content-Type': 'application/json',

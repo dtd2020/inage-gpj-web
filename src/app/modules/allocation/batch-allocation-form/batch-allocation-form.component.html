@@ -1,0 +1,155 @@
+<div class="card ">
+    <div class="card-body ">
+        <form [formGroup]="form" method="#" action="#" *ngIf="canShowForm">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <legend class="legend">
+                        Dodos do responsável
+                    </legend>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Responsável</label>
+                    <div class="form-group">
+                        <select formControlName="staffId" class="form-control custom-select">
+                            <option value="">Seleccione o responsável</option>
+                            <option *ngFor="let sta of staff" [ngValue]="sta.id">
+                                {{sta.name}}</option>
+                        </select>
+                        <error-msg [control]="getFormControl(form, 'staffId')"
+                            label="Responsável"></error-msg>
+                    </div>
+                </div>
+            </div>
+           
+        </form>
+    </div>
+   
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-text">
+                  <p class="card-category">Processos susceptíveis à alocação</p>
+                </div>
+              </div>
+            <div class="card-body table-responsive">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="text-primary">
+                            <tr>
+                                <th class="text-center">
+                                    Processo
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <!-- <th>
+                                    Estado
+                                </th> -->
+                                <th class="text-center">
+                                    Requerente
+                                </th>
+                                <th class="text-right">
+                                    Adicionar
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let process of processesAvailableToAllocate">
+                                <td class="text-center">
+                                    {{process?.code}}
+                                </td>
+                                <td>
+                                    {{process?.processType}}
+                                </td>
+                                <!-- <td>
+                                    {{process?.closureStatus}}
+                                </td> -->
+                                <td class="text-center">
+                                    {{process?.complainer?.name}}
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" 
+                                        class="btn btn-info btn-sm" (click)="addProcess(process)">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-text">
+                  <p class="card-category">Processos sendo alocados</p>
+                </div>
+              </div>
+            <div class="card-body table-responsive">
+                    <table class="table table-hover">
+                        <thead class="text-warning">
+                            <tr>
+                                <th class="text-right">
+                                    Remover
+                                </th>
+                                <th class="text-center">
+                                    Processo
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <!-- <th>
+                                    Estado
+                                </th> -->
+                                <th class="text-center">
+                                    Requerente
+                                </th>
+                            </tr>
+                            
+                            
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let process of processesToALlocate">
+                                <td class="text-left">
+                                    <button type="button" 
+                                        class="btn btn-danger btn-sm" (click)="removeProcess(process)">
+                                        <i class="fa fa-arrow-left"></i>
+                                    </button>
+                                </td>
+                                <td class="text-center">
+                                    {{process?.code}}
+                                </td>
+                                <td>
+                                    {{process?.processType}}
+                                </td>
+                                <!-- <td>
+                                    {{process?.closureStatus}}
+                                </td> -->
+                                <td class="text-center">
+                                    {{process?.complainer?.name}}
+                                </td>
+                               
+                            </tr>
+                        </tbody>
+                    </table>
+                <!-- </div> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <button type="button" class="btn btn-default btn-round mr-2" (click)="onSubmit()">Salvar</button>
+            <a href="#" class="btn btn-warning btn-round mr-2" routerLink="/back-office/processes/list">Cancelar</a>
+    </div>
+</div>

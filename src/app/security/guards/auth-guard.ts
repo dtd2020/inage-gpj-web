@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.securityService.localUser != null) {
+    if (this.securityService.localUserObservar != null) {
       if (!this.securityService.isTokenExpired()) {
         return true;
       } else {

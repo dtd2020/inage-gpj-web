@@ -8,9 +8,10 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserComponent } from './user.component';
+import { UserTypeComponent } from './user-type/user-type.component';
 
 @NgModule({
-  declarations: [UserComponent, UserListComponent, UserFormComponent, UserDetailsComponent],
+  declarations: [UserComponent, UserListComponent, UserFormComponent, UserDetailsComponent, UserTypeComponent],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, ErrorMsgModule],
   exports: [UserListComponent, UserFormComponent, UserDetailsComponent],
 })

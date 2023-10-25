@@ -117,17 +117,11 @@ export const ROUTES: RouteInfo[] = [
     icontype: "nc-icon nc-bank",
   },
   {
-    path: "/citezen/process/list",
+    path: "/citezen/processes/list",
     title: "Processos",
     type: "link",
     icontype: "nc-icon nc-single-copy-04",
-  },
-  {
-    path: "/citezen/process",
-    title: "Process Test",
-    type: "link",
-    icontype: "nc-icon nc-bank",
-  },
+  }
 ];
 
 @Component({
@@ -149,7 +143,7 @@ export class CitezenSidebarComponent {
     this.menuItems = ROUTES.filter((menuItem) => menuItem);
 
     // ****************************************************************
-    this.securityService.localUser.subscribe((user) => {
+    this.securityService.localUserObservar.subscribe((user) => {
       this.loggedUser = user;
     });
   }

@@ -27,6 +27,16 @@ export class BackOfficeSidebarComponent implements OnInit {
       type: "link",
       icontype: "nc-icon nc-single-copy-04",
     },
+    {
+      path: '/back-office/allocations',
+      title: 'Alocações',
+      collapse: 'pages',
+      type: 'sub',
+      icontype: 'nc-icon nc-book-bookmark',
+      children: [
+          {path: 'batch-allocation', title: 'Alocar processos', ab:'AP'}
+      ]
+  }
   ];
 
   
@@ -44,7 +54,7 @@ export class BackOfficeSidebarComponent implements OnInit {
     this.menuItems = this.ROUTES.filter((menuItem) => menuItem);
 
     // ****************************************************************
-    this.securityService.localUser.subscribe(
+    this.securityService.localUserObservar.subscribe(
       (user) => {
         this.loggedUser = user;
       }
