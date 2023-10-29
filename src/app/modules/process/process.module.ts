@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { ProcessFormComponent } from './process-form/process-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorMsgModule } from 'app/shared/error-msg/error-msg.module';
-import { ComplainerModule } from '../complaint/complainer.module';
 import { AttachmentModule } from '../attachment/attachment.module';
 import { ProcessDataFormComponent } from './process-form/process-data-form/process-data-form.component';
 import { ProcessDetailsComponent } from './process-details/process-details.component';
@@ -14,6 +13,7 @@ import { ProcessListAllComponent } from './process-list/process-list-all/process
 import { ProcessListToAllocateComponent } from './process-list/process-list-to-allocate/process-list-to-allocate.component';
 import { ProcessListAllocatedComponent } from './process-list/process-list-allocated/process-list-allocated.component';
 import { ProcessListComplainerComponent } from './process-list/process-list-complainer/process-list-complainer.component';
+import { ComplainerModule } from '../complainer/complainer.module';
 
 
 

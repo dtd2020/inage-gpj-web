@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ProcessModel } from 'app/models/process-model';
 import { ProcessService } from 'app/services/process.service';
@@ -12,7 +13,7 @@ export class ProcessListToAllocateComponent extends GenericComponent implements 
 
   public processes: ProcessModel[] = [];
 
-  constructor(private processService: ProcessService) {
+  constructor(private router: Router, private processService: ProcessService) {
     super();
   }
 
@@ -26,8 +27,11 @@ export class ProcessListToAllocateComponent extends GenericComponent implements 
       (processes) => {
         this.processes = processes;
       }
-    )
-    
+    )    
+  }
+
+  public processDetails(processId: number) {
+    this.router.navigate([`back-office/allocations/single-allocation/${processId}`]);
   }
 
 }

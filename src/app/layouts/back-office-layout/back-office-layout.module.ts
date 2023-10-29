@@ -10,6 +10,7 @@ import { BackOfficeLayoutComponent } from './back-office-layout.component';
 import { BackOfficeNavbarComponent } from './back-office-navbar/back-office-navbar.component';
 import { BackOfficeSidebarComponent } from './back-office-sidebar/back-office-sidebar.component';
 import { AllocationModule } from 'app/modules/allocation/allocation.module';
+import { StaffModule } from 'app/modules/staff/staff.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { AllocationModule } from 'app/modules/allocation/allocation.module';
     ReactiveFormsModule,
     ProcessModule,
     AllocationModule,
-    UserModule
+    UserModule,
+    StaffModule,
   ]
 })
 export class BackOfficeLayoutModule { }

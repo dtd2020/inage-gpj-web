@@ -21,12 +21,26 @@ export class BackOfficeSidebarComponent implements OnInit {
       type: "link",
       icontype: "nc-icon nc-single-copy-04",
     },
+
+    {
+      path: "/back-office/public-server",
+      title: "Utente",
+      collapse: 'public-server',
+      type: "sub",
+      icontype: "nc-icon nc-single-copy-04",
+      children: [
+        { path: '/complainers/list', title: 'Reclamante', ab: 'RC' },
+        { path: '/staffs/list', title: 'Pessoal de apoio', ab: 'PA' }
+      ]
+    },
+
     {
       path: "/back-office/processes/list",
       title: "Processos",
       type: "link",
       icontype: "nc-icon nc-single-copy-04",
     },
+
     {
       path: '/back-office/allocations',
       title: 'Alocações',
@@ -34,21 +48,22 @@ export class BackOfficeSidebarComponent implements OnInit {
       type: 'sub',
       icontype: 'nc-icon nc-book-bookmark',
       children: [
-          {path: 'batch-allocation', title: 'Alocar processos', ab:'AP'}
+        { path: '/list-all', title: 'Listar alocações', ab: 'LA' },
+        { path: '/batch-allocation', title: 'Alocar processos', ab: 'AP' }
       ]
-  }
+    }
   ];
 
-  
+
 
   public menuItems: any[];
 
   public loggedUser: LocalUserModel;
 
-  constructor(private securityService: SecurityService) {}
+  constructor(private securityService: SecurityService) { }
 
 
-  
+
 
   ngOnInit() {
     this.menuItems = this.ROUTES.filter((menuItem) => menuItem);
@@ -61,7 +76,7 @@ export class BackOfficeSidebarComponent implements OnInit {
     );
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   isNotMobileMenu() {
     if (window.outerWidth > 991) {

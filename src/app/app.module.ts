@@ -47,6 +47,7 @@ import { SidebarModule } from './sidebar/sidebar.module';
         AppComponent,
         GenericComponent,
         
+        
     ],
     providers: [
         {

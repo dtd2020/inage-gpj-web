@@ -97,7 +97,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
   }
 
   public fetchUser(userId: number): void {
-    this.userService.fetchUser(userId).subscribe(
+    this.userService.fetchUserById(userId).subscribe(
       (user) => {
         this.user = user;
         this.createForm();
@@ -111,8 +111,8 @@ export class UserFormComponent extends GenericComponent implements OnInit {
   public createForm(): void {
     this.form = this.formBuilder.group({
       id: [null],
-      name: [null, [Validators.required]],
-      mobile: [null, [Validators.required, FormValidation.phone]],
+      // name: [null, [Validators.required]],
+      // mobile: [null, [Validators.required, FormValidation.phone]],
       username: [null, [Validators.required]],
       email: [null, [Validators.required, Validators.email]],
       profiles: this.buildProfiles(),
@@ -212,8 +212,8 @@ export class UserFormComponent extends GenericComponent implements OnInit {
 
     this.form.patchValue({
       id: user.id,
-      name: user.name,
-      mobile: user.mobile,
+      // name: user.name,
+      // mobile: user.mobile,
       username: user.username,
       email: user.email,
     })
@@ -231,11 +231,13 @@ export class UserFormComponent extends GenericComponent implements OnInit {
       this.userService.saveUser(requestUserData).subscribe(
         (user) => {
           if(this.userType === UserTypeEnum.CITEZEN.key) {
-            this.createComplainer(this.getComplainerDataRequest(this.form, user?.id));
+            // this.createComplainer(this.getComplainerDataRequest(this.form, user?.id));
+            this.router.navigate(['back-office/complainers/create-edit'], {queryParams: {userId: user.id}})
           } else {
-            this.createStaff(this.getStaffDataRequest(this.form, user?.id));
+            // this.createStaff(this.getStaffDataRequest(this.form, user?.id));
+            this.router.navigate(['back-office/staffs/create-edit'], {queryParams: {userId: user.id}})
           }
-          this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
+          // this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
         }
       );
     } else {

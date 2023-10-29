@@ -8,6 +8,9 @@ import { ProcessStep } from '../process-form/process-form.component';
 import { ProcessService } from 'app/services/process.service';
 import { AttachmentModel } from 'app/models/attachment-model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { isEmpty } from 'app/shared/utils/utils';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'process-details',
@@ -24,11 +27,27 @@ export class ProcessDetailsComponent extends GenericComponent implements OnInit 
   @Input() process: ProcessModel;
   @Output() outputData = new EventEmitter<DetailsOutputForm>();
 
-  constructor(private processService: ProcessService,  private sanitizer: DomSanitizer) {
+  constructor(private route: ActivatedRoute, private location: Location, private processService: ProcessService,  private sanitizer: DomSanitizer) {
     super();
   }
 
   ngOnInit(): void {
+
+    this.route.params.subscribe(
+      (params) => {        
+        if (!isEmpty(params?.processId)) {
+          this.fetchProcessById(params.processId)
+        }
+      }
+    );
+  }
+
+  public fetchProcessById(processId: number) {
+    this.processService.fetchProcessById(processId).subscribe(
+      (process) => {
+        this.process = process;
+      }
+    )
   }
 
   onSubmit(): void {
@@ -41,7 +60,7 @@ export class ProcessDetailsComponent extends GenericComponent implements OnInit 
     if (this.step) {
       this.outputData.emit(outputData);
     } else {
-      throw new Error("Não é um step");
+      this.location.back();
     }
 
   }

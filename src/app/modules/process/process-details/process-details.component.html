@@ -11,24 +11,29 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-sm-12">
-                        <label for="">Nome</label>
-                        <span>{{process?.complainer?.name}}</span>
+                        <label for="">Nuit:</label>
+                        <span>{{process?.complainer?.nuit}}</span>
                     </div>
                     <div class="col-sm-12">
-                        <label for="">Celular</label>
-                        <span>{{process?.complainer?.mobile}}</span>
+                        <label for="">Nome:</label>
+                        <span>{{process?.complainer?.name}}</span>
                     </div>
+                    
                 </div>
 
             </div>
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-sm-12">
-                        <label for="">Email</label>
+                        <label for="">Celular:</label>
+                        <span>{{process?.complainer?.mobile}}</span>
+                    </div>
+                    <div class="col-sm-12">
+                        <label for="">Email:</label>
                         <span>{{process?.complainer?.email}}</span>
                     </div>
                     <div class="col-sm-12">
-                        <label for="">Endereço</label>
+                        <label for="">Endereço:</label>
                         <span>{{process?.complainer?.address}}</span>
                     </div>
                 </div>
@@ -43,11 +48,11 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-sm-12">
-                        <label for="">Tipo de processo</label>
+                        <label for="">Tipo de processo:</label>
                         <span>{{process?.processType}}</span>
                     </div>
                     <div class="col-sm-12">
-                        <label for="">Tipo de queixoso</label>
+                        <label for="">Tipo de queixoso:</label>
                         <span>{{process?.complaintType}}</span>
                     </div>
                 </div>
@@ -56,7 +61,7 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-sm-12">
-                        <label for="">Utilizador</label>
+                        <label for="">Descrição:</label>
                         <span>{{process?.description}}</span>
                     </div>
                 </div>
@@ -71,9 +76,11 @@
             <div class="col-md-12">
                 <table class="table">
                     <thead>
-                        <th class="text-left">Nome atribuído</th>
+                        <tr>
+                            <th class="text-left">Nome atribuído</th>
                         <th class="text-left">Nome original</th>
                         <th class="text-right">Accções</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr  *ngFor="let attachment of process?.attachments; let i = index">
@@ -128,8 +135,8 @@
     </div>
 
     <div class="card-footer">
-        <button type="button" class="btn btn-default btn-round mr-2" (click)="previous()">Anterior</button>
-        <button type="submit" class="btn btn-default btn-round mr-2" *ngIf="!step" (click)="onSubmit()">Avançar</button>
+        <button type="button" class="btn btn-default btn-round mr-2" *ngIf="step" (click)="previous()">Anterior</button>
+        <button type="submit" class="btn btn-default btn-round mr-2" *ngIf="!step" (click)="onSubmit()">Fechar</button>
     </div>
 
 </div>

@@ -18,7 +18,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   public fetchUser(userId: number): void {
-    this.userService.fetchUser(userId).subscribe(
+    this.userService.fetchUserById(userId).subscribe(
       (user) => { this.user = user }
     )
   }

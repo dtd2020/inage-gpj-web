@@ -8,10 +8,10 @@ export interface ProcessModel {
     description: string;
     complainerId: number;
     complainer: ComplainerModel;
-    processType: ProcessTypeModel;
-    complaintType: ComplaintTypeModel;
-    closureType: ClosureTypeModel;
-    closureStatus: ClosureStatusModel;
+    processType: string;
+    complaintType: string;
+    closureType: string;
+    closureStatus: string;
     attachments: AttachmentModel[];
     updateHistory: ProcessUpdateHistoryModel;
 
@@ -32,5 +32,6 @@ export interface ClosureTypeModel {
 }
 
 export interface ClosureStatusModel {
-    description: string;
+    key: string;
+    value: string;
 }

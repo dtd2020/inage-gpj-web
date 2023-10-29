@@ -1,0 +1,68 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title text-left text-primary">
+                       Lista dos reclamantes
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="">
+                               <tr>
+                                <th>
+                                    NUIT
+                                </th>
+                                <th>
+                                    Nome
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th class="text-right">
+                                    Acções
+                                </th>
+                               </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let complainer of complainers">
+                                    <td class="">
+                                        {{complainer.nuit}}
+                                    </td>
+                                    <td>
+                                        {{complainer.name}}
+                                    </td>
+                                    <td>
+                                        {{complainer.email}}
+                                    </td>
+                                    <td class="text-right">
+                                        <button type="button" rel="tooltip"
+                                            class="btn btn-info btn-icon btn-sm   btn-neutral  " (click)="complainerDetails(complainer?.id)">
+                                            <i class="fa fa-eye"></i>
+                                            
+                                        </button>
+                                        <button type="button" rel="tooltip"
+                                            class="btn btn-info btn-icon btn-sm   btn-neutral  " (click)="complainerEdit(complainer?.id)">
+                                            <i class="fa fa-pencil"></i>
+                                            
+                                        </button>
+                                        <!-- <button type="button" rel="tooltip"
+                                            class="btn btn-success btn-icon btn-sm   btn-neutral " (click)="confirmUserDeletion(complainer?.id)">
+                                            <i class="fa fa-remove text-danger"></i>
+                                        </button> -->
+                                        <!-- <button type="button" rel="tooltip"
+                                            class="btn btn-danger btn-icon btn-sm   btn-neutral  ">
+                                            <i class="fa fa-times"></i>
+                                        </button> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

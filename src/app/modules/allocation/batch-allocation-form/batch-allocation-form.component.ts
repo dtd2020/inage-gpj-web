@@ -4,7 +4,7 @@ import { ProcessModel } from 'app/models/process-model';
 import { StaffModel } from 'app/models/staff-model';
 import { AllocationService } from 'app/services/allocation.service';
 import { GenericComponent } from 'app/shared/generic/generic.component';
-import { AllocationBatchModel } from 'app/models/allocation-model';
+import { BatchAllocationModel } from 'app/models/allocation-model';
 import { SwalManagementService } from 'app/shared/swal-management.service';
 import { Router } from '@angular/router';
 
@@ -69,7 +69,7 @@ export class BatchAllocationFormComponent extends GenericComponent implements On
       this.swalManagService.sweetAlterError("Obrigatorio adicionar o(s) processo(s).");
       return;
     }
-    let batchAllocationData: AllocationBatchModel = this.getFormRequestData(this.form);
+    let batchAllocationData: BatchAllocationModel = this.getFormRequestData(this.form);
     this.allocationService.batchAllocateProcess(batchAllocationData).subscribe(
       (response) => {
         this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "/back-office/processes/list");
@@ -77,9 +77,9 @@ export class BatchAllocationFormComponent extends GenericComponent implements On
     )
   }
 
-  public getFormRequestData(form: any): AllocationBatchModel {
+  public getFormRequestData(form: any): BatchAllocationModel {
     let processesToAllocateIds: number[] = this.processesToALlocate.map(p => p.id);
-    let formRequestData: AllocationBatchModel = form.value;
+    let formRequestData: BatchAllocationModel = form.value;
     formRequestData.processIds = processesToAllocateIds;    
     return formRequestData;
   }

@@ -20,6 +20,16 @@ export class ComplainerService {
     return this.http.get<ComplainerModel>(this.url);
   }
 
+  public findComplainerById(complainerId: number) : Observable<ComplainerModel> {
+    this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/find-by-id/${complainerId}`);
+    return this.http.get<ComplainerModel>(this.url);
+  }
+
+  public fetchAllComplainers() : Observable<ComplainerModel[]> {
+    this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/fetch-all`);
+    return this.http.get<ComplainerModel[]>(this.url);
+  }
+
   public saveComplainer(complainer: ComplainerModel): Observable<ComplainerModel> {
     if(isEmpty(complainer?.id)) {
       return this.createComplainer(complainer);

@@ -1,0 +1,74 @@
+<div class="main-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="card-title text-left text-primary">
+                       Reclamante
+                    </h6>
+                    <p class="card-category">Dados pessoais</p>
+                </div>
+                <div class="card-body">
+                    <!-- <div class="row">
+                        <div class="col-sm-12">
+                            <label for="">Perfis</label>
+                            <span class="badge badge-pill badge-default ml-2" *ngFor="let profile of complainer?.profiles; let i = index">{{profile.description}}</span>
+                        </div>
+                    </div>
+                    <hr> -->
+                    <div class="row complainer-details">
+                        <!-- <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="">Nome</label>
+                                    <span>{{complainer?.name}}</span>
+                                </div>
+                                <div class="col-sm-12">
+                                    <label for="">Telefone</label>
+                                    <span>{{complainer?.mobile}}</span>
+                                </div>
+                            </div>
+                            
+                        </div> -->
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="">NUIT:</label>
+                                    <span>{{complainer?.nuit}}</span>
+                                </div>
+                                <div class="col-sm-12">
+                                    <label for="">Nome:</label>
+                                    <span>{{complainer?.name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="">Celular:</label>
+                                    <span>{{complainer?.mobile}}</span>
+                                </div>
+                                <div class="col-sm-12">
+                                    <label for="">Email:</label>
+                                    <span>{{complainer?.email}}</span>
+                                </div>
+                                <div class="col-sm-12">
+                                    <label for="">Endereço:</label>
+                                    <span>{{complainer?.address}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <a href="#" class="btn btn-default btn-round" routerLink="/back-office/public-server/complainers/list">Voltar à Lista dos reclamantes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

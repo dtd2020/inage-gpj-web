@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProcessModel } from 'app/models/process-model';
 import { UserModel } from 'app/models/user-model';
 import { LocalUserModel } from 'app/security/models/local-user';
@@ -17,11 +18,13 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
   public processes: ProcessModel[] = [];
   public loggedUser: LocalUserModel;
 
-  constructor(private processService: ProcessService, private securityService: SecurityService) {
+  constructor(private router: Router, private processService: ProcessService, private securityService: SecurityService) {
     super();
   }
 
   ngOnInit(): void {
+    console.log(this.loggedUser);
+    
     this.loggedUser = this.securityService.localUser;
     if(!isEmpty(this.loggedUser)) {
       this.fetchAllComplainerProcessesByUserId(this.loggedUser?.id);
@@ -34,8 +37,15 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
       (processes) => {
         this.processes = processes;
       }
-    )
-    
+    )    
+  }
+
+  public createProcess(userId: number): void {
+    this.router.navigate(['/citezen/processes/create-edit'], { queryParams: { userId: userId}});
+  }
+
+  public processDetails(processId: number) {
+    this.router.navigate([`back-office/processes/details/${processId}`]);
   }
 
 }

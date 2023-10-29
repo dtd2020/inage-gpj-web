@@ -18,8 +18,13 @@ export class UserService {
     return this.http.get<UserModel[]>(this.url).pipe(take(1));
   }
 
-  public fetchUser(userId: number): Observable<UserModel> {
+  public fetchUserById(userId: number): Observable<UserModel> {
     this.url = this.clientService.urlAuthWS(`${this.userContext}/fetch-by-id/${userId}`);
+    return this.http.get<UserModel>(this.url).pipe(take(1));
+  }
+
+  public findUserById(userId: number): Observable<UserModel> {
+    this.url = this.clientService.urlAuthWS(`${this.userContext}/find-by-id/${userId}`);
     return this.http.get<UserModel>(this.url).pipe(take(1));
   }
 
