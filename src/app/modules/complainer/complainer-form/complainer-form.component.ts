@@ -56,6 +56,7 @@ export class ComplainerFormComponent extends GenericComponent implements OnInit 
       (params) => {
         if (!isEmpty(params.userId)) {
           this.userId = params.userId;
+          
         }
       }
     );
@@ -77,7 +78,13 @@ export class ComplainerFormComponent extends GenericComponent implements OnInit 
           this.createForm(this.complainer);
           this.canShowForm = true;
         } else {
-          this.swalManagService.sweetAlterError("Sistema sem dados pessoais do queixoso! Queira por favor primeiro registar os dados.", (this.routeService.getPreviousUrl()));
+          console.log(this.routeService.getPreviousUrl());
+          if(!isEmpty((this.routeService.getPreviousUrl()))) {
+            this.swalManagService.sweetAlterError("Sistema sem dados pessoais do queixoso! Queira por favor primeiro registar os dados.", (this.routeService.getPreviousUrl()));
+          } else {
+            this.swalManagService.sweetAlterError("Sistema sem dados pessoais do queixoso! Queira por favor primeiro registar os dados.");
+            this.router.navigate(['guest']);
+          }
 
         }
       }
@@ -171,14 +178,24 @@ export class ComplainerFormComponent extends GenericComponent implements OnInit 
   }
 
   public onSubmit() {
-    // if(!this.isValidForm) {
-    //   return;
-    // }
-    console.log((this.getFormRequestData(this.form)));
+    
+    if(!this.isValidForm(this.form)) {
+      return;
+    }
+    
     
     this.complainerService.saveComplainer(this.getFormRequestData(this.form)).subscribe(
       (complainer) => {
-        this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso!", "back-office/users/list");
+        // console.log(this.routeService);
+        // console.log(this.routeService.getPreviousUrl());
+        
+        if(this.routeService.getPreviousUrl().includes('guest')) {
+          this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso!", "citezen/processes/list");
+        } else if(this.routeService.getPreviousUrl().includes('back-office')) {
+          this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso!", "back-office/users/list");
+        } else {
+          this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso!", "guest");
+        }
       }
     )
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, Scroll } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,13 @@ export class RouteService {
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {        
         this.previousUrl = this.currentUrl;
-        this.currentUrl = event.url;
+        this.currentUrl = event.url;        
       };
+
+      if(event instanceof Scroll) {
+        this.previousUrl = this.currentUrl;
+        this.currentUrl = event.routerEvent.url;        
+      }
     });
   }
 

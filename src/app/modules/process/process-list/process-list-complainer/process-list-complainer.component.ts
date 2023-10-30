@@ -23,8 +23,6 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
   }
 
   ngOnInit(): void {
-    console.log(this.loggedUser);
-    
     this.loggedUser = this.securityService.localUser;
     if(!isEmpty(this.loggedUser)) {
       this.fetchAllComplainerProcessesByUserId(this.loggedUser?.id);
@@ -41,6 +39,10 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
   }
 
   public createProcess(userId: number): void {
+    console.log(userId);
+    console.log(this.loggedUser);
+    
+    
     this.router.navigate(['/citezen/processes/create-edit'], { queryParams: { userId: userId}});
   }
 

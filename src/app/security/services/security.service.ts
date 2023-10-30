@@ -28,6 +28,7 @@ export class SecurityService {
     private securityUtil: SecurityUtilService
   ) {
     this.localUser$.next(this.getLocalUserFromToken());
+    this.localUser = this.getLocalUserFromToken();
   }
 
   public attemptLogin(authRequest: LoginRequestModel) {
@@ -51,8 +52,9 @@ export class SecurityService {
     this.http.post<LoginResponseModel>(this.clientService.urlAuthWS(`/auth/self-register`), user).pipe(take(1)).subscribe(
       (response) => {
         this.setToken(response.token);
-        this.localUser$.next(this.getLocalUserFromToken());       
-        this.redirectAfterLogin(this.getLocalUserFromToken());
+        this.localUser$.next(this.getLocalUserFromToken()); 
+        this.localUser = this.getLocalUserFromToken();        
+        this.router.navigate(['guest/complainer/create-edit'], { queryParams: {userId: this.localUser?.id} });  
       }
     )
   }
@@ -78,7 +80,6 @@ export class SecurityService {
   }
 
   private redirectAfterLogin(user: LocalUserModel) {
-    console.log(user);
     
     // if ((this.securityUtil.isIncludedProfile(user?.profiles, "ADMIN") || this.securityUtil.isIncludedProfile(user?.profiles, "STAFF"))) {
     //   this.router.navigate(["/back-office"]);

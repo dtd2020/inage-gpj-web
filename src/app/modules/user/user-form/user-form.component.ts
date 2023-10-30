@@ -232,10 +232,10 @@ export class UserFormComponent extends GenericComponent implements OnInit {
         (user) => {
           if(this.userType === UserTypeEnum.CITEZEN.key) {
             // this.createComplainer(this.getComplainerDataRequest(this.form, user?.id));
-            this.router.navigate(['back-office/complainers/create-edit'], {queryParams: {userId: user.id}})
+            this.router.navigate(['back-office/public-server/complainers/create-edit'], {queryParams: {userId: user.id}})
           } else {
             // this.createStaff(this.getStaffDataRequest(this.form, user?.id));
-            this.router.navigate(['back-office/staffs/create-edit'], {queryParams: {userId: user.id}})
+            this.router.navigate(['back-office/public-server/staffs/create-edit'], {queryParams: {userId: user.id}})
           }
           // this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
         }

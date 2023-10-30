@@ -86,8 +86,8 @@ export class SelfRegisterComponent extends GenericComponent implements OnInit {
     public createForm(): void {
       this.form = this.formBuilder.group({
         id: [null],
-        name: [null, [Validators.required]],
-        mobile: [null, [Validators.required, FormValidation.phone]],
+        // name: [null, [Validators.required]],
+        // mobile: [null, [Validators.required, FormValidation.phone]],
         username: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email]],
         profiles: [null],
