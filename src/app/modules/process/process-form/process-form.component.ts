@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ComplainerModel } from 'app/models/complainer-model';
-import { ComplaintTypeEnum } from 'app/models/enums/complaint-type-enum';
+import { ComplainerTypeEnum } from 'app/models/enums/complainer-type-enum';
 import { ProcessTypeEnum } from 'app/models/enums/process-type-enum';
 import { StepDirectionEnum } from 'app/models/enums/step-direction-enum';
 import {
@@ -11,7 +11,7 @@ import {
   DetailsOutputForm,
   ProcessDataOutputForm,
 } from 'app/models/OutputFormData-model';
-import { ComplaintTypeModel, ProcessModel, ProcessTypeModel } from 'app/models/process-model';
+import { ComplainerTypeModel, ProcessModel, ProcessTypeModel } from 'app/models/process-model';
 import { ProcessService } from 'app/services/process.service';
 import { GenericComponent } from 'app/shared/generic/generic.component';
 import { SwalManagementService } from 'app/shared/swal-management.service';
@@ -47,7 +47,7 @@ export class ProcessFormComponent extends GenericComponent implements OnInit {
   public isFormValid;
 
   public processTypes: ProcessTypeModel[] = ProcessTypeEnum.asArray;
-  public complaintTypes: ComplaintTypeModel[] = ComplaintTypeEnum.asArray;
+  public complaintTypes: ComplainerTypeModel[] = ComplainerTypeEnum.asArray;
 
   public process: ProcessModel = {
     id: null,
@@ -56,9 +56,9 @@ export class ProcessFormComponent extends GenericComponent implements OnInit {
     complainerId: null,
     complainer: null,
     processType: undefined,
-    complaintType: undefined,
+    complainerType: undefined,
     closureType: undefined,
-    closureStatus: undefined,
+    processStatus: undefined,
     attachments: [],
     updateHistory: undefined
   };
@@ -143,7 +143,7 @@ export class ProcessFormComponent extends GenericComponent implements OnInit {
    
     if (event?.process) {
       this.process.processType = event?.process?.processType;
-      this.process.complaintType = event?.process?.complaintType;
+      this.process.complainerType = event?.process?.complainerType;
       this.process.description = event?.process?.description;
     }
 

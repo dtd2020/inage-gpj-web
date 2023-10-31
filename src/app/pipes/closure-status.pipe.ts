@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ClosureStatusEnum } from 'app/models/enums/closure-status-enum';
-import { ClosureStatusModel } from 'app/models/process-model';
+import { ProcessStatusEnum } from 'app/models/enums/process-status-enum';
+import { ProcessStatusModel } from 'app/models/process-model';
 
 @Pipe({
-  name: 'closureStatus'
+  name: 'processStatus'
 })
 export class ClosureStatusPipe implements PipeTransform {
 
   transform(key: string): string {
-    let closureStatueses : ClosureStatusModel[] = ClosureStatusEnum.asArray;
+    let closureStatueses : ProcessStatusModel[] = ProcessStatusEnum.asArray;
     let result = null;
 
     closureStatueses.forEach(status => {

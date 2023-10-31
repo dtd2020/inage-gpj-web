@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ComplaintTypeEnum } from 'app/models/enums/complaint-type-enum';
+import { ComplainerTypeEnum } from 'app/models/enums/complainer-type-enum';
 import { ProcessTypeEnum } from 'app/models/enums/process-type-enum';
 import { StepDirectionEnum } from 'app/models/enums/step-direction-enum';
 import { ProcessDataOutputForm } from 'app/models/OutputFormData-model';
-import { ComplaintTypeModel, ProcessModel, ProcessTypeModel } from 'app/models/process-model';
+import { ComplainerTypeModel, ProcessModel, ProcessTypeModel } from 'app/models/process-model';
 import { ProcessService } from 'app/services/process.service';
 import { GenericComponent } from 'app/shared/generic/generic.component';
 import { ProcessStep } from '../process-form.component';
@@ -22,7 +22,7 @@ export class ProcessDataFormComponent extends GenericComponent implements OnInit
   public canShowForm: boolean = false;
 
   public processTypes: ProcessTypeModel[] = ProcessTypeEnum.asArray;
-  public complaintTypes: ComplaintTypeModel[] = ComplaintTypeEnum.asArray;
+  public complainerTypes: ComplainerTypeModel[] = ComplainerTypeEnum.asArray;
 
   @Input() step: boolean = false;
   @Input() process: ProcessModel;
@@ -44,7 +44,7 @@ export class ProcessDataFormComponent extends GenericComponent implements OnInit
 
     this.form = this.formBuilder.group({
       processType: [this.process?.processType, [Validators.required]],
-      complaintType: [this.process?.complaintType, [Validators.required]],
+      complainerType: [this.process?.complainerType, [Validators.required]],
       description: [this.process?.description, [Validators.required]],
     });
   }

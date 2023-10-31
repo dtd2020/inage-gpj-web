@@ -28,13 +28,13 @@
                 <div class="col-md-6">
                     <label>Tipo de queixoso</label>
                     <div class="form-group">
-                        <select formControlName="complaintType" class="form-control custom-select">
+                        <select formControlName="complainerType" class="form-control custom-select">
                             <option value="">Seleccione o tipo</option>
-                            <option *ngFor="let complaintType of complaintTypes"
-                                [ngValue]="complaintType.key">
-                                {{complaintType.value}}</option>
+                            <option *ngFor="let complainerType of complainerTypes"
+                                [ngValue]="complainerType.key">
+                                {{complainerType.value}}</option>
                         </select>
-                        <error-msg [control]="getFormControl(form, 'complaintType')"
+                        <error-msg [control]="getFormControl(form, 'complainerType')"
                             label="Tipo do Processo"></error-msg>
                     </div>
                 </div>

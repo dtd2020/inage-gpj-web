@@ -3,7 +3,7 @@
    
         <div class="col-md-4">
             <span class="card-category text-left text-default"> Estado da alocação  </span>
-            <span class="badge badge-pill badge-success badge-content" [ngClass]="{'badge-warning': allocation?.status!='CLOSED'}"> {{allocation?.status | closureStatus}}</span>
+            <span class="badge badge-pill badge-success badge-content" [ngClass]="{'badge-warning': allocation?.status!='CLOSED'}"> {{allocation?.status | processStatus}}</span>
         </div>
         <div class="col-md-4">
             <span class="card-category text-left text-default"> alocação </span>
@@ -12,7 +12,7 @@
     
         <div class="col-md-4">
             <span class="card-category text-left text-default"> Estado do processo </span>
-            <span class="badge badge-pill badge-success badge-content" [ngClass]="{'badge-warning': allocation?.process?.closureStatus!='CLOSED'}"> {{allocation?.process?.closureStatus | closureStatus}}</span>
+            <span class="badge badge-pill badge-success badge-content" [ngClass]="{'badge-warning': allocation?.process?.processStatus!='CLOSED'}"> {{allocation?.process?.processStatus | processStatus}}</span>
         </div>
     </div>
     <div class="card mt-10">
@@ -80,7 +80,7 @@
                         </div>
                         <div class="col-sm-12">
                             <label for="">Tipo de queixoso:</label>
-                            <span>{{allocation?.process?.complaintType}}</span>
+                            <span>{{allocation?.process?.complainerType}}</span>
                         </div>
                     </div>
     
@@ -217,6 +217,21 @@
         <form [formGroup]="form" method="#" action="#" >
 
             <div class="row">
+                <div class="col-md-4">
+                    <label>Fechar alocação?</label>
+                    <div class="form-group">
+                        <bSwitch
+                        [switch-on-color]="'primary'"
+                        [switch-off-color]="'primary'"
+                        [switch-off-text]="'Não'"
+                        [switch-on-text]="'Sim'" formControlName="closed">
+                    </bSwitch>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="row" *ngIf="!form.value.closed">
                 <div class="col-md-12">
                     <label>Próxima fase</label>
                     <div class="form-group">
@@ -227,6 +242,19 @@
                         </select>
                         <input type="hidden" formControlName="allocationId">
                         <error-msg [control]="getFormControl(form, 'allocationStatus')"
+                            label="Próxima fase"></error-msg>
+                    </div>
+                </div>
+
+                <div class="col-md-12" *ngIf="form.value.allocationStatus=='CLOSED'">
+                    <label>Tipo de fecho</label>
+                    <div class="form-group">
+                        <select formControlName="closureType" class="form-control custom-select">
+                            <option value="">Seleccione a fase</option>
+                            <option *ngFor="let closureType of closureTypes" [ngValue]="closureType.key">
+                                {{closureType.value}}</option>
+                        </select>
+                        <error-msg [control]="getFormControl(form, 'closureType')"
                             label="Próxima fase"></error-msg>
                     </div>
                 </div>

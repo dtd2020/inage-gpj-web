@@ -1,3 +1,5 @@
+import { JwBootstrapSwitchNg2Module } from 'jw-bootstrap-switch-ng2';
+
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +14,7 @@ import { SingleAllocationFormComponent } from './single-allocation-form/single-a
 import { ClosureStatusPipe } from 'app/pipes/closure-status.pipe';
 import { AllocationClosedPipe } from 'app/pipes/allocation-closed.pipe';
 import { PipeModule } from 'app/shared/pipe/pipe.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -30,6 +33,9 @@ import { PipeModule } from 'app/shared/pipe/pipe.module';
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
+    NgbModule,
+    JwBootstrapSwitchNg2Module,
+   
     ErrorMsgModule,
     PipeModule
     
