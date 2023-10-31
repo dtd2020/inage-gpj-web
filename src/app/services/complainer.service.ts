@@ -44,7 +44,7 @@ export class ComplainerService {
   }
 
   public updateComplainer(complainerId: number, complainer: ComplainerModel): Observable<ComplainerModel> {
-    this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/update/${complainer}`);
+    this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/update/${complainerId}`);
     return this.http.put<ComplainerModel>(this.url, complainer);
   }
 }
