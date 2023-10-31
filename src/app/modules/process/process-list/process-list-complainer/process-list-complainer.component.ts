@@ -47,7 +47,7 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
   }
 
   public processDetails(processId: number) {
-    this.router.navigate([`back-office/processes/details/${processId}`]);
+    this.router.navigate([`citezen/processes/details/${processId}`]);
   }
 
 }

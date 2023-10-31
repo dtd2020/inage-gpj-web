@@ -5,6 +5,7 @@ import { ProcessListComponent } from "app/modules/process/process-list/process-l
 import { ProcessComponent } from "app/modules/process/process.component";
 import { CitezenHomeComponent } from "./citezen-home/citezen-home.component";
 import { ProcessFormComponent } from "app/modules/process/process-form/process-form.component";
+import { ProcessDetailsComponent } from "app/modules/process/process-details/process-details.component";
 
 export const CitezenLayoutRouting: Routes = [
   {
@@ -23,6 +24,10 @@ export const CitezenLayoutRouting: Routes = [
       {
         path: 'create-edit',
         component: ProcessFormComponent
+      },
+      {
+        path: 'details/:processId',
+        component: ProcessDetailsComponent
       }
     ],
   }
