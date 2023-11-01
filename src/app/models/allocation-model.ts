@@ -17,8 +17,8 @@ export interface AllocationCommentModel{
     allocationId: number;
     title: string;
     comment: string;
-    author_nuit: string;
-    author_name: string;
+    authorNuit: string;
+    authorName: string;
     from: string;
     createdAt: string;
 }
