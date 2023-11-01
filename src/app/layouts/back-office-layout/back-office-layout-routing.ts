@@ -129,6 +129,10 @@ export const BackOfficeLayoutRouting: Routes = [
         component: AllocationListComponent
       },
       {
+        path: 'all-mine',
+        component: AllocationListComponent
+      },
+      {
         path: 'allocation-follow-up/:allocationId',
         component: FollowUpAllocationProcessComponent
       },

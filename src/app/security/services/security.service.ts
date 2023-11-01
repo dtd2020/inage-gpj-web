@@ -43,6 +43,8 @@ export class SecurityService {
           this.setToken(response.token);
           this.localUser$.next(this.getLocalUserFromToken());
           this.localUser = this.getLocalUserFromToken();
+          console.log(this.localUser);
+          
           this.redirectAfterLogin(this.getLocalUserFromToken());
         }
       );
@@ -93,7 +95,34 @@ export class SecurityService {
       if(this.securityUtil.isIncludedProfile(user?.profiles, "COMPLAINER")) {
         this.router.navigate(["/citezen"]);
       } else {
-        this.router.navigate(["/back-office"]);
+
+        if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.localUser.profiles.some(profile => profile.code == 'COORDINATOR')) && (this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
+          console.log('1 - ADMIN - COORDINATOR - ACCESSOR');       
+          this.router.navigate(["/back-office"]);
+         } else if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.localUser.profiles.some(profile => profile.code == 'COORDINATOR'))) {
+           console.log('2 - ADMIN - COORDINATOR - ACCESSOR'); 
+           this.router.navigate(["/back-office"]);
+         } else if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
+           console.log('3 - ADMIN - COORDINATOR - ACCESSOR'); 
+           this.router.navigate(["/back-office"]);
+         } else if ((this.localUser.profiles.some(profile => profile.code == 'COORDINATOR')) && (this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
+           console.log('4 - ADMIN - COORDINATOR - ACCESSOR'); 
+           this.router.navigate(["/back-office"]);
+         } else if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN'))) {
+           console.log('5 - ADMIN - COORDINATOR - ACCESSOR'); 
+           this.router.navigate(["/back-office"]);
+         } else if ((this.localUser.profiles.some(profile => profile.code == 'COORDINATOR'))) {
+           console.log('6 - ADMIN - COORDINATOR - ACCESSOR'); 
+           this.router.navigate(["/back-office/processes/list"]);
+         } else if ((this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
+           console.log('7 - ACCESSOR'); 
+           this.router.navigate(["/back-office/allocations/all-mine"]);
+         } else {
+           console.log('NENHUM');
+           this.router.navigate(["/back-office"]);
+         }
+
+        
       }
     } else {
       this.router.navigate(["/auth/login"]);

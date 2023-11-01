@@ -27,7 +27,7 @@
                                 <th>
                                     Fechada
                                 </th>
-                                <th class="text-right">
+                                <th class="text-right" *ngIf="canShowFollowUpOption">
                                     Acções
                                 </th>
                                </tr>
@@ -49,7 +49,7 @@
                                     <td>
                                         {{allocation?.closed}}
                                     </td>
-                                    <td class="text-right">
+                                    <td class="text-right" *ngIf="canShowFollowUpOption">
                                         <button type="button" rel="tooltip"
                                             class="btn btn-warning btn-sm" (click)="followUpAllocation(allocation?.id)">
                                             <span>Dar sequimento</span>

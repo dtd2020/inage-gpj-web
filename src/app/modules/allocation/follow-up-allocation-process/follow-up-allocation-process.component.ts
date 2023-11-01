@@ -95,7 +95,7 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
     }
     this.allocationService.allocationFollowUp(this.getFormRequestData(this.form)).subscribe(
       () => {
-        this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso!", "back-office/allocations/list-all");
+        this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso!", "back-office/allocations/all-mine");
       }
     )
 

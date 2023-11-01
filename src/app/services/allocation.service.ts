@@ -28,6 +28,11 @@ export class AllocationService {
     this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/resources`);
     return this.hhtp.get<AllocationResourceModel>(this.url).pipe(take(1));
   }
+  
+  public fetchAllMyAllocations(userId: number): Observable<AllocationModel[]> {
+    this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/fetch-all-by-staff/${userId}`);
+    return this.hhtp.get<AllocationModel[]>(this.url).pipe(take(1));
+  }
 
   public singleAllocateProcess(singleAllocationRequestData: SingleAllocationModel) : Observable<void> {
     this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/single-allocate`);
