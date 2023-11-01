@@ -47,12 +47,13 @@
                                         {{allocation?.staff?.nuit}}
                                     </td>
                                     <td>
-                                        {{allocation?.closed}}
+                                        <span class="badge badge-pill badge-success badge-content" *ngIf="allocation?.closed">Fechada</span>
+                                        <span class="badge badge-pill badge-danger badge-content" *ngIf="!allocation?.closed">Aberta</span>
                                     </td>
                                     <td class="text-right" *ngIf="canShowFollowUpOption">
                                         <button type="button" rel="tooltip"
                                             class="btn btn-warning btn-sm" (click)="followUpAllocation(allocation?.id)">
-                                            <span>Dar sequimento</span>
+                                            <span>Seguimento</span>
                                             
                                         </button>
                                         <!-- <button type="button" rel="tooltip"

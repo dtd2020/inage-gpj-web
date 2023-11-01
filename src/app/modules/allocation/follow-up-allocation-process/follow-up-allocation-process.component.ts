@@ -51,7 +51,8 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
       (allocation) => {
         this.allocation = allocation;
         this.allocationStatuses = this.allocationStatuses.filter(s => {
-          if (s.key != ProcessStatusEnum.PENDING.key && s.key != ProcessStatusEnum.ALLOCATED.key) {
+          let currentAllocationStatus = this.allocation.status;
+          if (s.key != ProcessStatusEnum.PENDING.key && s.key != ProcessStatusEnum.ALLOCATED.key && s.key != currentAllocationStatus) {
             return true;
           }
         })

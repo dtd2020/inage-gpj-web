@@ -29,20 +29,13 @@ export class AllocationListComponent extends GenericComponent implements OnInit 
     this.loggedUser = this.securityService.localUser;
 
 
-    if(this.routerService.getCurrentUrl().includes("all-mine")) {
-      console.log(this.loggedUser);
-      
+    if(this.routerService.getCurrentUrl().includes("all-mine")) {      
       if(!isEmpty(this.loggedUser)) {
-        console.log("USER");
-        
         this.fetchAllMyAllocations(this.loggedUser?.id)
       } else {
         this.location.back();
-      }
-      
-    } else {
-      console.log("ALL");
-      
+      }      
+    } else {      
       this.fetchAllAllocations();
     }
     

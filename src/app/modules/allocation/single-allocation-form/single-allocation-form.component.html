@@ -13,7 +13,7 @@
                                     <select formControlName="staffId" class="form-control custom-select">
                                         <option value="">Seleccione o responsável</option>
                                         <option *ngFor="let sta of staffs" [ngValue]="sta.id">
-                                            {{sta.name}}</option>
+                                            {{sta.nuit}} - {{sta.name}}</option>
                                     </select>
                                     <error-msg [control]="getFormControl(form, 'staffId')"
                                         label="Responsável"></error-msg>
