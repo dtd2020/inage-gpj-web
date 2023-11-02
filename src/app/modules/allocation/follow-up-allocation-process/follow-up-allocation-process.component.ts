@@ -52,7 +52,7 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
         this.allocation = allocation;
         this.allocationStatuses = this.allocationStatuses.filter(s => {
           let currentAllocationStatus = this.allocation.status;
-          if (s.key != ProcessStatusEnum.PENDING.key && s.key != ProcessStatusEnum.ALLOCATED.key && s.key != currentAllocationStatus) {
+          if (s.key != ProcessStatusEnum.PENDING.key && s.key != ProcessStatusEnum.ALLOCATED.key) {
             return true;
           }
         })
@@ -94,13 +94,22 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
     if (!this.isValidForm(this.form)) {
       return;
     }
+
+    if(this.form.value?.allocationStatus == this.allocation?.status) {
+      this.confirmSumition();
+    } else {
+      this.submitAllocation();
+    }
+    
+    
+  }
+
+  private submitAllocation() {
     this.allocationService.allocationFollowUp(this.getFormRequestData(this.form)).subscribe(
       () => {
         this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso!", "back-office/allocations/all-mine");
       }
     )
-
-
   }
 
 
@@ -132,9 +141,23 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
       }
 
     }
+  }
 
 
 
+  public confirmSumition(): void {
+    let submitAllocation = (function () {
+      return this.submitAllocation();
+    }).bind(this)
+
+    this.swalManagService.showAlert(
+      this.alertProps = {
+        icon: 'warning',
+        text: 'Pretende manter o mesmo Estado do processo?',
+        alertText: 'Confirmado.',
+        callback: submitAllocation
+      }
+    )
   }
 
 }
