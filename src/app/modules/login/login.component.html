@@ -53,7 +53,7 @@
                       <i class="nc-icon nc-single-02"></i>
                     </span>
                   </div>
-                  <input type="text" class="form-control" formControlName="username" placeholder="Utilizador"
+                  <input type="text" maxlength="9" number="true" class="form-control" formControlName="username" placeholder="Utilizador"
                     (focus)="focus=true" (blur)="focus=false">
                 </div>
                 <div class="input-group" [ngClass]="{'input-group-focus':focus1===true}">
