@@ -6,6 +6,8 @@ import { ProcessComponent } from "app/modules/process/process.component";
 import { CitezenHomeComponent } from "./citezen-home/citezen-home.component";
 import { ProcessFormComponent } from "app/modules/process/process-form/process-form.component";
 import { ProcessDetailsComponent } from "app/modules/process/process-details/process-details.component";
+import { AllocationComponent } from "app/modules/allocation/allocation.component";
+import { ComplainerFollowUpAllocationProcessComponent } from "app/modules/allocation/complainer-follow-up-allocation-process/complainer-follow-up-allocation-process.component";
 
 export const CitezenLayoutRouting: Routes = [
   {
@@ -30,6 +32,16 @@ export const CitezenLayoutRouting: Routes = [
         component: ProcessDetailsComponent
       }
     ],
+  },
+  {
+    path: 'allocations',
+    component: AllocationComponent,
+    children: [
+      {
+        path: 'allocation-follow-up/:allocationId',
+        component: ComplainerFollowUpAllocationProcessComponent
+      }
+    ]
   }
   
 ];
