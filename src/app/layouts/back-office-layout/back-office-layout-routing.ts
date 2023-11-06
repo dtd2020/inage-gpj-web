@@ -24,6 +24,7 @@ import {
   SingleAllocationFormComponent,
 } from './../../modules/allocation/single-allocation-form/single-allocation-form.component';
 import { FollowUpAllocationProcessComponent } from 'app/modules/allocation/follow-up-allocation-process/follow-up-allocation-process.component';
+import { StaffFollowUpAllocationProcessComponent } from 'app/modules/allocation/staff-follow-up-allocation-process/staff-follow-up-allocation-process.component';
 
 export const BackOfficeLayoutRouting: Routes = [
   {
@@ -134,7 +135,7 @@ export const BackOfficeLayoutRouting: Routes = [
       },
       {
         path: 'allocation-follow-up/:allocationId',
-        component: FollowUpAllocationProcessComponent
+        component: StaffFollowUpAllocationProcessComponent
       },
       {
         path: 'batch-allocation',

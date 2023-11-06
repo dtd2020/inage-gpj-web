@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProcessStatusEnum } from 'app/models/enums/process-status-enum';
 import { ProcessModel } from 'app/models/process-model';
 import { UserModel } from 'app/models/user-model';
 import { LocalUserModel } from 'app/security/models/local-user';
@@ -17,6 +18,7 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
 
   public processes: ProcessModel[] = [];
   public loggedUser: LocalUserModel;
+  private readonly AWAITINIG_COMPLAINER_RESPONSE: string = ProcessStatusEnum.AWAITING_COMPLAINER_RESPONSE.key;
 
   constructor(private router: Router, private processService: ProcessService, private securityService: SecurityService) {
     super();
@@ -38,16 +40,16 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
     )    
   }
 
-  public createProcess(userId: number): void {
-    console.log(userId);
-    console.log(this.loggedUser);
-    
-    
+  public createProcess(userId: number): void { 
     this.router.navigate(['/citezen/processes/create-edit'], { queryParams: { userId: userId}});
   }
 
   public processDetails(processId: number) {
     this.router.navigate([`citezen/processes/details/${processId}`]);
+  }
+
+  private followUpAllocation(processId: number) : void {
+    this.router.navigate([`citezen/allocations/follow-up/${processId}`]);
   }
 
 }

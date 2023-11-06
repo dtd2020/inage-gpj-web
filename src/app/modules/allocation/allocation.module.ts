@@ -16,6 +16,7 @@ import { AllocationClosedPipe } from 'app/pipes/allocation-closed.pipe';
 import { PipeModule } from 'app/shared/pipe/pipe.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComplainerFollowUpAllocationProcessComponent } from './complainer-follow-up-allocation-process/complainer-follow-up-allocation-process.component';
+import { StaffFollowUpAllocationProcessComponent } from './staff-follow-up-allocation-process/staff-follow-up-allocation-process.component';
 
 
 
@@ -27,6 +28,7 @@ import { ComplainerFollowUpAllocationProcessComponent } from './complainer-follo
     AllocationListComponent,
     FollowUpAllocationProcessComponent,
     ComplainerFollowUpAllocationProcessComponent,
+    StaffFollowUpAllocationProcessComponent,
     
     // ClosureStatusPipe,
     // AllocationClosedPipe

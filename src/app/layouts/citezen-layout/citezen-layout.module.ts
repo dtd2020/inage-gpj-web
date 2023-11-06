@@ -9,6 +9,7 @@ import { ProcessModule } from 'app/modules/process/process.module';
 import { CitezenSidebarComponent } from './citezen-sidebar/citezen-sidebar.component';
 import { CitezenLayoutComponent } from './citezen-layout.component';
 import { CitezenHomeComponent } from './citezen-home/citezen-home.component';
+import { AllocationModule } from 'app/modules/allocation/allocation.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { CitezenHomeComponent } from './citezen-home/citezen-home.component';
   imports: [
     CommonModule,
     RouterModule.forChild(CitezenLayoutRouting),
-    ProcessModule
+    ProcessModule,
+    AllocationModule
   ],
   exports: [
   ]

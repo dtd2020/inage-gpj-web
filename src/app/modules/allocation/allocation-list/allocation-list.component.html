@@ -4,33 +4,33 @@
             <div class="card">
                 <div class="card-header">
                     <h6 class="card-title text-left text-primary">
-                       Alocações
+                        Alocações
                     </h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
                             <thead class="">
-                               <tr>
-                                <th>
-                                    Processo
-                                </th>
-                                <th>
-                                    Estado
-                                </th>
-                                <th>
-                                    Requerente
-                                </th>
-                                <th>
-                                    Responsável
-                                </th>
-                                <th>
-                                    Fechada
-                                </th>
-                                <th class="text-right" *ngIf="canShowFollowUpOption">
-                                    Acções
-                                </th>
-                               </tr>
+                                <tr>
+                                    <th>
+                                        Processo
+                                    </th>
+                                    <th>
+                                        Estado
+                                    </th>
+                                    <th>
+                                        Requerente
+                                    </th>
+                                    <th>
+                                        Responsável
+                                    </th>
+                                    <th>
+                                        Fechada
+                                    </th>
+                                    <th class="text-right" *ngIf="canShowFollowUpOption">
+                                        Acções
+                                    </th>
+                                </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let allocation of allocations">
@@ -47,20 +47,27 @@
                                         {{allocation?.staff?.nuit}}
                                     </td>
                                     <td>
-                                        <span class="badge badge-pill badge-success badge-content" *ngIf="allocation?.closed">Fechada</span>
-                                        <span class="badge badge-pill badge-danger badge-content" *ngIf="!allocation?.closed">Aberta</span>
+                                        <span class="badge badge-pill badge-success badge-content"
+                                            *ngIf="allocation?.closed">Fechada</span>
+                                        <span class="badge badge-pill badge-danger badge-content"
+                                            *ngIf="!allocation?.closed">Aberta</span>
                                     </td>
                                     <td class="text-right" *ngIf="canShowFollowUpOption">
-                                        <button type="button" rel="tooltip"
-                                            class="btn btn-warning btn-sm" (click)="followUpAllocation(allocation?.id)">
+
+
+                                        
+
+                                        <button type="button" rel="tooltip" class="btn btn-warning btn-sm" *ngIf="!allocation?.closed; else allocationDetails"
+                                            (click)="followUpAllocation(allocation?.id)">
                                             <span>Seguimento</span>
-                                            
                                         </button>
-                                        <!-- <button type="button" rel="tooltip"
-                                            class="btn btn-info btn-icon btn-sm   btn-neutral  " (click)="complainerEdit(allocation?.id)">
-                                            <i class="fa fa-pencil"></i>
-                                            
-                                        </button> -->
+
+                                        <ng-template #allocationDetails>
+                                            <button type="button" class="btn btn-info btn-icon btn-round btn-sm btn-neutral"
+                                            (click)="followUpAllocation(allocation?.id)">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        </ng-template>
                                     </td>
                                 </tr>
                             </tbody>

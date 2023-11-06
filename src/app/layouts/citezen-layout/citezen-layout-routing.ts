@@ -38,7 +38,7 @@ export const CitezenLayoutRouting: Routes = [
     component: AllocationComponent,
     children: [
       {
-        path: 'allocation-follow-up/:allocationId',
+        path: 'follow-up/:processId',
         component: ComplainerFollowUpAllocationProcessComponent
       }
     ]

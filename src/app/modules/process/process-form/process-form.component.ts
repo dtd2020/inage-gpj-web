@@ -60,7 +60,8 @@ export class ProcessFormComponent extends GenericComponent implements OnInit {
     closureType: undefined,
     processStatus: undefined,
     attachments: [],
-    updateHistory: undefined
+    updateHistory: undefined,
+    allocations: undefined
   };
 
   constructor(private router: Router, private formBuilder: FormBuilder, private processService: ProcessService, private swalManagService: SwalManagementService) {

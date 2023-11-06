@@ -4,32 +4,33 @@
             <div class="card-header">
 
                 <h6 class="card-title text-right">
-                    <a class="btn btn-default" [routerLink]="['/citezen/processes/create-edit']" (click)="createProcess(loggedUser?.id)">
+                    <a class="btn btn-default" [routerLink]="['/citezen/processes/create-edit']"
+                        (click)="createProcess(loggedUser?.id)">
                         <i class="fa fa-plus mr-2"></i>
-                         Criar processo</a>
+                        Criar processo</a>
                 </h6>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table">
                         <thead class="text-primary">
-                           <tr>
-                            <th class="text-center">
-                                Processo
-                            </th>
-                            <th>
-                                Tipo
-                            </th>
-                            <th>
-                                Estado
-                            </th>
-                            <th class="text-center">
-                                Requerente
-                            </th>
-                            <th class="text-right">
-                                Accoes
-                            </th>
-                           </tr>
+                            <tr>
+                                <th class="text-center">
+                                    Processo
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th class="text-center">
+                                    Requerente
+                                </th>
+                                <th class="text-right">
+                                    Accoes
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let process of processes">
@@ -51,9 +52,18 @@
                                         <i class="fa fa-eye"></i>
                                     </button> -->
 
-                                    <button type="button" 
-                                        class="btn btn-info btn-icon btn-round btn-sm btn-neutral" (click)="processDetails(process?.id)">
+                                    <!-- <button type="button" class="btn btn-info btn-icon btn-round btn-sm btn-neutral"
+                                        (click)="processDetails(process?.id)">
                                         <i class="fa fa-eye"></i>
+                                    </button> -->
+                                    <button type="button" rel="tooltip" class="btn btn-warning btn-sm"
+                                        (click)="followUpAllocation(process?.id)">
+                                        <span
+                                            *ngIf="process?.processStatus==AWAITINIG_COMPLAINER_RESPONSE; else progressStatus">Seguimento</span>
+                                        <ng-template #progressStatus>
+                                            <span>Estágio</span>
+                                        </ng-template>
+
                                     </button>
                                     <!-- <button type="button" 
                                         class="btn btn-success btn-icon btn-round btn-sm ">

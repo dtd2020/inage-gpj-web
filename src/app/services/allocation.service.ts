@@ -18,6 +18,11 @@ export class AllocationService {
     this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/fetch-by-id/${allocationId}`);
     return this.hhtp.get<AllocationModel>(this.url).pipe(take(1));
   }
+
+  public fetchAllocationByIdWithCommentHistory(allocationId: number) : Observable<AllocationModel> {
+    this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/fetch-by-id/${allocationId}/with-comment-history`);
+    return this.hhtp.get<AllocationModel>(this.url).pipe(take(1));
+  }
   
   public fetchAllAllocations() : Observable<AllocationModel[]> {
     this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/fetch-all`);

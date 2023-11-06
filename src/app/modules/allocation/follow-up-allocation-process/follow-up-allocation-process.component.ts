@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AllocationService } from 'app/services/allocation.service';
 import { ProcessService } from 'app/services/process.service';
@@ -9,10 +9,10 @@ import { RouteService } from 'app/shared/services/route.service';
 import { SwalManagementService } from 'app/shared/swal-management.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { isEmpty } from 'app/shared/utils/utils';
-import { AllocationFollowUpRequestModel, AllocationModel } from 'app/models/allocation-model';
+import { AllocationCommentModel, AllocationFollowUpRequestModel, AllocationModel } from 'app/models/allocation-model';
 import { AttachmentModel } from 'app/models/attachment-model';
 import { ProcessStatusEnum } from 'app/models/enums/process-status-enum';
-import { ProcessStatusModel, ClosureTypeModel } from 'app/models/process-model';
+import { ProcessStatusModel, ClosureTypeModel, ProcessModel } from 'app/models/process-model';
 import { ClosureTypeEnum } from 'app/models/enums/closure-type-enum';
 
 @Component({
@@ -29,42 +29,68 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
   public canShowDetails: boolean = false;
   public today = new Date();
 
-  public allocation: AllocationModel;
-  public allocationStatuses: ProcessStatusModel[] = ProcessStatusEnum.asArray;
-  public closureTypes: ClosureTypeModel[] = ClosureTypeEnum.asArray;
+  // public allocation: AllocationModel;
+  // public allocationStatuses: ProcessStatusModel[] = ProcessStatusEnum.asArray;
+  // public closureTypes: ClosureTypeModel[] = ClosureTypeEnum.asArray;
+
+  @Input() process: ProcessModel;
+  @Input() allocation: AllocationModel;
+  @Input() allocationComments: AllocationCommentModel[] = [];
+  @Input() followUpFrom: string;
+  @Input() allocationStatuses: ProcessStatusModel[] = [];
+  @Input() closureTypes: AllocationModel[] = [];
+
+  @Output() outputAllocationData = new EventEmitter<AllocationFollowUpRequestModel>();
 
   constructor(private route: ActivatedRoute, private routeService: RouteService, private processService: ProcessService, private staffService: StaffService, private allocationService: AllocationService, private formBuilder: FormBuilder, private swalManagService: SwalManagementService, private sanitizer: DomSanitizer) {
     super();
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      if (!isEmpty(params?.allocationId)) {
-        this.fetchAllocationById(params?.allocationId);
+    
+    // this.route.params.subscribe(params => {
+    //   if (!isEmpty(params?.allocationId)) {
+    //     this.fetchAllocationById(params?.allocationId);
+    //   }
+    // })
+    console.log(this.allocationComments);
+    
+    this.intiData();
+    
+  }
+
+  private intiData() {
+    if(!isEmpty(this.process)) {
+      this.canShowDetails = true;
+    }
+    if(!isEmpty(this.allocation)) {
+      this.createFollowUpAllocationForm(this.allocation);
+      if (!this.allocation?.closed && (!isEmpty(this.process) && this.process?.processStatus != ProcessStatusEnum.CLOSED.key) ) {
+        this.canShowForm = true;
       }
-    })
+    }
   }
 
 
-  public fetchAllocationById(allocationId: number): void {
-    this.allocationService.fetchAllocationById(allocationId).subscribe(
-      (allocation) => {
-        this.allocation = allocation;
-        this.allocationStatuses = this.allocationStatuses.filter(s => {
-          let currentAllocationStatus = this.allocation.status;
-          if (s.key != ProcessStatusEnum.PENDING.key && s.key != ProcessStatusEnum.ALLOCATED.key) {
-            return true;
-          }
-        })
-        this.createFollowUpAllocationForm(allocation);
-        this.canShowDetails = true;
-        if (!allocation?.closed && allocation?.process?.processStatus != ProcessStatusEnum.CLOSED.key) {
-          this.canShowForm = true;
-        }
+  // public fetchAllocationById(allocationId: number): void {
+  //   this.allocationService.fetchAllocationById(allocationId).subscribe(
+  //     (allocation) => {
+  //       this.allocation = allocation;
+  //       this.allocationStatuses = this.allocationStatuses.filter(s => {
+  //         let currentAllocationStatus = this.allocation.status;
+  //         if (s.key != ProcessStatusEnum.PENDING.key && s.key != ProcessStatusEnum.ALLOCATED.key) {
+  //           return true;
+  //         }
+  //       })
+  //       this.createFollowUpAllocationForm(allocation);
+  //       this.canShowDetails = true;
+  //       if (!allocation?.closed && allocation?.process?.processStatus != ProcessStatusEnum.CLOSED.key) {
+  //         this.canShowForm = true;
+  //       }
 
-      }
-    )
-  }
+  //     }
+  //   )
+  // }
 
   public preview(file: AttachmentModel) {
     this.showPreview = true
@@ -85,7 +111,7 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
     return this.formBuilder.group({
       title: [null],
       comment: [null, [Validators.required]],
-      from: ['STAFF', [Validators.required]],
+      from: [this.followUpFrom, [Validators.required]],
     });
   }
 
@@ -104,10 +130,28 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
     
   }
 
+  
+
   private submitAllocation() {
-    this.allocationService.allocationFollowUp(this.getFormRequestData(this.form)).subscribe(
-      () => {
-        this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso!", "back-office/allocations/all-mine");
+    this.outputAllocationData.emit(this.getFormRequestData(this.form));
+    // this.allocationService.allocationFollowUp(this.getFormRequestData(this.form)).subscribe(
+    //   () => {
+    //     this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso!", "back-office/allocations/all-mine");
+    //   }
+    // )
+  }
+
+  public confirmSumition(): void {
+    let submitAllocation = (function () {
+      return this.submitAllocation();
+    }).bind(this)
+
+    this.swalManagService.showAlert(
+      this.alertProps = {
+        icon: 'warning',
+        text: 'Pretende manter o mesmo Estado do processo?',
+        alertText: 'Confirmado.',
+        callback: submitAllocation
       }
     )
   }
@@ -145,19 +189,6 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
 
 
 
-  public confirmSumition(): void {
-    let submitAllocation = (function () {
-      return this.submitAllocation();
-    }).bind(this)
 
-    this.swalManagService.showAlert(
-      this.alertProps = {
-        icon: 'warning',
-        text: 'Pretende manter o mesmo Estado do processo?',
-        alertText: 'Confirmado.',
-        callback: submitAllocation
-      }
-    )
-  }
 
 }

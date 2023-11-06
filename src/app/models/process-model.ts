@@ -1,3 +1,4 @@
+import { AllocationModel } from "./allocation-model";
 import { AttachmentModel } from "./attachment-model";
 import { ComplainerModel } from "./complainer-model";
 import { ProcessUpdateHistoryModel } from "./process-update-history-model";
@@ -13,6 +14,7 @@ export interface ProcessModel {
     closureType: string;
     processStatus: string;
     attachments: AttachmentModel[];
+    allocations: AllocationModel[];
     updateHistory: ProcessUpdateHistoryModel;
 
 }

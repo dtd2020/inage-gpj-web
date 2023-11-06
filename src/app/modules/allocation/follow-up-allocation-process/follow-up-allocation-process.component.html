@@ -1,18 +1,18 @@
 <div *ngIf="canShowDetails">
     <div class="row" style="margin-bottom: 20px;">
    
-        <div class="col-md-4">
+        <div class="col-md-4" *ngIf="allocation">
             <span class="card-category text-left text-default"> Estado da alocação  </span>
             <span class="badge badge-pill badge-success badge-content" [ngClass]="{'badge-warning': allocation?.status!='CLOSED'}"> {{allocation?.status | processStatus}}</span>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" *ngIf="allocation">
             <span class="card-category text-left text-default"> alocação </span>
             <span class="badge badge-pill badge-success badge-content" [ngClass]="{'badge-warning': allocation?.closed!=true}"> {{allocation?.closed | allocationClosed}}</span>
         </div>
     
         <div class="col-md-4">
             <span class="card-category text-left text-default"> Estado do processo </span>
-            <span class="badge badge-pill badge-success badge-content" [ngClass]="{'badge-warning': allocation?.process?.processStatus!='CLOSED'}"> {{allocation?.process?.processStatus | processStatus}}</span>
+            <span class="badge badge-pill badge-success badge-content" [ngClass]="{'badge-warning': allocation?.process?.processStatus!='CLOSED'}"> {{process?.processStatus | processStatus}}</span>
         </div>
     </div>
     <div class="card mt-10">
@@ -35,11 +35,11 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <label for="">Nuit:</label>
-                            <span>{{allocation?.process?.complainer?.nuit}}</span>
+                            <span>{{process?.complainer?.nuit}}</span>
                         </div>
                         <div class="col-sm-12">
                             <label for="">Nome:</label>
-                            <span>{{allocation?.process?.complainer?.name}}</span>
+                            <span>{{process?.complainer?.name}}</span>
                         </div>
                         
                     </div>
@@ -49,15 +49,15 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <label for="">Celular:</label>
-                            <span>{{allocation.process?.complainer?.mobile}}</span>
+                            <span>{{process?.complainer?.mobile}}</span>
                         </div>
                         <div class="col-sm-12">
                             <label for="">Email:</label>
-                            <span>{{allocation?.process?.complainer?.email}}</span>
+                            <span>{{process?.complainer?.email}}</span>
                         </div>
                         <div class="col-sm-12">
                             <label for="">Endereço:</label>
-                            <span>{{allocation?.process?.complainer?.address}}</span>
+                            <span>{{process?.complainer?.address}}</span>
                         </div>
                     </div>
                 </div>
@@ -72,15 +72,15 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <label for="">Codigo de processo:</label>
-                            <span>{{allocation?.process?.code}}</span>
+                            <span>{{process?.code}}</span>
                         </div>
                         <div class="col-sm-12">
                             <label for="">Tipo de processo:</label>
-                            <span>{{allocation?.process?.processType}}</span>
+                            <span>{{process?.processType}}</span>
                         </div>
                         <div class="col-sm-12">
                             <label for="">Tipo de queixoso:</label>
-                            <span>{{allocation?.process?.complainerType}}</span>
+                            <span>{{process?.complainerType}}</span>
                         </div>
                     </div>
     
@@ -89,7 +89,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <label for="">Descrição:</label>
-                            <span>{{allocation?.process?.description}}</span>
+                            <span>{{process?.description}}</span>
                         </div>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
           <div class="card card-timeline card-plain">
             <div class="card-body">
               <ul class="timeline">
-                <li class="" [ngClass]="{'timeline-inverted': i%2!=0}" *ngFor="let allocationComment of allocation?.allocationComments; let i = index">
+                <li class="" [ngClass]="{'timeline-inverted': i%2!=0}" *ngFor="let allocationComment of allocationComments; let i = index">
                     <div class="timeline-badge danger" *ngIf="i%2!=0">
                         <i class="nc-icon nc-single-copy-04"></i>                    
                       </div>
@@ -297,7 +297,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <button type="submit" class="btn btn-default btn-round mr-2" (click)="onSubmit()">Salvar</button>
-                <a href="#" class="btn btn-warning btn-round" routerLink="/back-office/allocations/all-mine">Voltar à Lista das minhas alocações</a>
+                <!-- <a href="#" class="btn btn-warning btn-round" routerLink="/back-office/allocations/all-mine">Voltar à Lista das minhas alocações</a> -->
             </div>
         </div>
     </div>
