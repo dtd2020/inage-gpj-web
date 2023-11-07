@@ -25,6 +25,7 @@ import {
 } from './../../modules/allocation/single-allocation-form/single-allocation-form.component';
 import { FollowUpAllocationProcessComponent } from 'app/modules/allocation/follow-up-allocation-process/follow-up-allocation-process.component';
 import { StaffFollowUpAllocationProcessComponent } from 'app/modules/allocation/staff-follow-up-allocation-process/staff-follow-up-allocation-process.component';
+import { HasPermissionGuard } from 'app/security/guards/has-permission.guard';
 
 export const BackOfficeLayoutRouting: Routes = [
   {
@@ -39,19 +40,35 @@ export const BackOfficeLayoutRouting: Routes = [
     children: [
       {
         path: 'list',
-        component: UserListComponent
+        component: UserListComponent,
+        canActivate: [HasPermissionGuard],
+        data: {
+          permissions: ['LIST_USER']
+        }
       },
       {
         path: 'details/:id',
-        component: UserDetailsComponent
+        component: UserDetailsComponent,
+        canActivate: [HasPermissionGuard],
+        data: {
+          permissions: ['GET_USER']
+        }
       },
       {
         path: 'user-type',
-        component: UserTypeComponent
+        component: UserTypeComponent,
+        canActivate: [HasPermissionGuard],
+        data: {
+          permissions: ['CREATE_USER']
+        }
       },
       {
         path: 'create-edit',
-        component: UserFormComponent
+        component: UserFormComponent,
+        canActivate: [HasPermissionGuard],
+        data: {
+          permissions: ['CREATE_USER']
+        }
       }
     ]
   },
@@ -105,19 +122,31 @@ export const BackOfficeLayoutRouting: Routes = [
     children: [
       {
         path: 'list',
-        component: ProcessListComponent
+        component: ProcessListComponent,
+        canActivate: [HasPermissionGuard],
+        data: {
+          permissions: ['GET_PROCESS']
+        }
       },
       {
         path: 'create-edit',
-        component: ProcessFormComponent
+        component: ProcessFormComponent,
+        canActivate: [HasPermissionGuard],
+        data: {
+          permissions: ['CREATE_PROCESS']
+        }
       },
-      {
-        path: 'details',
-        component: ProcessFormComponent
-      },
+      // {
+      //   path: 'details',
+      //   component: ProcessFormComponent
+      // },
       {
         path: 'details/:processId',
-        component: ProcessDetailsComponent
+        component: ProcessDetailsComponent,
+        canActivate: [HasPermissionGuard],
+        data: {
+          permissions: ['GET_PROCESS']
+        }
       }
     ]
   },
@@ -135,15 +164,27 @@ export const BackOfficeLayoutRouting: Routes = [
       },
       {
         path: 'allocation-follow-up/:allocationId',
-        component: StaffFollowUpAllocationProcessComponent
+        component: StaffFollowUpAllocationProcessComponent,
+        canActivate: [HasPermissionGuard],
+        data: {
+          permissions: ['FOLLOW_UP_PROCESS']
+        }
       },
       {
         path: 'batch-allocation',
-        component: BatchAllocationFormComponent
+        component: BatchAllocationFormComponent,
+        canActivate: [HasPermissionGuard],
+        data: {
+          permissions: ['ALLOCATE_PROCESS']
+        }
       },
       {
         path: 'single-allocation/:processId',
-        component: SingleAllocationFormComponent
+        component: SingleAllocationFormComponent,
+        canActivate: [HasPermissionGuard],
+        data: {
+          permissions: ['ALLOCATE_PROCESS']
+        }
       }
     ]
   }

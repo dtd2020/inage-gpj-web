@@ -10,6 +10,7 @@ export interface LocalUserModel {
     exp: string;
     authorities: AuthorityModel[];
     profiles: ProfileModel[];
+    permissions: PermissionModel[];
 }
 
 export interface AuthorityModel {
@@ -17,6 +18,13 @@ export interface AuthorityModel {
 }
 
 export interface ProfileModel {
+    id: number;
+    code: string;
+    description: string;
+    permissions: PermissionModel[]
+}
+
+export interface PermissionModel {
     id: number;
     code: string;
     description: string;

@@ -5,6 +5,7 @@ import { BackOfficeLayoutComponent } from './layouts/back-office-layout/back-off
 import { CitezenLayoutComponent } from './layouts/citezen-layout/citezen-layout.component';
 import { GuestLayoutComponent } from './layouts/guest-layout/guest-layout.component';
 import { AuthGuard } from './security/guards/auth-guard';
+import { BackOfficeGuard } from './security/guards/back-office.guard';
 
 export const AppRoutes: Routes = [
   {
@@ -59,7 +60,7 @@ export const AppRoutes: Routes = [
   {
     path: "back-office",
     component: BackOfficeLayoutComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, BackOfficeGuard],
     children: [
       {
         path: "",
