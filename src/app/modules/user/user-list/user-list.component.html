@@ -51,7 +51,7 @@
                                             
                                         </button>
                                         <button type="button" rel="tooltip"
-                                            class="btn btn-success btn-icon btn-sm   btn-neutral " (click)="confirmUserDeletion(user?.id)">
+                                            class="btn btn-success btn-icon btn-sm   btn-neutral" *ngxPermissionsOnly="['DELETE_USER']" (click)="confirmUserDeletion(user?.id)">
                                             <i class="fa fa-remove text-danger"></i>
                                         </button>
                                         <!-- <button type="button" rel="tooltip"

@@ -7,6 +7,7 @@ import { GenericComponent } from 'app/shared/generic/generic.component';
 import { SwalManagementService } from 'app/shared/swal-management.service';
 import { switchMap } from 'rxjs';
 import Swal from "sweetalert2";
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Component({
   selector: 'user-list',
@@ -17,12 +18,19 @@ export class UserListComponent extends GenericComponent implements OnInit {
 
   public users: UserModel[];
 
-  constructor(private userService: UserService, private router: Router, private swalManagService: SwalManagementService) { 
+  constructor(private userService: UserService, private ngxPermissionService: NgxPermissionsService, private router: Router, private swalManagService: SwalManagementService) { 
     super()
   }
 
   ngOnInit(): void {
     this.fetchAllUsers();
+    let permissions = this.ngxPermissionService.getPermissions();
+    console.log(permissions);
+  //   this.ngxPermissionService.loadPermissions(['DELETE_USER']);
+    
+  //   this.ngxPermissionService.permissions$.subscribe((permissions) => {
+  //     console.log(permissions)
+  // })
   }
 
   public fetchAllUsers(): void {

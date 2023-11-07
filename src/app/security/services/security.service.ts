@@ -10,8 +10,9 @@ import {
   LoginResponseModel,
 } from "../models/auth-model";
 import { SecurityUtilService } from "../utils/security-util.service";
-import { LocalUserModel, ProfileModel } from "../models/local-user";
+import { LocalUserModel, PermissionModel, ProfileModel } from "../models/local-user";
 import { UserModel, UserRequestModel } from "app/models/user-model";
+import { NgxPermissionsService } from 'ngx-permissions';
 
 @Injectable({
   providedIn: "root",
@@ -25,10 +26,12 @@ export class SecurityService {
     private http: HttpClient,
     private router: Router,
     private clientService: ClientService,
-    private securityUtil: SecurityUtilService
+    private securityUtil: SecurityUtilService,
+    private ngxPermissionService: NgxPermissionsService
   ) {
     this.localUser$.next(this.getLocalUserFromToken());
     this.localUser = this.getLocalUserFromToken();
+    this.ngxLoadPermissions(); 
   }
 
   public attemptLogin(authRequest: LoginRequestModel) {
@@ -43,8 +46,7 @@ export class SecurityService {
           this.setToken(response.token);
           this.localUser$.next(this.getLocalUserFromToken());
           this.localUser = this.getLocalUserFromToken();
-          console.log(this.localUser);
-          
+          this.ngxLoadPermissions(); 
           this.redirectAfterLogin(this.getLocalUserFromToken());
         }
       );
@@ -55,7 +57,8 @@ export class SecurityService {
       (response) => {
         this.setToken(response.token);
         this.localUser$.next(this.getLocalUserFromToken()); 
-        this.localUser = this.getLocalUserFromToken();        
+        this.localUser = this.getLocalUserFromToken();     
+        this.ngxLoadPermissions();   
         this.router.navigate(['guest/complainer/create-edit'], { queryParams: {userId: this.localUser?.id} });  
       }
     )
@@ -82,14 +85,6 @@ export class SecurityService {
   }
 
   private redirectAfterLogin(user: LocalUserModel) {
-    
-    // if ((this.securityUtil.isIncludedProfile(user?.profiles, "ADMIN") || this.securityUtil.isIncludedProfile(user?.profiles, "STAFF"))) {
-    //   this.router.navigate(["/back-office"]);
-    // } else if (this.securityUtil.isIncludedProfile(user?.profiles, "COMPLAINER")) {
-    //   this.router.navigate(["/citezen"]);
-    // } else {
-    //   this.router.navigate(["/auth/login"]);
-    // }
 
     if(user?.profiles.length > 0) { 
       if(this.securityUtil.isIncludedProfile(user?.profiles, "COMPLAINER")) {
@@ -130,6 +125,29 @@ export class SecurityService {
     
   }
 
+  private ngxLoadPermissions() : void {
+    let permissions = this.getPermissions(this.localUser);
+    this.ngxPermissionService.loadPermissions(permissions);
+    
+  }
+
+  private getPermissions(l) : string[] {
+    let permissions : string[] = [];
+    let userPermissions = this.localUser.permissions;
+    let profilePermissions : PermissionModel[] = [];
+
+    this.localUser.profiles.forEach((profile) => {
+      profile.permissions.forEach((permission) => {
+        if(!userPermissions.some(userPermission => userPermission.code == permission.code)) {
+          userPermissions.push(permission);
+        }
+      })
+    })
+
+    permissions = userPermissions.map(permission => permission.code);
+
+    return permissions;
+  }
 
   public logout(): void {
     this.securityUtil.removeToken();

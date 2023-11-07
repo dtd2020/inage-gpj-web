@@ -11,6 +11,7 @@ import { BackOfficeNavbarComponent } from './back-office-navbar/back-office-navb
 import { BackOfficeSidebarComponent } from './back-office-sidebar/back-office-sidebar.component';
 import { AllocationModule } from 'app/modules/allocation/allocation.module';
 import { StaffModule } from 'app/modules/staff/staff.module';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 
 @NgModule({

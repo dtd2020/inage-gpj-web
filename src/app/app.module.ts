@@ -20,6 +20,7 @@ import { GenericComponent } from './shared/generic/generic.component';
 import { NavbarModule } from './shared/navbar/navbar.module';
 import { SpinnerModule } from './shared/spinner/spinner.module';
 import { SidebarModule } from './sidebar/sidebar.module';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
     imports: [
@@ -35,6 +36,7 @@ import { SidebarModule } from './sidebar/sidebar.module';
                 tokenGetter: tokenGetter
             }
         }),
+        NgxPermissionsModule.forRoot(),
         NgbModule,
         HttpClientModule,
         SidebarModule,

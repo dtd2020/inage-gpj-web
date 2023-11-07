@@ -9,10 +9,11 @@ import { UserFormComponent } from './user-form/user-form.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserComponent } from './user.component';
 import { UserTypeComponent } from './user-type/user-type.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 @NgModule({
   declarations: [UserComponent, UserListComponent, UserFormComponent, UserDetailsComponent, UserTypeComponent],
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, ErrorMsgModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, ErrorMsgModule, NgxPermissionsModule.forChild()],
   exports: [UserListComponent, UserFormComponent, UserDetailsComponent],
 })
 export class UserModule {}
