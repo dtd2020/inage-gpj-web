@@ -136,16 +136,30 @@ export class UserFormComponent extends GenericComponent implements OnInit {
 
   private buildPermissions() {
     const values = this.permissions.map(permission => {
-      return new FormControl(this.checkPermissionExistenceInUser(permission.id))
+      return new FormControl(this.checkPermissionExistenceInUserAndProfile(permission.id))
     });
     return this.formBuilder.array(values, [this.dynamicCheckboxValidator]);
   }
 
-  private checkPermissionExistenceInUser(permissionId: number) {
+  private checkPermissionExistenceInUserAndProfile(permissionId: number) {
     if (this.user?.permissions == null || this.user?.permissions == undefined) {
       return false;
     }
-    return this.user?.permissions.some(permission => permission.id === permissionId);
+    return this.getUserPermissions().some(permission => permission.id === permissionId);
+  }
+
+  private getUserPermissions() : PermissionModel[] {
+    let userPermissions : PermissionModel[] = this.user.permissions;
+
+    this.user.profiles.forEach(profile => {
+      profile.permissions.forEach(profilePermission => {
+        if(!userPermissions.some(permission => permission.code == profilePermission.code)) {
+          userPermissions.push(profilePermission);
+        }
+      })
+    })
+
+    return userPermissions;
   }
 
 
