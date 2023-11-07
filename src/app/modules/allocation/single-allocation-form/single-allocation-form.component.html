@@ -39,7 +39,7 @@
 
         <div class="row user-details">
             <div class="col-md-12">
-                <span class="badge badge-pill badge-default">Dados do Queixoso</span>                
+                <h6 class="title text-primary">Dados do Queixoso</h6>            
             </div>
             <div class="col-md-6">
                 <div class="row">
@@ -76,10 +76,14 @@
 
         <div class="row process-data">
             <div class="col-md-12">
-                <span class="badge badge-pill badge-default">Dados do processo</span>                
+                <h6 class="title text-primary">Dados do processo</h6>            
             </div>
             <div class="col-md-6">
                 <div class="row">
+                    <div class="col-sm-12">
+                        <label for="">Código do processo:</label>
+                        <span>{{process?.code}}</span>
+                    </div>
                     <div class="col-sm-12">
                         <label for="">Tipo de processo:</label>
                         <span>{{process?.processType}}</span>
@@ -104,7 +108,7 @@
 
         <div class="row attachments">
             <div class="col-md-12">
-                <span class="badge badge-pill badge-default">Anexos</span> 
+                <h6 class="title text-primary">Anexos</h6>            
             </div>
             <div class="col-md-12">
                 <table class="table">
