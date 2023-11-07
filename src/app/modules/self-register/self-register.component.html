@@ -71,7 +71,7 @@
               <div class="col-md-12">
                   <label>Nuit</label>
                   <div class="form-group">
-                      <input type="text" class="form-control" formControlName="username"
+                      <input type="text" maxlength="9" number="true" class="form-control" formControlName="username"
                           placeholder="Digite o nuit">
                       <error-msg [control]="getFormControl(form, 'username')"
                           label="Nuit"></error-msg>
@@ -85,6 +85,24 @@
                       <error-msg [control]="getFormControl(form, 'email')" label="Email"></error-msg>
                   </div>
               </div>
+              <div class="col-md-12">
+                <label>Senha</label>
+                <div class="form-group">
+                    <input type="text" class="form-control" formControlName="password"
+                        placeholder="Digite o senha">
+                    <error-msg [control]="getFormControl(form, 'password')"
+                        label="Senha"></error-msg>
+                </div>
+            </div>
+              <div class="col-md-12">
+                <label>Confirmar Senha</label>
+                <div class="form-group">
+                    <input type="text" class="form-control" formControlName="confirmPassword"
+                        placeholder="Digite a mesma senha">
+                    <error-msg [control]="getFormControl(form, 'confirmPassword')"
+                        label="Confirmar Senha"></error-msg>
+                </div>
+            </div>
           </div>
       </form>
   </div>

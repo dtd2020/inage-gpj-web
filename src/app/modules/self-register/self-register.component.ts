@@ -88,37 +88,25 @@ export class SelfRegisterComponent extends GenericComponent implements OnInit {
         id: [null],
         // name: [null, [Validators.required]],
         // mobile: [null, [Validators.required, FormValidation.phone]],
-        username: [null, [Validators.required]],
+        username: [null, [Validators.required, FormValidation.nuit]],
         email: [null, [Validators.required, Validators.email]],
+        password: [null, [Validators.required]],
+        confirmPassword: [null, [Validators.required]],
         profiles: [null],
-        permissions: [null]
-      });
+        permissions: [null],
+      },
+      { validator: [FormValidation.confirmPassword]});
     }
 
 
 
+
     public onSubmit(): void {
-      // console.log(this.getFormRequestData(this.form));
-      // this.isValidForm;
-      // return;
 
       if (this.isValidForm(this.form)) {
         this.securityService.register(this.getFormRequestData(this.form));
       }
       
-      // if (this.isValidForm(this.form)) {
-      //   this.securityService.registerUser(this.getFormRequestData(this.form));
-        
-      //   let requestUserData: UserModel = this.getFormRequestData(this.form);
-      //   this.userService.saveUser(requestUserData).subscribe(
-      //     (user) => {
-      //       this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "/auth/login")
-      //     }
-      //   );
-      // } else {
-      //   return;
-      // }
-  
   
     }
   

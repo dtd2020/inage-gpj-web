@@ -13,6 +13,7 @@ import { SecurityUtilService } from "../utils/security-util.service";
 import { LocalUserModel, PermissionModel, ProfileModel } from "../models/local-user";
 import { UserModel, UserRequestModel } from "app/models/user-model";
 import { NgxPermissionsService } from 'ngx-permissions';
+import { isEmpty } from "app/shared/utils/utils";
 
 @Injectable({
   providedIn: "root",
@@ -31,7 +32,9 @@ export class SecurityService {
   ) {
     this.localUser$.next(this.getLocalUserFromToken());
     this.localUser = this.getLocalUserFromToken();
-    this.ngxLoadPermissions(); 
+    if(!isEmpty(this.localUser)) {
+      this.ngxLoadPermissions(); 
+    }
   }
 
   public attemptLogin(authRequest: LoginRequestModel) {

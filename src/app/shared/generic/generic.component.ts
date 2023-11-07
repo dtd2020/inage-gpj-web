@@ -25,6 +25,10 @@ export class GenericComponent {
     return form.get(name) as unknown as FormControl[];
   }
 
+  public getFormGroup(form: FormGroup, name: string): FormGroup {
+    return form.get(name) as FormGroup
+  }
+
   isValidForm(form: FormGroup) {
     if (form.invalid) {
       this.checkFormValidation(form);

@@ -113,7 +113,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
       id: [null],
       // name: [null, [Validators.required]],
       // mobile: [null, [Validators.required, FormValidation.phone]],
-      username: [null, [Validators.required]],
+      username: [null, [Validators.required, FormValidation.nuit]],
       email: [null, [Validators.required, Validators.email]],
       profiles: this.buildProfiles(),
       permissions: this.buildPermissions()
