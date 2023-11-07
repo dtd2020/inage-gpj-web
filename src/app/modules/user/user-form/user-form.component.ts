@@ -32,7 +32,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
 
   private user: UserModel;
   private userId: number;
-  private userType : string;
+  private userType: string;
   public profiles: ProfileModel[] = [];
   public permissions: PermissionModel[] = [];
 
@@ -57,7 +57,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
         if (params.userId != null && params.userId != undefined && params.userId != "") {
           this.userId = params.userId;
         }
-        
+
         if (params.userType != null && params.userType != undefined && params.userType != "") {
           this.userType = params.userType;
         }
@@ -74,16 +74,16 @@ export class UserFormComponent extends GenericComponent implements OnInit {
         this.profiles = resources.profiles;
         this.permissions = resources.permissions;
 
-        
+
 
         if (this.userId) {
           this.fetchUser(this.userId);
         } else {
 
-          if(!isEmpty(this.userType) && this.userType === UserTypeEnum.CITEZEN.key) {
+          if (!isEmpty(this.userType) && this.userType === UserTypeEnum.CITEZEN.key) {
             this.profiles = this.profiles.filter(p => p.code === 'COMPLAINER')
-            
-          } else if(!isEmpty(this.userType) && this.userType !== UserTypeEnum.CITEZEN.key) {
+
+          } else if (!isEmpty(this.userType) && this.userType !== UserTypeEnum.CITEZEN.key) {
             this.profiles = this.profiles.filter(p => p.code !== 'COMPLAINER')
           }
 
@@ -226,18 +226,19 @@ export class UserFormComponent extends GenericComponent implements OnInit {
   public onSubmit(): void {
     if (this.isValidForm(this.form)) {
       let requestUserData: UserRequestModel = this.getFormDataRequest(this.form);
-      // this.createComplainer(this.getComplainerDataRequest(this.form, 52));
-      // return;
       this.userService.saveUser(requestUserData).subscribe(
         (user) => {
-          if(this.userType === UserTypeEnum.CITEZEN.key) {
-            // this.createComplainer(this.getComplainerDataRequest(this.form, user?.id));
-            this.router.navigate(['back-office/public-server/complainers/create-edit'], {queryParams: {userId: user.id}})
+          if (!isEmpty(this.form?.value.id)) {
+            this.router.navigate(['back-office/users/list']);
           } else {
-            // this.createStaff(this.getStaffDataRequest(this.form, user?.id));
-            this.router.navigate(['back-office/public-server/staffs/create-edit'], {queryParams: {userId: user.id}})
+            if (this.userType === UserTypeEnum.CITEZEN.key) {
+              this.router.navigate(['back-office/public-server/complainers/create-edit'], { queryParams: { userId: user.id } })
+
+            } else {
+              this.router.navigate(['back-office/public-server/staffs/create-edit'], { queryParams: { userId: user.id } })
+            }
           }
-          // this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
+
         }
       );
     } else {
@@ -245,7 +246,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
     }
   }
 
-  public createComplainer(complainer: ComplainerModel) : void {
+  public createComplainer(complainer: ComplainerModel): void {
     this.complainerService.saveComplainer(complainer).subscribe(
       (complainer) => {
         this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
@@ -253,7 +254,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
     )
   }
 
-  public createStaff(staff: StaffModel) : void {
+  public createStaff(staff: StaffModel): void {
     this.staffService.saveStaff(staff).subscribe(
       (staff) => {
         this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
@@ -265,7 +266,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
 
     let formRequestData: UserRequestModel = form.value;
     let tempProfileIds: number[] = [];
-      let tempPermissionIds: number[] = [];
+    let tempPermissionIds: number[] = [];
 
     var tempProfiles = this.profiles.slice();
     const selectedProfileIds = this.form.value.profiles
@@ -290,7 +291,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
       }
     }
 
-    
+
     tempProfiles.forEach(temProfile => {
       tempProfileIds.push(temProfile.id);
     })
@@ -302,7 +303,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
 
     formRequestData.profileIds = tempProfileIds;
     formRequestData.permissionIds = tempPermissionIds;
-    formRequestData.email =  isEmpty(form.value?.email) ? null : form.value?.email.toLowerCase();
+    formRequestData.email = isEmpty(form.value?.email) ? null : form.value?.email.toLowerCase();
 
     return formRequestData;
   }
@@ -318,7 +319,7 @@ export class UserFormComponent extends GenericComponent implements OnInit {
       address: form?.value?.address,
       userId: userId
     };
-    
+
     return formComplainerDataRequest;
   }
 
