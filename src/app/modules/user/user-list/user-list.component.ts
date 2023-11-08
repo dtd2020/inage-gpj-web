@@ -25,7 +25,7 @@ export class UserListComponent extends GenericComponent implements OnInit {
   ngOnInit(): void {
     this.fetchAllUsers();
     let permissions = this.ngxPermissionService.getPermissions();
-    console.log(permissions);
+    // console.log(permissions);
   //   this.ngxPermissionService.loadPermissions(['DELETE_USER']);
     
   //   this.ngxPermissionService.permissions$.subscribe((permissions) => {

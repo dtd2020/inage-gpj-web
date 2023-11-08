@@ -38,11 +38,9 @@ export class StaffFollowUpAllocationProcessComponent extends GenericComponent im
 
   ngOnInit(): void {
     this.loggedUser = this.securityService.localUser;
-    console.log('hhhhhhhhhh');
     
 
     this.route.params.subscribe(params => {
-      console.log(params);
       
       if (!isEmpty(params?.allocationId)) {
         this.fetchAllocationById(params?.allocationId);

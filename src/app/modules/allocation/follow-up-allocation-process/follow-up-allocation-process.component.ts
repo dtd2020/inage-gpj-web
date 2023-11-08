@@ -53,7 +53,6 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
     //     this.fetchAllocationById(params?.allocationId);
     //   }
     // })
-    console.log(this.allocationComments);
     
     this.intiData();
     

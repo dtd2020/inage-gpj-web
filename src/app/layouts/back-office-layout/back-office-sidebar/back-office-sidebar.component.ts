@@ -190,27 +190,27 @@ export class BackOfficeSidebarComponent implements OnInit {
         this.loggedUser = user;
 
         if ((this.loggedUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.loggedUser.profiles.some(profile => profile.code == 'COORDINATOR')) && (this.loggedUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
-          console.log('1 - ADMIN - COORDINATOR - ACCESSOR');   
+          // console.log('1 - ADMIN - COORDINATOR - ACCESSOR');   
            this.menuItems = this.ADMIN_ROUTES.filter((menuItem) => menuItem);
          } else if ((this.loggedUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.loggedUser.profiles.some(profile => profile.code == 'COORDINATOR'))) {
-           console.log('2 - ADMIN - COORDINATOR - ACCESSOR'); 
+          //  console.log('2 - ADMIN - COORDINATOR - ACCESSOR'); 
            this.menuItems = this.ADMIN_ROUTES.filter((menuItem) => menuItem);
          } else if ((this.loggedUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.loggedUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
-           console.log('3 - ADMIN - COORDINATOR - ACCESSOR'); 
+          //  console.log('3 - ADMIN - COORDINATOR - ACCESSOR'); 
            this.menuItems = this.ADMIN_ROUTES.filter((menuItem) => menuItem);
          } else if ((this.loggedUser.profiles.some(profile => profile.code == 'COORDINATOR')) && (this.loggedUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
-           console.log('4 - ADMIN - COORDINATOR - ACCESSOR'); 
+          //  console.log('4 - ADMIN - COORDINATOR - ACCESSOR'); 
            this.menuItems = this.ADMIN_ROUTES.filter((menuItem) => menuItem);
          } else if ((this.loggedUser.profiles.some(profile => profile.code == 'ADMIN'))) {
-           console.log('5 - ADMIN - COORDINATOR - ACCESSOR'); 
+          //  console.log('5 - ADMIN - COORDINATOR - ACCESSOR'); 
            this.menuItems = this.ADMIN_ROUTES.filter((menuItem) => menuItem);
          } else if ((this.loggedUser.profiles.some(profile => profile.code == 'COORDINATOR'))) {
-           console.log('6 - ADMIN - COORDINATOR - ACCESSOR'); 
+          //  console.log('6 - ADMIN - COORDINATOR - ACCESSOR'); 
            this.menuItems = this.ADMIN_ROUTES.filter((menuItem) => menuItem);
          } else if ((this.loggedUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
-           console.log('7 - ACCESSOR'); 
+          //  console.log('7 - ACCESSOR'); 
            this.menuItems = this.ACCESSOR_OUTES.filter((menuItem) => menuItem);
-           console.log(this.ROUTES);
+          //  console.log(this.ROUTES);
            
          } else {
            console.log('NENHUM');

@@ -18,7 +18,7 @@ export class BackOfficeGuard implements CanActivate {
     let isAuthorized = false;
 
       if(userRoles.some(uRole => {
-        if(uRole.code == 'ADMIN' || uRole.code == 'COORDINATOR') {
+        if(uRole.code == 'ADMIN' || uRole.code == 'COORDINATOR' || uRole.code == 'ACCESSOR') {
           return true;
         }
       })) {

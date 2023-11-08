@@ -39,7 +39,7 @@
 
         <div class="row user-details">
             <div class="col-md-12">
-                <h6 class="title text-primary">Dados do Queixoso</h6>            
+                <h6 class="title text-primary">Dados do Requerente</h6>            
             </div>
             <div class="col-md-6">
                 <div class="row">
@@ -86,11 +86,11 @@
                     </div>
                     <div class="col-sm-12">
                         <label for="">Tipo de processo:</label>
-                        <span>{{process?.processType}}</span>
+                        <span>{{process?.processType | processType}}</span>
                     </div>
                     <div class="col-sm-12">
                         <label for="">Tipo de queixoso:</label>
-                        <span>{{process?.complainerType}}</span>
+                        <span>{{process?.complainerType | complainerType}}</span>
                     </div>
                 </div>
 

@@ -19,7 +19,7 @@
                                 Requerente
                             </th>
                             <th class="text-right">
-                                Accoes
+                                Acções
                             </th>
                            </tr>
                         </thead>
@@ -29,10 +29,10 @@
                                     {{process?.code}}
                                 </td>
                                 <td>
-                                    {{process?.processType}}
+                                    {{process?.processType | processType}}
                                 </td>
                                 <td>
-                                    {{process?.processStatus}}
+                                    {{process?.processStatus | processStatus}}
                                 </td>
                                 <td class="text-center">
                                     {{process?.complainer?.name}}
