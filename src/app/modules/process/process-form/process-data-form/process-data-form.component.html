@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label>Tipo de queixoso</label>
+                    <label>Tipo de requerente</label>
                     <div class="form-group">
                         <select formControlName="complainerType" class="form-control custom-select">
                             <option value="">Seleccione o tipo</option>
@@ -46,11 +46,11 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <label>Descrição</label>
+                    <label>Descrição/Razões</label>
                     <div class="form-group">
                         <textarea rows="4" cols="80" class="form-control textarea"
                             formControlName="description"
-                            placeholder="Escreva neste espa a descrição"></textarea>
+                            placeholder="Informe neste espaço as razões da sua reclamação, queixa, petição, ..."></textarea>
                         <error-msg [control]="getFormControl(form, 'description')"
                             label="Descrição"></error-msg>
                     </div>

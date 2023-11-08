@@ -80,9 +80,9 @@ export class ComplainerFormComponent extends GenericComponent implements OnInit 
         } else {
           console.log(this.routeService.getPreviousUrl());
           if(!isEmpty((this.routeService.getPreviousUrl()))) {
-            this.swalManagService.sweetAlterError("Sistema sem dados pessoais do queixoso! Queira por favor primeiro registar os dados.", (this.routeService.getPreviousUrl()));
+            this.swalManagService.sweetAlterError("Sistema sem dados pessoais do requerente! Queira por favor primeiro registar os dados.", (this.routeService.getPreviousUrl()));
           } else {
-            this.swalManagService.sweetAlterError("Sistema sem dados pessoais do queixoso! Queira por favor primeiro registar os dados.");
+            this.swalManagService.sweetAlterError("Sistema sem dados pessoais do requerente! Queira por favor primeiro registar os dados.");
             this.router.navigate(['guest']);
           }
 

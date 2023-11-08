@@ -110,12 +110,12 @@ export interface ChildrenItems {
 // ];
 
 export const ROUTES: RouteInfo[] = [
-  {
-    path: "/citezen",
-    title: "Inicio",
-    type: "link",
-    icontype: "nc-icon nc-bank",
-  },
+  // {
+  //   path: "/citezen",
+  //   title: "Inicio",
+  //   type: "link",
+  //   icontype: "nc-icon nc-bank",
+  // },
   {
     path: "/citezen/processes/list",
     title: "Processos",
