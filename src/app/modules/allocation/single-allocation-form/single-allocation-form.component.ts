@@ -85,9 +85,9 @@ export class SingleAllocationFormComponent extends GenericComponent implements O
     return formRequestData;
   }
 
-  public preview(file: AttachmentModel) {
+  public preview(attachment: AttachmentModel) {
     this.showPreview = true
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(file.data);
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(attachment.fileReaded);
   }
 
 

@@ -1,6 +1,17 @@
 export interface AttachmentModel {
     id: number;
-    fileName: string;
     originalFileName: string;
-    data: string | null;
+    givenFileName: string;
+    file: File;
+    fileReaded: string | null;
+    fileType: string;
+    processId: number
+}
+
+export interface AttachmentResponseModel {
+    id: number;
+}
+
+export interface AttachmentFormDataRequest {
+    attachments: AttachmentModel[];
 }

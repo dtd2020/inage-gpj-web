@@ -15,12 +15,21 @@ export class AuthTokenInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
 
-    request = request.clone({
-      setHeaders: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.securityService.getToken()}`
-      }
-    })
+
+    if (this.whiteListService.isDcoumentWhiteListRoute(request.url, request.method)) {  
+      request = request.clone({
+        setHeaders: {
+          'Authorization': `Bearer ${this.securityService.getToken()}`
+        }
+      })
+    } else {
+      request = request.clone({
+        setHeaders: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${this.securityService.getToken()}`
+        }
+      })
+    }
 
     return next.handle(request);
   }

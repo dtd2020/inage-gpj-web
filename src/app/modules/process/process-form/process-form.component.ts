@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AttachmentModel } from 'app/models/attachment-model';
 import { ComplainerModel } from 'app/models/complainer-model';
 import { ComplainerTypeEnum } from 'app/models/enums/complainer-type-enum';
 import { ProcessTypeEnum } from 'app/models/enums/process-type-enum';
@@ -158,6 +159,9 @@ export class ProcessFormComponent extends GenericComponent implements OnInit {
   
 
   public onAttachmentForm(event?: AttachmentOutputForm): void {
+
+    console.log(event);
+    
    
     if (event?.attachments) {
       this.process.attachments = event.attachments;
@@ -185,7 +189,8 @@ export class ProcessFormComponent extends GenericComponent implements OnInit {
   onSubmit() {
     this.process.complainerId = this.process?.complainer?.id;
     this.processService.createProcess(this.process).subscribe(
-      (response) => {
+      (process) => {
+        this.processService.createProcessBatchAttachment(this.process?.attachments, process?.id).subscribe();
         if(this.router.url.includes('citezen')) {
           this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso", "citezen/processes/list");
         } else {
@@ -195,5 +200,20 @@ export class ProcessFormComponent extends GenericComponent implements OnInit {
       }
     )
   }
+
+  public createProcessBatchAttachment(attachments : AttachmentModel[], processId: number) : void {
+    this.processService.createProcessBatchAttachment(attachments, processId).subscribe(
+      (response) => {
+        console.log('Upload successufull');
+        // if(this.router.url.includes('citezen')) {
+        //   this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso", "citezen/processes/list");
+        // } else {
+        //   this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso", "back-office/processes/list");
+        // }
+        
+      }
+    )
+  }
+
 
 }

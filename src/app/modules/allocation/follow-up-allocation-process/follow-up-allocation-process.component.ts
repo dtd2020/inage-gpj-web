@@ -91,9 +91,9 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
   //   )
   // }
 
-  public preview(file: AttachmentModel) {
+  public preview(attachment: AttachmentModel) {
     this.showPreview = true
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(file.data);
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(attachment.fileReaded);
   }
 
   public createFollowUpAllocationForm(allocation?: AllocationModel): void {

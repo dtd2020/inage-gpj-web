@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AttachmentFormDataRequest, AttachmentModel, AttachmentResponseModel } from 'app/models/attachment-model';
 import { ProcessModel } from 'app/models/process-model';
 import { ClientService } from 'app/security/services/client.service';
 import { BehaviorSubject, take, Observable } from 'rxjs';
@@ -70,6 +71,50 @@ export class ProcessService {
     this.url = this.clientService.urlProcessingWS(`${this.processContext}/delete/${processId}`);
     return this.http.delete<void>(this.url).pipe(take(1));
   }
+
+  public createProcessSingleAttachment(attachment : AttachmentModel, processId: number) : Observable<AttachmentResponseModel> {
+
+    this.url = this.clientService.urlProcessingWS(`${this.processContext}/attachment/single-upload`);
+    let formData : FormData = new FormData();
+
+    formData.append('file', attachment?.file);
+    formData.append('processId', attachment?.processId?.toString());
+    formData.append('givenFileName', attachment?.givenFileName);
+
+    return this.http.post<AttachmentResponseModel>(this.url, formData).pipe(take(1));
+  }
+
+
+  public createProcessBatchAttachment(attachments : AttachmentModel[], processId: number) : Observable<void> {
+
+    this.url = this.clientService.urlProcessingWS(`${this.processContext}/attachment/batch-upload`);
+    let formData : FormData = new FormData();
+
+    attachments.forEach(attachment => {
+      formData.append('files', attachment?.file);
+      formData.append('names', attachment?.givenFileName);
+    })
+    formData.append('processId', processId.toString());
+    
+    console.log("BATCUUU");
+    
+    return this.http.post<void>(this.url, formData).pipe(take(1));
+  }
+
+
+  // public uploadAttachment(attachment: AttachmentModel) : Observable<AttachmentResponseModel> {
+
+  //   let formData : FormData = new FormData();
+  //   formData.append('file', attachment?.file);
+  //   formData.append('processId', attachment?.processId?.toString());
+  //   formData.append('givenFileName', attachment?.givenFileName);
+
+  //   this.url = this.clientService.urlProcessingWS(`${this.processContext}/attachment/upload`);
+
+
+    
+  //   return this.http.post<AttachmentResponseModel>(this.url, formData).pipe(take(1));
+  // }
 
   
 }

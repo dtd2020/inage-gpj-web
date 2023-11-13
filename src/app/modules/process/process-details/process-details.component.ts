@@ -75,9 +75,9 @@ export class ProcessDetailsComponent extends GenericComponent implements OnInit 
 
   }
 
-  public preview(file: AttachmentModel) {
+  public preview(attachment: AttachmentModel) {
     this.showPreview = true
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(file.data);
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(attachment.fileReaded);
   }
 
 }

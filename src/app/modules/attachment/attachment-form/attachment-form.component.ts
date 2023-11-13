@@ -7,6 +7,8 @@ import { StepDirectionEnum } from 'app/models/enums/step-direction-enum';
 import { ProcessService } from 'app/services/process.service';
 import { ProcessStep } from 'app/modules/process/process-form/process-form.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AttachmentService } from 'app/services/attachment.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'attachment-form',
@@ -19,17 +21,17 @@ export class AttachmentFormComponent extends GenericComponent implements OnInit 
   public canShowForm: boolean = false;
 
 
-  public fileToUpload: File | null = null;
-  public data;
+  public file: File | null = null;
   public safeUrl: any;
   public showPreview: boolean = false;
+  protected fileReaded;
 
 
   @Input() step: boolean = false;
   @Input() attachments?: AttachmentModel[] = [];
   @Output() outputData = new EventEmitter<AttachmentOutputForm>();
 
-  constructor(private formBuilder: FormBuilder, private processService: ProcessService, private sanitizer: DomSanitizer) {
+  constructor(private formBuilder: FormBuilder, private attachmentService: AttachmentService, private processService: ProcessService, private sanitizer: DomSanitizer) {
     super();
   }
 
@@ -47,38 +49,54 @@ export class AttachmentFormComponent extends GenericComponent implements OnInit 
 
     let reader = new FileReader();
 
-    this.fileToUpload = event.target.files[0];
-    reader.readAsDataURL(this.fileToUpload);
+    this.file = event.target.files[0];
+    reader.readAsDataURL(this.file);
     reader.onload = (_event) => {
-      this.data = reader.result;
-      this.add(this.data, this.fileToUpload)
+      this.fileReaded = reader.result;
+      this.add(this.fileReaded, this.file)
     }
 
   }
 
-  add(data?, fileToUpload?) {
-
+  add(fileReaded?, file?: File) {
     let attachment: AttachmentModel;
 
     attachment = {
       id: null,
-      fileName: this.form?.value.fileName,
-      originalFileName: fileToUpload.name,
-      data: data
+      givenFileName: this.form?.value.givenFileName,
+      originalFileName: file.name,
+      fileType: file.type,
+      file: file,
+      fileReaded: fileReaded,
+      processId: null
     }
 
-    this.attachments.push(attachment);
+    // this.attachmentService.uploadAttachment(attachment).subscribe(
+    //   (attachmentResponse) => {
+    //     this.attachments.push(attachment);
+    //     // if(attachmentResponse instanceof HttpResponse) {
+    //     //   attachment.id = attachmentResponse.body.id;
+    //     //   this.attachments.push(attachment);
+    //     // } else {
+    //     //   console.log("NNNNNNNNN");
+    //     //   console.log(typeof(attachmentResponse));
+          
+    //     // }
+        
+    //   }
+    // )
 
-    this.fileToUpload = null;
-    this.data = null;
+    this.attachments.push(attachment);
+    this.file = null;
+    this.fileReaded = null;
     this.form.reset();
 
 
   }
 
-  public preview(file: AttachmentModel) {
+  public preview(attachment: AttachmentModel) {
     this.showPreview = true
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(file.data);
+    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(attachment.fileReaded);
   }
 
   delete(index: number) {
@@ -89,7 +107,7 @@ export class AttachmentFormComponent extends GenericComponent implements OnInit 
   public createForm() {
     this.form = this.formBuilder.group({
       id: [null],
-      fileName: [null, [Validators.required]],
+      givenFileName: [null, [Validators.required]],
       originalFileName: [null, [Validators.required]]
     })
   }

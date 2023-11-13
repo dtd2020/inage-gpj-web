@@ -121,7 +121,7 @@
                     </thead>
                     <tbody>
                         <tr  *ngFor="let attachment of process?.attachments; let i = index">
-                            <td class="text-left">{{attachment?.fileName}}</td>
+                            <td class="text-left">{{attachment?.givenFileName}}</td>
                             <td class="text-left">{{attachment?.originalFileName}}</td>
                             <td class="text-right">
                                 <button type="button" class="btn btn-info  btn-sm mr-2" data-toggle="modal"
