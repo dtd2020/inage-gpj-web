@@ -91,17 +91,20 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="text-left">Nome atribuído</th>
-                        <th class="text-left">Nome original</th>
+                            <!-- <th class="text-left">Nome atribuído</th> -->
+                        <th class="text-left">Nome do ficheiro</th>
                         <th class="text-right">Accções</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr  *ngFor="let attachment of process?.attachments; let i = index">
-                            <td class="text-left">{{attachment?.givenFileName}}</td>
+                            <!-- <td class="text-left">{{attachment?.fileName}}</td> -->
                             <td class="text-left">{{attachment?.originalFileName}}</td>
                             <td class="text-right">
-                                <button type="button" class="btn btn-info  btn-sm mr-2" data-toggle="modal"
+                                <button type="button" class="btn btn-info  btn-sm mr-2" (click)="preview(attachment)">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                                <!-- <button type="button" class="btn btn-info  btn-sm mr-2" data-toggle="modal"
                                     data-target="#noticeModal" (click)="preview(attachment)">
                                     <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -112,7 +115,7 @@
                                                 d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                                         </svg>
                                     </span>
-                                </button>
+                                </button> -->
                             </td>
                         </tr>
                     </tbody>

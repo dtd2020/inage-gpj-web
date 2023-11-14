@@ -56,8 +56,8 @@
                                         (click)="processDetails(process?.id)">
                                         <i class="fa fa-eye"></i>
                                     </button> -->
-                                    <button type="button" rel="tooltip" class="btn btn-warning btn-sm"
-                                        (click)="followUpAllocation(process?.id)">
+                                    <button type="button" rel="tooltip" class="btn btn-default btn-sm"
+                                        (click)="followUpAllocation(process?.id)" [ngClass]="{'btn-warning': process?.processStatus==AWAITINIG_COMPLAINER_RESPONSE}">
                                         <span
                                             *ngIf="process?.processStatus==AWAITINIG_COMPLAINER_RESPONSE; else progressStatus">Seguimento</span>
                                         <ng-template #progressStatus>

@@ -30,6 +30,7 @@ export class StaffFollowUpAllocationProcessComponent extends GenericComponent im
   public allocationStatuses: ProcessStatusModel[] = ProcessStatusEnum.asArray;
   public closureTypes: ClosureTypeModel[] = ClosureTypeEnum.asArray;
 
+  private canShowAllocationDetails = false;
   private canShowFollowUpProcessAllocation = false;
 
   constructor(private route: ActivatedRoute, private location: Location, private securityService: SecurityService, private processService: ProcessService, private allocationService: AllocationService, private swalManagService: SwalManagementService) {
@@ -71,7 +72,9 @@ export class StaffFollowUpAllocationProcessComponent extends GenericComponent im
     this.setAllocationComments(allocation);
     this.setAllocationStatuses();
     this.setClosureTypes();
+    this.canShowAllocationDetails = true;
     this.canShowFollowUpProcessAllocation = true;
+    
     
   }
 

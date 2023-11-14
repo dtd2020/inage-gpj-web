@@ -1,7 +1,7 @@
 export interface AttachmentModel {
     id: number;
     originalFileName: string;
-    givenFileName: string;
+    fileName: string;
     file: File;
     fileReaded: string | null;
     fileType: string;

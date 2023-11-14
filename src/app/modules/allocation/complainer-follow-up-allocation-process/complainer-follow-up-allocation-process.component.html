@@ -1,12 +1,27 @@
 <div class="main-content">
-    <follow-up-allocation-process *ngIf="canShowFollowUpProcessAllocation" 
+    <!-- <follow-up-allocation-process *ngIf="canShowFollowUpProcessAllocation" 
     [process]="process" 
     [allocation]="allocation"
     [allocationComments]="allocationComments"
     [allocationStatuses]="allocationStatuses"
     [followUpFrom]="'COMPLAINER'"
     [closureTypes]="closureTypes"
-    (outputAllocationData)="onOutputAllocationData($event)"></follow-up-allocation-process>
+    (outputAllocationData)="onOutputAllocationData($event)"></follow-up-allocation-process> -->
+
+    <allocation-details *ngIf="canShowAllocationDetails"
+        [process]="process"
+        [allocation]="allocation"
+        [allocationComments]="allocationComments" >
+    </allocation-details>
+
+    <follow-up-allocation-process *ngIf="canShowFollowUpProcessAllocation" 
+        [allocationStatuses]="allocationStatuses"
+        [process]="process"
+        [allocation]="allocation"
+        [followUpFrom]="'COMPLAINER'"
+        [closureTypes]="closureTypes"
+        (outputAllocationData)="onOutputAllocationData($event)">
+    </follow-up-allocation-process>
 
     <div class="row">
         <div class="col-sm-12">

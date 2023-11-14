@@ -1,16 +1,21 @@
 <div class="main-content">
+    <allocation-details *ngIf="canShowAllocationDetails"
+        [process]="process"
+        [allocation]="allocation"
+        [allocationComments]="allocationComments" >
+    </allocation-details>
+    
     <follow-up-allocation-process *ngIf="canShowFollowUpProcessAllocation" 
-    [process]="process" 
-    [allocation]="allocation"
-    [allocationComments]="allocationComments"
-    [allocationStatuses]="allocationStatuses"
-    [followUpFrom]="'STAFF'"
-    [closureTypes]="closureTypes"
-    (outputAllocationData)="onOutputAllocationData($event)"></follow-up-allocation-process>
+        [allocationStatuses]="allocationStatuses"
+        [process]="process"
+        [allocation]="allocation"
+        [followUpFrom]="'STAFF'"
+        [closureTypes]="closureTypes"
+        (outputAllocationData)="onOutputAllocationData($event)">
+    </follow-up-allocation-process>
 
     <div class="row">
         <div class="col-sm-12">
-            <!-- <button type="submit" class="btn btn-default btn-round mr-2" (click)="onSubmit()">Salvar</button> -->
             <a href="#" class="btn btn-warning btn-round" routerLink="/back-office/allocations/all-mine">Voltar à Lista das minhas alocações</a>
         </div>
     </div>

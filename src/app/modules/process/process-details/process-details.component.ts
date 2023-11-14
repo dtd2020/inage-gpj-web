@@ -11,6 +11,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { isEmpty } from 'app/shared/utils/utils';
 import { Location } from '@angular/common';
+import { AttachmentService } from 'app/services/attachment.service';
+import { ClientService } from 'app/security/services/client.service';
+import { UploadDownloadService } from 'app/services/upload-download.service';
 
 @Component({
   selector: 'process-details',
@@ -27,7 +30,7 @@ export class ProcessDetailsComponent extends GenericComponent implements OnInit 
   @Input() process: ProcessModel;
   @Output() outputData = new EventEmitter<DetailsOutputForm>();
 
-  constructor(private route: ActivatedRoute, private location: Location, private processService: ProcessService,  private sanitizer: DomSanitizer) {
+  constructor(private route: ActivatedRoute, private location: Location, private processService: ProcessService, private attachmentService: AttachmentService) {
     super();
   }
 
@@ -76,8 +79,9 @@ export class ProcessDetailsComponent extends GenericComponent implements OnInit 
   }
 
   public preview(attachment: AttachmentModel) {
-    this.showPreview = true
-    this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(attachment.fileReaded);
+    this.attachmentService.downloadAttachmentById(attachment);
   }
+
+
 
 }

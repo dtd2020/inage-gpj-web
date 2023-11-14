@@ -106,7 +106,7 @@
         </div>
         <hr class="section-divider">
 
-        <div class="row attachments">
+        <!-- <div class="row attachments">
             <div class="col-md-12">
                 <h6 class="title text-primary">Anexos</h6>            
             </div>
@@ -115,13 +115,13 @@
                     <thead>
                         <tr>
                             <th class="text-left">Nome atribuído</th>
-                        <th class="text-left">Nome original</th>
+                        <th class="text-left">Nome do ficheiro</th>
                         <th class="text-right">Accções</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr  *ngFor="let attachment of process?.attachments; let i = index">
-                            <td class="text-left">{{attachment?.givenFileName}}</td>
+                            <td class="text-left">{{attachment?.fileName}}</td>
                             <td class="text-left">{{attachment?.originalFileName}}</td>
                             <td class="text-right">
                                 <button type="button" class="btn btn-info  btn-sm mr-2" data-toggle="modal"
@@ -165,7 +165,60 @@
            
 
             
+        </div> -->
+
+        <div class="row attachments">
+            <div class="col-md-12">
+                <h6 class="title text-primary">Anexos</h6>
+            </div>
+            <div class="col-md-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <!-- <th class="text-left">Nome atribuído</th> -->
+                        <th class="text-left">Nome do ficheiro</th>
+                        <th class="text-right">Accções</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr  *ngFor="let attachment of allocation?.process?.attachments; let i = index">
+                            <!-- <td class="text-left">{{attachment?.fileName}}</td> -->
+                            <td class="text-left">{{attachment?.originalFileName}}</td>
+                            <td class="text-right">
+                                <button type="button" class="btn btn-info  btn-sm mr-2" (click)="preview(attachment)">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="modal fade" id="noticeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-notice">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="nc-icon nc-simple-remove"></i>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                         <div *ngIf="showPreview">
+                            <embed [src]="safeUrl" class="card-img-top" type="application/pdf" width="800px" height="500px">
+                          </div>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                          <button type="button" class="btn btn-info btn-round" data-dismiss="modal">Fechar</button>
+    
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+           
+
+            
         </div>
+
 
         <hr class="section-divider">
 

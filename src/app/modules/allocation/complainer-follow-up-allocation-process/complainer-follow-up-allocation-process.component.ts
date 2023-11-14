@@ -28,6 +28,7 @@ export class ComplainerFollowUpAllocationProcessComponent extends GenericCompone
   public allocationStatuses: ProcessStatusModel[] = ProcessStatusEnum.asArray;
   public closureTypes: ClosureTypeModel[] = ClosureTypeEnum.asArray;
 
+  private canShowAllocationDetails = false;
   private canShowFollowUpProcessAllocation = false;
 
   constructor(private route: ActivatedRoute, private location: Location, private processService: ProcessService, private allocationService: AllocationService, private swalManagService: SwalManagementService) {
@@ -65,6 +66,7 @@ export class ComplainerFollowUpAllocationProcessComponent extends GenericCompone
     this.setAllocationStatuses();
     this.setClosureTypes();
     this.canShowFollowUpProcessAllocation = true;
+    this.canShowAllocationDetails = true;
   }
 
   public setAllocation(allocations: AllocationModel[]): void {

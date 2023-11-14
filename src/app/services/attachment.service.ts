@@ -4,6 +4,7 @@ import { AttachmentModel, AttachmentResponseModel } from 'app/models/attachment-
 import { ClientService } from 'app/security/services/client.service';
 import { SecurityService } from 'app/security/services/security.service';
 import { Observable, take } from 'rxjs';
+import { UploadDownloadService } from './upload-download.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,46 +15,29 @@ export class AttachmentService {
   private processContext: string = "/processes";
   private url: string;
 
-  constructor(private clientService: ClientService, private securityService: SecurityService, private http: HttpClient) { }
+  constructor(private clientService: ClientService, private uploadDownloadService: UploadDownloadService, private securityService: SecurityService, private http: HttpClient) { }
+
 
   // public uploadAttachment(attachment: AttachmentModel) : Observable<AttachmentResponseModel> {
-  // // public uploadAttachment(attachment: AttachmentModel) : Observable<HttpEvent<AttachmentResponseModel>> {
-  //   this.url = this.clientService.urlProcessingWS(`${this.attachmnetContext}/upload`);
-  //   // const xhr = new XMLHttpRequest();
-  //   // const formData: FormData = new FormData();
 
-  //   // formData.append('file', attachment.file);
-  //   // formData.append('file', attachment.file);
+  //     let formData : FormData = new FormData();
+  //     formData.append('file', attachment?.file);
+  //     formData.append('processId', attachment?.processId?.toString());
+  //     formData.append('fileName', attachment?.fileName);
 
-  //   // xhr.open('POST', this.url, true); 
-  //   // xhr.setRequestHeader('Accept', 'multipart/form-data')
-  //   // xhr.setRequestHeader('Authorization', `Bearer ${this.securityService.getToken()}`)
-  //   // xhr.send(formData);
-
-  //   // const req = new HttpRequest('POST', `${this.url}`, formData, {
-  //   //   reportProgress: true,
-  //   //   responseType: 'json'
-  //   // });
-
-  //   // return this.http.request(req);
-
-
-    
-  //   return this.http.post<AttachmentResponseModel>(this.url, attachment).pipe(take(1));
-  // }
-
-
-  public uploadAttachment(attachment: AttachmentModel) : Observable<AttachmentResponseModel> {
-
-      let formData : FormData = new FormData();
-      formData.append('file', attachment?.file);
-      formData.append('processId', attachment?.processId?.toString());
-      formData.append('givenFileName', attachment?.givenFileName);
-
-      this.url = this.clientService.urlProcessingWS(`${this.processContext}/attachment/upload`);
+  //     this.url = this.clientService.urlProcessingWS(`${this.processContext}/attachment/upload`);
   
   
       
-      return this.http.post<AttachmentResponseModel>(this.url, formData).pipe(take(1));
-    }
+  //     return this.http.post<AttachmentResponseModel>(this.url, formData).pipe(take(1));
+  //   }
+
+  public downloadAttachmentById(attachment: AttachmentModel) : void {
+    this.url = this.clientService.urlProcessingWS(`/attachments/download/${attachment?.id}`);
+    this.uploadDownloadService.download(this.url).subscribe(
+      (response) => {
+        this.uploadDownloadService.handleFile(response, attachment?.originalFileName);
+      }
+    )
+  }
 }

@@ -79,7 +79,7 @@ export class ProcessService {
 
     formData.append('file', attachment?.file);
     formData.append('processId', attachment?.processId?.toString());
-    formData.append('givenFileName', attachment?.givenFileName);
+    formData.append('fileName', attachment?.fileName);
 
     return this.http.post<AttachmentResponseModel>(this.url, formData).pipe(take(1));
   }
@@ -92,7 +92,7 @@ export class ProcessService {
 
     attachments.forEach(attachment => {
       formData.append('files', attachment?.file);
-      formData.append('names', attachment?.givenFileName);
+      formData.append('names', attachment?.fileName);
     })
     formData.append('processId', processId.toString());
     
@@ -101,13 +101,15 @@ export class ProcessService {
     return this.http.post<void>(this.url, formData).pipe(take(1));
   }
 
+  
+
 
   // public uploadAttachment(attachment: AttachmentModel) : Observable<AttachmentResponseModel> {
 
   //   let formData : FormData = new FormData();
   //   formData.append('file', attachment?.file);
   //   formData.append('processId', attachment?.processId?.toString());
-  //   formData.append('givenFileName', attachment?.givenFileName);
+  //   formData.append('fileName', attachment?.fileName);
 
   //   this.url = this.clientService.urlProcessingWS(`${this.processContext}/attachment/upload`);
 

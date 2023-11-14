@@ -17,6 +17,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComplainerFollowUpAllocationProcessComponent } from './complainer-follow-up-allocation-process/complainer-follow-up-allocation-process.component';
 import { StaffFollowUpAllocationProcessComponent } from './staff-follow-up-allocation-process/staff-follow-up-allocation-process.component';
 import { PipeModule } from 'app/pipes/pipe.module';
+import { AllocationDetailsComponent } from './allocation-details/allocation-details.component';
+import { NgxPermissionsModule } from 'ngx-permissions';
 
 
 
@@ -29,6 +31,7 @@ import { PipeModule } from 'app/pipes/pipe.module';
     FollowUpAllocationProcessComponent,
     ComplainerFollowUpAllocationProcessComponent,
     StaffFollowUpAllocationProcessComponent,
+    AllocationDetailsComponent,
     
     // ClosureStatusPipe,
     // AllocationClosedPipe
@@ -41,7 +44,8 @@ import { PipeModule } from 'app/pipes/pipe.module';
     JwBootstrapSwitchNg2Module,
    
     ErrorMsgModule,
-    PipeModule
+    PipeModule,
+    NgxPermissionsModule.forChild()
     
   ],
   exports: [

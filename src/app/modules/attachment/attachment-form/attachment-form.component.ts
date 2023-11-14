@@ -63,7 +63,7 @@ export class AttachmentFormComponent extends GenericComponent implements OnInit 
 
     attachment = {
       id: null,
-      givenFileName: this.form?.value.givenFileName,
+      fileName: this.form?.value.fileName,
       originalFileName: file.name,
       fileType: file.type,
       file: file,
@@ -107,7 +107,7 @@ export class AttachmentFormComponent extends GenericComponent implements OnInit 
   public createForm() {
     this.form = this.formBuilder.group({
       id: [null],
-      givenFileName: [null, [Validators.required]],
+      fileName: [null, [Validators.required]],
       originalFileName: [null, [Validators.required]]
     })
   }

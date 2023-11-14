@@ -35,14 +35,14 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
 
   @Input() process: ProcessModel;
   @Input() allocation: AllocationModel;
-  @Input() allocationComments: AllocationCommentModel[] = [];
+  // @Input() allocationComments: AllocationCommentModel[] = [];
   @Input() followUpFrom: string;
   @Input() allocationStatuses: ProcessStatusModel[] = [];
   @Input() closureTypes: AllocationModel[] = [];
 
   @Output() outputAllocationData = new EventEmitter<AllocationFollowUpRequestModel>();
 
-  constructor(private route: ActivatedRoute, private routeService: RouteService, private processService: ProcessService, private staffService: StaffService, private allocationService: AllocationService, private formBuilder: FormBuilder, private swalManagService: SwalManagementService, private sanitizer: DomSanitizer) {
+  constructor(private route: ActivatedRoute, private routeService: RouteService, private processService: ProcessService, private staffService: StaffService, private allocationService: AllocationService,  private formBuilder: FormBuilder, private swalManagService: SwalManagementService, private sanitizer: DomSanitizer) {
     super();
   }
 
@@ -53,6 +53,8 @@ export class FollowUpAllocationProcessComponent extends GenericComponent impleme
     //     this.fetchAllocationById(params?.allocationId);
     //   }
     // })
+    
+    
     
     this.intiData();
     
