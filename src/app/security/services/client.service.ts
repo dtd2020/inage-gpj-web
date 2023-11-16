@@ -9,7 +9,7 @@ export class ClientService {
   constructor() { }
 
   public url(context: string): string {
-    return `${environment.GPJ_API}${context}`;
+    return `${environment.API_BASE_URL}${context}`;
   }
 
   public urlAuthWS(resource: string): string {

@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  gpj_web:
+    build:
+      context: .
+      target: gpj_web
+    container_name: gpj_web
+    networks:
+      - gpj_web_network
+
+  gpj_nginx:
+    build:
+      context: .
+      target: gpj_nginx
+    container_name: gpj_nginx
+    restart: unless-stopped
+    ports:
+      - 4300:80
+    volumes:
+      - ./docker/nginx/:/etc/nginx/conf.d/
+    depends_on:
+      - gpj_web   
+    networks:
+      - gpj_web_network
+
+networks:
+  gpj_web_network:
+    name: gpj_network
+    driver: bridge
