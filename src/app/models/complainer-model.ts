@@ -1,3 +1,5 @@
+import { PageableMetaModel } from "./pageable-meta-model";
+
 export interface ComplainerModel {
     id: number;
     name: string;
@@ -6,4 +8,9 @@ export interface ComplainerModel {
     mobile: string;
     address: string;
     userId: number;
+}
+
+export interface ComplainerPageModel {
+    data: ComplainerModel[];
+    pageableMeta: PageableMetaModel;
 }

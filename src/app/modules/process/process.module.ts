@@ -15,6 +15,7 @@ import { ProcessListAllocatedComponent } from './process-list/process-list-alloc
 import { ProcessListComplainerComponent } from './process-list/process-list-complainer/process-list-complainer.component';
 import { ComplainerModule } from '../complainer/complainer.module';
 import { PipeModule } from 'app/pipes/pipe.module';
+import { PaginationModule } from 'app/shared/pagination/pagination.module';
 
 
 
@@ -35,6 +36,7 @@ import { PipeModule } from 'app/pipes/pipe.module';
     ReactiveFormsModule,
     RouterModule,
     ErrorMsgModule,
+    PaginationModule,
     PipeModule,
     ComplainerModule,
     AttachmentModule

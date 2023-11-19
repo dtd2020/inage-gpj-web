@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-md-2 col-md-offset-1">
+      <div class="form-group">
+          <select class="form-control custom-select">
+              <option (click)="selectPageSize(null)">Itens por página</option>
+              <option *ngFor="let pageSize of pagesSize" (click)="selectPageSize(pageSize)">
+                  {{pageSize}}</option>
+          </select>
+      </div>
+  </div>
+  <div class="col-md-6">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination pagination-primary">
+        <!-- first button -->
+        <li
+          [class]="pageableMeta?.pageNumber === 0 ? 'page-item disabled' : 'page-item'"
+          *ngIf="firstLastButtons"
+        >
+          <button class="page-link" (click)="selectPageNumber(0)">Primeira</button>
+        </li>
+        <!-- previous button -->
+        <li
+          [class]="pageableMeta?.pageNumber  === 0 ? 'page-item disabled' : 'page-item'"
+          *ngIf="nextPreviousButtons"
+        >
+          <button class="page-link" (click)="previous()">
+            <span aria-hidden="true"><i class="fa fa-angle-double-left" aria-hidden="true"></i></span>
+          </button>
+          
+        </li>
+        <!-- page numbers -->
+        <ng-container *ngFor="let p of totalPagesArrayForLoop; index as i">
+          <li
+            *ngIf="i >= pageableMeta?.pageNumber - maxSize && i <= pageableMeta?.pageNumber + maxSize"
+            [class]="pageableMeta?.pageNumber === i ? 'page-item active' : 'page-item'"
+          >
+            <button class="page-link" (click)="selectPageNumber(i)">
+              {{ i + 1 }}
+            </button>
+          </li>
+        </ng-container>
+        <!-- next button -->
+        <li
+          [class]="
+          pageableMeta?.pageNumber + 1 === pageableMeta?.totalPages ? 'page-item disabled' : 'page-item'
+          "
+          *ngIf="nextPreviousButtons"
+        >
+          <button class="page-link" (click)="next()">
+            <span aria-hidden="true"><i class="fa fa-angle-double-right" aria-hidden="true"></i></span>
+          </button>
+        </li>
+        <!-- last button -->
+        <li
+          [class]="
+          pageableMeta?.pageNumber + 1 === pageableMeta?.totalPages ? 'page-item disabled' : 'page-item'
+          "
+          *ngIf="firstLastButtons"
+        >
+          <button class="page-link" (click)="selectPageNumber(pageableMeta?.totalPages - 1)">
+            Última
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+
+  

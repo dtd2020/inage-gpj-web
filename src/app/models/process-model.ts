@@ -1,6 +1,7 @@
 import { AllocationModel } from "./allocation-model";
 import { AttachmentModel } from "./attachment-model";
 import { ComplainerModel } from "./complainer-model";
+import { PageableMetaModel } from "./pageable-meta-model";
 import { ProcessUpdateHistoryModel } from "./process-update-history-model";
 
 export interface ProcessModel {
@@ -37,4 +38,9 @@ export interface ClosureTypeModel {
 export interface ProcessStatusModel {
     key: string;
     value: string;
+}
+
+export interface ProcessPageModel {
+    data: ProcessModel[];
+    pageableMeta: PageableMetaModel;
 }

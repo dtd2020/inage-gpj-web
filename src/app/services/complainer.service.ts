@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ComplainerModel } from 'app/models/complainer-model';
+import { ComplainerModel, ComplainerPageModel } from 'app/models/complainer-model';
+import { PageRequestModel } from 'app/models/pageable-meta-model';
 import { ClientService } from 'app/security/services/client.service';
 import { isEmpty } from 'app/shared/utils/utils';
 import { Observable } from 'rxjs';
@@ -25,9 +26,13 @@ export class ComplainerService {
     return this.http.get<ComplainerModel>(this.url);
   }
 
-  public fetchAllComplainers() : Observable<ComplainerModel[]> {
-    this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/fetch-all`);
-    return this.http.get<ComplainerModel[]>(this.url);
+  public fetchAllComplainersPageable(pageRequest: PageRequestModel) : Observable<ComplainerPageModel> {
+    if(!isEmpty(pageRequest.sortBy)) {
+      this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
+    } else {
+      this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
+    }
+    return this.http.get<ComplainerPageModel>(this.url);
   }
 
   public saveComplainer(complainer: ComplainerModel): Observable<ComplainerModel> {

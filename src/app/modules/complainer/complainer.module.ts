@@ -7,6 +7,7 @@ import { ComplainerComponent } from './complainer.component';
 import { RouterModule } from '@angular/router';
 import { ComplainerListComponent } from './complainer-list/complainer-list.component';
 import { ComplainerDetailsComponent } from './complainer-details/complainer-details.component';
+import { PaginationModule } from 'app/shared/pagination/pagination.module';
 
 
 
@@ -16,7 +17,8 @@ import { ComplainerDetailsComponent } from './complainer-details/complainer-deta
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    ErrorMsgModule
+    ErrorMsgModule,
+    PaginationModule
   ],
   exports: [ComplainerFormComponent, ComplainerComponent, ComplainerListComponent, ComplainerDetailsComponent]
 })

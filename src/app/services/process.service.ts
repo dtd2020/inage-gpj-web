@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AttachmentFormDataRequest, AttachmentModel, AttachmentResponseModel } from 'app/models/attachment-model';
-import { ProcessModel } from 'app/models/process-model';
+import { PageRequestModel } from 'app/models/pageable-meta-model';
+import { ProcessModel, ProcessPageModel } from 'app/models/process-model';
 import { ClientService } from 'app/security/services/client.service';
+import { isEmpty } from 'app/shared/utils/utils';
 import { BehaviorSubject, take, Observable } from 'rxjs';
 
 @Injectable({
@@ -26,20 +28,49 @@ export class ProcessService {
     this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all`);
     return this.http.get<ProcessModel[]>(this.url).pipe(take(1));
   }
-
-  public fetchAllComplainerProcessesByUserId(userId: number) : Observable<ProcessModel[]> {
-    this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-by-user-id/${userId}/complainer`);
-    return this.http.get<ProcessModel[]>(this.url).pipe(take(1));
+  
+  
+  public fetchAllProcessesPageable(pageRequest: PageRequestModel) : Observable<ProcessPageModel> {
+    if(!isEmpty(pageRequest.sortBy)) {
+      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
+    } else {
+      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
+    }
+    return this.http.get<ProcessPageModel>(this.url).pipe(take(1));
   }
 
-  public findAllProcessesToAllocate() : Observable<ProcessModel[]> {
-    this.url = this.clientService.urlProcessingWS(`${this.processContext}/find-all-availabe-to-allocate`);
-    return this.http.get<ProcessModel[]>(this.url).pipe(take(1));
+  public fetchAllComplainerProcessesByUserIdPageable(userId: number, pageRequest: PageRequestModel) : Observable<ProcessPageModel>{
+    if(!isEmpty(pageRequest.sortBy)) {
+      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-by-user-id/${userId}/complainer/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
+    } else {
+      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-by-user-id/${userId}/complainer/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
+    }
+    return this.http.get<ProcessPageModel>(this.url).pipe(take(1));
+  }
+
+  public findAllProcessesToAllocatePageable(pageRequest: PageRequestModel) : Observable<ProcessPageModel>{
+    if(!isEmpty(pageRequest.sortBy)) {
+      this.url = this.clientService.urlProcessingWS(`${this.processContext}/find-all-availabe-to-allocate/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
+    } else {
+      this.url = this.clientService.urlProcessingWS(`${this.processContext}/find-all-availabe-to-allocate/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
+    }
+    return this.http.get<ProcessPageModel>(this.url).pipe(take(1));
   }
   
   public fetchAllAllocatedProcesses() : Observable<ProcessModel[]> {
     this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-allocated`);
     return this.http.get<ProcessModel[]>(this.url).pipe(take(1));
+  }
+  
+  public fetchAllAllocatedProcessesPageable(pageRequest: PageRequestModel) : Observable<ProcessPageModel> {
+
+    if(!isEmpty(pageRequest.sortBy)) {
+      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-allocated/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
+    } else {
+      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-allocated/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
+    }
+    
+    return this.http.get<ProcessPageModel>(this.url).pipe(take(1));
   }
 
   // TODO: create a separate service that finds a process by id

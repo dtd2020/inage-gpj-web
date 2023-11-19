@@ -53,6 +53,18 @@
                     </table>
                 </div>
             </div>
+            <div class="card-footer">
+                <pagination
+                    [pageableMeta]="pageableMeta"
+                    [pageRequest]="pageRequest"
+                    [maxSize]="2"
+                    [firstLastButtons]="true"
+                    
+                    (onPaginationEvent)="onPaginationEvent($event)"
+                    >
+                </pagination>
+            </div>
         </div>
+        
     </div>
 </div>

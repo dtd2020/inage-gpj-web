@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ClientService } from 'app/security/services/client.service';
 import { ComplainerModel } from 'app/models/complainer-model';
-import { StaffModel } from 'app/models/staff-model';
+import { StaffModel, StaffPageModel } from 'app/models/staff-model';
 import { isEmpty } from 'app/shared/utils/utils';
+import { PageRequestModel } from 'app/models/pageable-meta-model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,16 @@ export class StaffService {
   public fetchAllStaffes() : Observable<StaffModel[]> {
     this.url = this.clientService.urlProcessingWS(`${this.staffContext}/fetch-all`);
     return this.http.get<StaffModel[]>(this.url);
+  }
+
+  public fetchAllStaffsPageable(pageRequest: PageRequestModel) : Observable<StaffPageModel> {
+    if(!isEmpty(pageRequest.sortBy)) {
+
+    } else {
+      this.url = this.clientService.urlProcessingWS(`${this.staffContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
+    }
+    this.url = this.clientService.urlProcessingWS(`${this.staffContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
+    return this.http.get<StaffPageModel>(this.url);
   }
   
   public findStaffByUserId(userId: number) : Observable<StaffModel> {

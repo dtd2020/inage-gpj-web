@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProcessStatusEnum } from 'app/models/enums/process-status-enum';
+import { PageRequestModel, PageableMetaModel } from 'app/models/pageable-meta-model';
 import { ProcessModel } from 'app/models/process-model';
 import { UserModel } from 'app/models/user-model';
 import { LocalUserModel } from 'app/security/models/local-user';
@@ -17,6 +18,12 @@ import { isEmpty } from 'app/shared/utils/utils';
 export class ProcessListComplainerComponent extends GenericComponent implements OnInit{
 
   public processes: ProcessModel[] = [];
+  private pageableMeta: PageableMetaModel;
+  private pageRequest: PageRequestModel = {
+    offset: 0,
+    pageSize: 10,
+    sortBy: null
+  };
   public loggedUser: LocalUserModel;
   private readonly AWAITINIG_COMPLAINER_RESPONSE: string = ProcessStatusEnum.AWAITING_COMPLAINER_RESPONSE.key;
 
@@ -27,17 +34,23 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
   ngOnInit(): void {
     this.loggedUser = this.securityService.localUser;
     if(!isEmpty(this.loggedUser)) {
-      this.fetchAllComplainerProcessesByUserId(this.loggedUser?.id);
+      this.fetchAllComplainerProcessesByUserIdPageable(this.loggedUser?.id);
     }
   }
 
 
-  public fetchAllComplainerProcessesByUserId(userId: number) {
-    this.processService.fetchAllComplainerProcessesByUserId(userId).subscribe(
-      (processes) => {
-        this.processes = processes;
+  public fetchAllComplainerProcessesByUserIdPageable(userId: number) {
+    this.processService.fetchAllComplainerProcessesByUserIdPageable(userId, this.pageRequest).subscribe(
+      (processePageable) => {
+        this.processes = processePageable.data;
+        this.pageableMeta = processePageable.pageableMeta;
       }
     )    
+  }
+
+  private onPaginationEvent(event: PageRequestModel): void {
+    this.pageRequest = event;
+    this.fetchAllComplainerProcessesByUserIdPageable(this.loggedUser?.id);
   }
 
   public createProcess(userId: number): void { 

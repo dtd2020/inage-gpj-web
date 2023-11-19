@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ComplainerModel } from 'app/models/complainer-model';
+import { PageRequestModel, PageableMetaModel } from 'app/models/pageable-meta-model';
 import { ComplainerService } from 'app/services/complainer.service';
 import { GenericComponent } from 'app/shared/generic/generic.component';
 import { SwalManagementService } from 'app/shared/swal-management.service';
@@ -13,21 +14,33 @@ import { SwalManagementService } from 'app/shared/swal-management.service';
 export class ComplainerListComponent extends GenericComponent implements OnInit{
 
   public complainers: ComplainerModel[];
+  private pageableMeta: PageableMetaModel;
+  private pageRequest: PageRequestModel = {
+    offset: 0,
+    pageSize: 10,
+    sortBy: null
+  };
 
   constructor(private complainerService: ComplainerService, private router: Router, private swalManagService: SwalManagementService) { 
     super();
   }
 
   ngOnInit(): void {
-    this.fetchAllComplainers();
+    this.fetchAllComplainersPageable();
   }
 
-  public fetchAllComplainers(): void {
-    this.complainerService.fetchAllComplainers().subscribe(
-      (complainers) => {
-        this.complainers = complainers;        
+  public fetchAllComplainersPageable(): void {
+    this.complainerService.fetchAllComplainersPageable(this.pageRequest).subscribe(
+      (complainerPageable) => {
+        this.pageableMeta = complainerPageable.pageableMeta;
+        this.complainers = complainerPageable.data;       
       }
     )
+  }
+
+  private onPaginationEvent(event: PageRequestModel): void {
+    this.pageRequest = event;
+    this.fetchAllComplainersPageable();
   }
 
   

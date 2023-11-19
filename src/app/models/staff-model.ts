@@ -1,3 +1,5 @@
+import { PageableMetaModel } from "./pageable-meta-model";
+
 export interface StaffModel {
     id: number;
     name: string;
@@ -11,4 +13,9 @@ export interface StaffModel {
 
 export interface StaffRoleModel {
     description: string;
+}
+
+export interface StaffPageModel {
+    data: StaffModel[];
+    pageableMeta: PageableMetaModel;
 }
