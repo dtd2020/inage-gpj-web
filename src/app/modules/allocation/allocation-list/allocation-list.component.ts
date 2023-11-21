@@ -10,6 +10,7 @@ import { isEmpty } from 'app/shared/utils/utils';
 import { RouteService } from 'app/shared/services/route.service';
 import { LocalUserModel } from 'app/security/models/local-user';
 import { SecurityService } from 'app/security/services/security.service';
+import { PageRequestModel, PageableMetaModel } from 'app/models/pageable-meta-model';
 
 @Component({
   selector: 'allocation-list',
@@ -20,6 +21,13 @@ export class AllocationListComponent extends GenericComponent implements OnInit 
 
   public loggedUser: LocalUserModel;
   public allocations: AllocationModel[] = [];
+  private pageableMeta: PageableMetaModel;
+  private pageRequest: PageRequestModel = {
+    offset: 0,
+    pageSize: 10,
+    sortBy: null
+  };
+
   public canShowFollowUpOption: boolean = false;
 
   constructor(private location: Location, private route: ActivatedRoute, private router: Router, private routerService: RouteService, private securityService: SecurityService, private allocationService: AllocationService, private formBuilder: FormBuilder, private swalManagService: SwalManagementService){
@@ -31,28 +39,47 @@ export class AllocationListComponent extends GenericComponent implements OnInit 
 
     if(this.routerService.getCurrentUrl().includes("all-mine")) {      
       if(!isEmpty(this.loggedUser)) {
-        this.fetchAllMyAllocations(this.loggedUser?.id)
+        this.fetchAllMyAllocationsPageable(this.loggedUser?.id)
       } else {
         this.location.back();
       }      
     } else {      
-      this.fetchAllAllocations();
+      this.fetchAllAllocationsPageable();
     }
     
   }
 
-  public fetchAllAllocations(): void {
-    this.allocationService.fetchAllAllocations().subscribe(
-      (allocations) => {
-        this.allocations = allocations;
+  // public fetchAllAllocations(): void {
+  //   this.allocationService.fetchAllAllocations().subscribe(
+  //     (allocations) => {
+  //       this.allocations = allocations;
+  //     }
+  //   );
+  // }
+  
+  public fetchAllAllocationsPageable(): void {
+    this.allocationService.fetchAllAllocationsPageable(this.pageRequest).subscribe(
+      (allocationPageable) => {
+        this.allocations = allocationPageable.data;
+        this.pageableMeta = allocationPageable.pageableMeta;
       }
     );
   }
 
-  public fetchAllMyAllocations(userId: number): void {
-    this.allocationService.fetchAllMyAllocations(userId).subscribe(
-      (allocations) => {
-        this.allocations = allocations;
+  private onPaginationEvent(event: PageRequestModel): void {
+    this.pageRequest = event;
+    if(this.routerService.getCurrentUrl().includes("all-mine")) {
+      this.fetchAllMyAllocationsPageable(this.loggedUser?.id);
+    } else {
+    this.fetchAllAllocationsPageable();
+    }
+  }
+
+  public fetchAllMyAllocationsPageable(userId: number): void {
+    this.allocationService.fetchAllMyAllocationsPageable(userId, this.pageRequest).subscribe(
+      (allocationPageable) => {
+        this.allocations = allocationPageable.data;
+        this.pageableMeta = allocationPageable.pageableMeta;
         this.canShowFollowUpOption = true;
       }
     );

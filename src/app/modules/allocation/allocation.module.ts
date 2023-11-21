@@ -19,6 +19,7 @@ import { StaffFollowUpAllocationProcessComponent } from './staff-follow-up-alloc
 import { PipeModule } from 'app/pipes/pipe.module';
 import { AllocationDetailsComponent } from './allocation-details/allocation-details.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { PaginationModule } from 'app/shared/pagination/pagination.module';
 
 
 
@@ -42,6 +43,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     ReactiveFormsModule,
     NgbModule,
     JwBootstrapSwitchNg2Module,
+    PaginationModule,
    
     ErrorMsgModule,
     PipeModule,

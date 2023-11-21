@@ -1,3 +1,5 @@
+import { PageableMetaModel } from "./pageable-meta-model";
+
 export interface UserModel {
     id: number;
     name: string;
@@ -7,6 +9,11 @@ export interface UserModel {
     active: boolean;
     profiles: ProfileModel[];
     permissions: PermissionModel[];
+}
+
+export interface UserPageModel {
+    data: UserModel[];
+    pageableMeta: PageableMetaModel;
 }
 
 

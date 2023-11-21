@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserModel, UserRequestModel, UserResourceModel } from 'app/models/user-model';
+import { PageRequestModel } from 'app/models/pageable-meta-model';
+import { UserModel, UserPageModel, UserRequestModel, UserResourceModel } from 'app/models/user-model';
 import { ClientService } from 'app/security/services/client.service';
+import { isEmpty } from 'app/shared/utils/utils';
 import { Observable, take } from 'rxjs';
 
 @Injectable({
@@ -13,9 +15,14 @@ export class UserService {
 
   constructor(private http: HttpClient, private clientService: ClientService) {}
 
-  public fetchAllUsers(): Observable<UserModel[]> {
-    this.url = this.clientService.urlAuthWS(`${this.userContext}/fetch-all`);
-    return this.http.get<UserModel[]>(this.url).pipe(take(1));
+  public fetchAllUsersPageable(pageRequest: PageRequestModel) : Observable<UserPageModel> {
+
+    if(!isEmpty(pageRequest.sortBy)) {
+      this.url = this.clientService.urlAuthWS(`${this.userContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
+    } else {
+      this.url = this.clientService.urlAuthWS(`${this.userContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
+    }
+    return this.http.get<UserPageModel>(this.url);
   }
 
   public fetchUserById(userId: number): Observable<UserModel> {

@@ -8,6 +8,7 @@ import { SwalManagementService } from 'app/shared/swal-management.service';
 import { switchMap } from 'rxjs';
 import Swal from "sweetalert2";
 import { NgxPermissionsService } from 'ngx-permissions';
+import { PageRequestModel, PageableMetaModel } from 'app/models/pageable-meta-model';
 
 @Component({
   selector: 'user-list',
@@ -17,29 +18,35 @@ import { NgxPermissionsService } from 'ngx-permissions';
 export class UserListComponent extends GenericComponent implements OnInit {
 
   public users: UserModel[];
+  private pageableMeta: PageableMetaModel;
+  private pageRequest: PageRequestModel = {
+    offset: 0,
+    pageSize: 10,
+    sortBy: null
+  };
 
   constructor(private userService: UserService, private ngxPermissionService: NgxPermissionsService, private router: Router, private swalManagService: SwalManagementService) { 
     super()
   }
 
   ngOnInit(): void {
-    this.fetchAllUsers();
+    this.fetchAllUsersPageable();
     let permissions = this.ngxPermissionService.getPermissions();
-    // console.log(permissions);
-  //   this.ngxPermissionService.loadPermissions(['DELETE_USER']);
-    
-  //   this.ngxPermissionService.permissions$.subscribe((permissions) => {
-  //     console.log(permissions)
-  // })
   }
 
-  public fetchAllUsers(): void {
-    this.userService.fetchAllUsers().subscribe(
-      (response) => {
-        this.users = response;
+  public fetchAllUsersPageable(): void {
+    this.userService.fetchAllUsersPageable(this.pageRequest).subscribe(
+      (userPageable) => {
+        this.users = userPageable.data;
+        this.pageableMeta = userPageable.pageableMeta;
         
       }
     )
+  }
+
+  private onPaginationEvent(event: PageRequestModel): void {
+    this.pageRequest = event;
+    this.fetchAllUsersPageable();
   }
 
   public userDetails(userId: number): void {

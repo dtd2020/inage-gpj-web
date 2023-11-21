@@ -1,3 +1,4 @@
+import { PageableMetaModel } from "./pageable-meta-model";
 import { ProcessModel } from "./process-model";
 import { StaffModel } from "./staff-model";
 
@@ -10,6 +11,11 @@ export interface AllocationModel {
     status: string;
     closed: boolean;
     allocationComments: AllocationCommentModel[];
+}
+
+export interface AllocationPageModel {
+    data: AllocationModel[];
+    pageableMeta: PageableMetaModel;
 }
 
 export interface AllocationCommentModel{
