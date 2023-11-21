@@ -43,7 +43,6 @@ export class PaginationComponent implements OnInit{
   constructor() {}
   ngOnInit(): void {
     this.pageRequest.pageSize = this.defaultPageSize;
-    console.log(this.pageRequest);
     this.totalPagesArrayForLoop = new Array(this.pageableMeta?.totalPages);
   }
 

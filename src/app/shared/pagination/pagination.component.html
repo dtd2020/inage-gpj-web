@@ -1,8 +1,11 @@
 <div class="row">
-  <div class="col-md-2 col-md-offset-1">
+  <div class="col-md-2" style="margin-top: 5px;">
+    <span class="text-muted"> Total de registos: {{pageableMeta?.totalElements}}</span>
+  </div>
+  <div class="col-md-2" style="margin-top: -5px;">
       <div class="form-group">
           <select class="form-control custom-select">
-              <option (click)="selectPageSize(null)">Itens por página</option>
+              <option (click)="selectPageSize(null)">Itens</option>
               <option *ngFor="let pageSize of pagesSize" (click)="selectPageSize(pageSize)">
                   {{pageSize}}</option>
           </select>

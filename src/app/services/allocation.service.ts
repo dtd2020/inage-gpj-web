@@ -25,11 +25,6 @@ export class AllocationService {
     this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/fetch-by-id/${allocationId}/with-comment-history`);
     return this.http.get<AllocationModel>(this.url).pipe(take(1));
   }
-  
-  // public fetchAllAllocations() : Observable<AllocationModel[]> {
-  //   this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/fetch-all`);
-  //   return this.http.get<AllocationModel[]>(this.url).pipe(take(1));
-  // }
 
   public fetchAllAllocationsPageable(pageRequest: PageRequestModel) : Observable<AllocationPageModel> {
     if(!isEmpty(pageRequest.sortBy)) {
@@ -40,15 +35,16 @@ export class AllocationService {
     return this.http.get<AllocationPageModel>(this.url);
   }
 
-  public findAllocationResources(): Observable<AllocationResourceModel> {
-    this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/resources`);
-    return this.http.get<AllocationResourceModel>(this.url).pipe(take(1));
+  public findAllocationResourcesPageable(pageRequest: PageRequestModel): Observable<AllocationResourceModel> {
+
+    if(!isEmpty(pageRequest.sortBy)) {
+      this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/resources/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
+    } else {
+      this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/resources/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
+    }
+    return this.http.get<AllocationResourceModel>(this.url);
   }
   
-  // public fetchAllMyAllocations(userId: number): Observable<AllocationModel[]> {
-  //   this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/fetch-all-by-staff/${userId}`);
-  //   return this.http.get<AllocationModel[]>(this.url).pipe(take(1));
-  // }
 
   public fetchAllMyAllocationsPageable(userId: number, pageRequest: PageRequestModel) : Observable<AllocationPageModel> {
     if(!isEmpty(pageRequest.sortBy)) {

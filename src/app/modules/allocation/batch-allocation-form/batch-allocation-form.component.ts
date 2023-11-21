@@ -7,6 +7,7 @@ import { GenericComponent } from 'app/shared/generic/generic.component';
 import { BatchAllocationModel } from 'app/models/allocation-model';
 import { SwalManagementService } from 'app/shared/swal-management.service';
 import { Router } from '@angular/router';
+import { PageRequestModel, PageableMetaModel } from 'app/models/pageable-meta-model';
 
 @Component({
   selector: 'batch-allocation-form',
@@ -22,6 +23,13 @@ export class BatchAllocationFormComponent extends GenericComponent implements On
   public processesAvailableToAllocate: ProcessModel[] = [];
   public processesToALlocate: ProcessModel[] = [];
   public staff: StaffModel[] = [];
+  private pageableMeta: PageableMetaModel;
+  private pageRequest: PageRequestModel = {
+    offset: 0,
+    pageSize: 10,
+    sortBy: null
+  };
+
 
 
   constructor(private router: Router, private allocationService: AllocationService, private formBuilder: FormBuilder, private swalManagService: SwalManagementService) {
@@ -29,31 +37,53 @@ export class BatchAllocationFormComponent extends GenericComponent implements On
   }
 
   ngOnInit(): void {    
-    this.findAllocationResources();
+    this.findAllocationResourcesPageable();
   }
 
-  public findAllocationResources(): void {
-    this.allocationService.findAllocationResources().subscribe(
-      (response) => {
-        this.processesAvailableToAllocate = response.availableProcessesToAllocate;
-        this.staff = response.staff;
+  public findAllocationResourcesPageable(): void {
+    this.allocationService.findAllocationResourcesPageable(this.pageRequest).subscribe(
+      (resourcePageable) => {
+        this.processesAvailableToAllocate = resourcePageable?.processPageable?.data;
+        this.filterOnPagination();
+        this.staff = resourcePageable.staff;
+        this.pageableMeta = resourcePageable?.processPageable?.pageableMeta;
         this.createForm();
         this.canShowForm = true;
       }
     )
   }
 
-  public createForm() {
+  private filterOnPagination() {
+    this.processesAvailableToAllocate = this.processesAvailableToAllocate.filter(pAvailableToAllocate => {
+      if(this.processesToALlocate.some(pToAllocate => pToAllocate?.id === pAvailableToAllocate?.id)) {
+        return null;
+      } else {
+        return true
+      }
+    })
+  }
 
+
+  private onPaginationEvent(event: PageRequestModel): void {
+    this.pageRequest = event;
+    this.findAllocationResourcesPageable();
+  }
+
+  public createForm() {
     this.form = this.formBuilder.group({
       staffId: [null, [Validators.required]]
     });
   }
 
   public addProcess(process: ProcessModel) {
-    this.processesToALlocate.push(process);
-    this.processesAvailableToAllocate = this.processesAvailableToAllocate.filter(p => p.id !== process?.id);
+    if(this.processesToALlocate.some(p => p?.id === process?.id)) {
+      this.swalManagService.sweetAlterError("Processo já adicionado à lista!");
+    } else {
+      this.processesToALlocate.push(process);
+      this.processesAvailableToAllocate = this.processesAvailableToAllocate.filter(p => p.id !== process?.id);
+    }  
   }
+  
 
   public removeProcess(process: ProcessModel) {
     this.processesToALlocate = this.processesToALlocate.filter(p => p.id !== process?.id);

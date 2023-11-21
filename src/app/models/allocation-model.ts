@@ -1,5 +1,5 @@
 import { PageableMetaModel } from "./pageable-meta-model";
-import { ProcessModel } from "./process-model";
+import { ProcessModel, ProcessPageModel } from "./process-model";
 import { StaffModel } from "./staff-model";
 
 export interface AllocationModel {
@@ -54,7 +54,12 @@ export interface SingleAllocationModel {
     processIds: number;
 }
 
+// export interface AllocationResourceModel {
+//     availableProcessesToAllocate: ProcessModel[],
+//     staff: StaffModel[]
+// }
+
 export interface AllocationResourceModel {
-    availableProcessesToAllocate: ProcessModel[],
+    processPageable: ProcessPageModel,
     staff: StaffModel[]
 }
