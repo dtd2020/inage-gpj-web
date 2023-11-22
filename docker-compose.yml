@@ -18,7 +18,7 @@ services:
     container_name: inage-gpj-nginx-${APP_ENV}
     restart: unless-stopped
     ports:
-      - 4300:80
+      - ${PORT}:80
     volumes:
       - ./docker/nginx/:/etc/nginx/conf.d/
     depends_on:
