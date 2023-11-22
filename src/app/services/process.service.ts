@@ -4,6 +4,7 @@ import { AttachmentFormDataRequest, AttachmentModel, AttachmentResponseModel } f
 import { PageRequestModel } from 'app/models/pageable-meta-model';
 import { ProcessModel, ProcessPageModel } from 'app/models/process-model';
 import { ClientService } from 'app/security/services/client.service';
+import { HttpParamsUtilService } from 'app/shared/utils/http-params-util.service';
 import { isEmpty } from 'app/shared/utils/utils';
 import { BehaviorSubject, take, Observable } from 'rxjs';
 
@@ -18,7 +19,7 @@ export class ProcessService {
   private step$ = new BehaviorSubject<string>('');
   public step = this.step$.asObservable();
 
-  constructor(private http: HttpClient, private clientService: ClientService) { }
+  constructor(private http: HttpClient, private clientService: ClientService, private httpParamsUtilService: HttpParamsUtilService) { }
 
   public setStep(step: string) {
     this.step$.next(step);
@@ -31,30 +32,21 @@ export class ProcessService {
   
   
   public fetchAllProcessesPageable(pageRequest: PageRequestModel) : Observable<ProcessPageModel> {
-    if(!isEmpty(pageRequest.sortBy)) {
-      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
-    } else {
-      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
-    }
-    return this.http.get<ProcessPageModel>(this.url).pipe(take(1));
+    let params = this.httpParamsUtilService.getPageRequestParams(pageRequest);
+    this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all/pageable`);
+    return this.http.get<ProcessPageModel>(this.url, {params: params}).pipe(take(1));
   }
 
   public fetchAllComplainerProcessesByUserIdPageable(userId: number, pageRequest: PageRequestModel) : Observable<ProcessPageModel>{
-    if(!isEmpty(pageRequest.sortBy)) {
-      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-by-user-id/${userId}/complainer/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
-    } else {
-      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-by-user-id/${userId}/complainer/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
-    }
-    return this.http.get<ProcessPageModel>(this.url).pipe(take(1));
+    let params = this.httpParamsUtilService.getPageRequestParams(pageRequest);
+    this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-by-user-id/${userId}/complainer/pageable`);
+    return this.http.get<ProcessPageModel>(this.url, {params: params}).pipe(take(1));
   }
 
   public findAllProcessesToAllocatePageable(pageRequest: PageRequestModel) : Observable<ProcessPageModel>{
-    if(!isEmpty(pageRequest.sortBy)) {
-      this.url = this.clientService.urlProcessingWS(`${this.processContext}/find-all-availabe-to-allocate/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
-    } else {
-      this.url = this.clientService.urlProcessingWS(`${this.processContext}/find-all-availabe-to-allocate/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
-    }
-    return this.http.get<ProcessPageModel>(this.url).pipe(take(1));
+    let params = this.httpParamsUtilService.getPageRequestParams(pageRequest);
+    this.url = this.clientService.urlProcessingWS(`${this.processContext}/find-all-availabe-to-allocate/pageable`);
+    return this.http.get<ProcessPageModel>(this.url, {params: params}).pipe(take(1));
   }
   
   public fetchAllAllocatedProcesses() : Observable<ProcessModel[]> {
@@ -63,14 +55,9 @@ export class ProcessService {
   }
   
   public fetchAllAllocatedProcessesPageable(pageRequest: PageRequestModel) : Observable<ProcessPageModel> {
-
-    if(!isEmpty(pageRequest.sortBy)) {
-      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-allocated/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
-    } else {
-      this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-allocated/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
-    }
-    
-    return this.http.get<ProcessPageModel>(this.url).pipe(take(1));
+    let params = this.httpParamsUtilService.getPageRequestParams(pageRequest);
+    this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-all-allocated/pageable`);    
+    return this.http.get<ProcessPageModel>(this.url, {params: params}).pipe(take(1));
   }
 
   // TODO: create a separate service that finds a process by id
@@ -126,8 +113,6 @@ export class ProcessService {
       formData.append('names', attachment?.fileName);
     })
     formData.append('processId', processId.toString());
-    
-    console.log("BATCUUU");
     
     return this.http.post<void>(this.url, formData).pipe(take(1));
   }

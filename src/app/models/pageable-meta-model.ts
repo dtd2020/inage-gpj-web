@@ -11,5 +11,10 @@ export interface PageableMetaModel {
 export interface PageRequestModel {
 	offset: number;
 	pageSize: number;
-	sortBy: string;
+	sortBy: SortByModel[];
+}
+
+export interface SortByModel {
+	direction: string;
+	property: string;
 }

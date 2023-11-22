@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { ComplainerModel, ComplainerPageModel } from 'app/models/complainer-model';
 import { PageRequestModel } from 'app/models/pageable-meta-model';
 import { ClientService } from 'app/security/services/client.service';
+import { HttpParamsUtilService } from 'app/shared/utils/http-params-util.service';
 import { isEmpty } from 'app/shared/utils/utils';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ComplainerService {
   private complainerContext: string = "/complainers";
   private url: string;
 
-  constructor(private clientService: ClientService, private http: HttpClient) { }
+  constructor(private clientService: ClientService, private http: HttpClient, private httpParamsUtilService: HttpParamsUtilService) { }
 
   public findComplainerByUserId(userId: number) : Observable<ComplainerModel> {
     this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/find-by-user-id/${userId}`);
@@ -27,12 +28,9 @@ export class ComplainerService {
   }
 
   public fetchAllComplainersPageable(pageRequest: PageRequestModel) : Observable<ComplainerPageModel> {
-    if(!isEmpty(pageRequest.sortBy)) {
-      this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
-    } else {
-      this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
-    }
-    return this.http.get<ComplainerPageModel>(this.url);
+    let params = this.httpParamsUtilService.getPageRequestParams(pageRequest);
+    this.url = this.clientService.urlProcessingWS(`${this.complainerContext}/fetch-all/pageable`);
+    return this.http.get<ComplainerPageModel>(this.url, {params: params}).pipe(take(1));
   }
 
   public saveComplainer(complainer: ComplainerModel): Observable<ComplainerModel> {

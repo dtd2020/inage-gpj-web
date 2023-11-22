@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ClientService } from 'app/security/services/client.service';
@@ -6,6 +6,7 @@ import { ComplainerModel } from 'app/models/complainer-model';
 import { StaffModel, StaffPageModel } from 'app/models/staff-model';
 import { isEmpty } from 'app/shared/utils/utils';
 import { PageRequestModel } from 'app/models/pageable-meta-model';
+import { HttpParamsUtilService } from 'app/shared/utils/http-params-util.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class StaffService {
   private staffContext: string = "/staffs";
   private url: string;
 
-  constructor(private clientService: ClientService, private http: HttpClient) { }
+  constructor(private clientService: ClientService, private http: HttpClient, private httpParamsUtilService: HttpParamsUtilService) { }
 
   public findAllStaffes() : Observable<StaffModel[]> {
     this.url = this.clientService.urlProcessingWS(`${this.staffContext}/find-all`);
@@ -28,13 +29,9 @@ export class StaffService {
   }
 
   public fetchAllStaffsPageable(pageRequest: PageRequestModel) : Observable<StaffPageModel> {
-    if(!isEmpty(pageRequest.sortBy)) {
-
-    } else {
-      this.url = this.clientService.urlProcessingWS(`${this.staffContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
-    }
-    this.url = this.clientService.urlProcessingWS(`${this.staffContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
-    return this.http.get<StaffPageModel>(this.url);
+    let params = this.httpParamsUtilService.getPageRequestParams(pageRequest);
+    this.url = this.clientService.urlProcessingWS(`${this.staffContext}/fetch-all/pageable`);
+    return this.http.get<StaffPageModel>(this.url, {params: params}).pipe(take(1));
   }
   
   public findStaffByUserId(userId: number) : Observable<StaffModel> {

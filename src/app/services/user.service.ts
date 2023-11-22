@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PageRequestModel } from 'app/models/pageable-meta-model';
 import { UserModel, UserPageModel, UserRequestModel, UserResourceModel } from 'app/models/user-model';
 import { ClientService } from 'app/security/services/client.service';
+import { HttpParamsUtilService } from 'app/shared/utils/http-params-util.service';
 import { isEmpty } from 'app/shared/utils/utils';
 import { Observable, take } from 'rxjs';
 
@@ -13,16 +14,13 @@ export class UserService {
   private userContext: string = "/users";
   private url: string;
 
-  constructor(private http: HttpClient, private clientService: ClientService) {}
+  constructor(private http: HttpClient, private clientService: ClientService, private httpParamsUtilService: HttpParamsUtilService) {}
 
-  public fetchAllUsersPageable(pageRequest: PageRequestModel) : Observable<UserPageModel> {
-
-    if(!isEmpty(pageRequest.sortBy)) {
-      this.url = this.clientService.urlAuthWS(`${this.userContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}&sortBy=${pageRequest.sortBy}`);
-    } else {
-      this.url = this.clientService.urlAuthWS(`${this.userContext}/fetch-all/pageable?offset=${pageRequest.offset}&pageSize=${pageRequest.pageSize}`);
-    }
-    return this.http.get<UserPageModel>(this.url);
+  public fetchAllUsersPageable(pageRequest: PageRequestModel) : Observable<UserPageModel> {   
+    
+    let params = this.httpParamsUtilService.getPageRequestParams(pageRequest);
+    this.url = this.clientService.urlAuthWS(`${this.userContext}/fetch-all/pageable`);
+    return this.http.get<UserPageModel>(this.url, {params: params}).pipe(take(1));
   }
 
   public fetchUserById(userId: number): Observable<UserModel> {
