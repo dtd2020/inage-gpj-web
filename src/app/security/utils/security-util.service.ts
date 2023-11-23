@@ -2,7 +2,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 import { Injectable } from '@angular/core';
 import { DecodedTokenModel } from '../models/auth-model';
-import { LocalUserModel, ProfileModel } from '../models/local-user';
+import { LocalUserModel, ProfileModel, SimpleProfileModel } from '../models/local-user';
+import { PermissionModel, UserModel } from 'app/models/user-model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class SecurityUtilService {
     localStorage.setItem('token', token);
   }
 
+
   public removeToken() : void {
     localStorage.removeItem('token');
   }
@@ -37,7 +39,6 @@ export class SecurityUtilService {
 
   public getLocalUserFromToken() : LocalUserModel {
     if(this.getToken()) {
-      
       return this.getDecodedToken()?.user;
     } else {
       return null;
@@ -50,7 +51,7 @@ export class SecurityUtilService {
     
   }
 
-  public isIncludedProfile(profiles: ProfileModel[], profileCode: string) {
+  public isIncludedProfile(profiles: SimpleProfileModel[], profileCode: string) {
     let result: boolean = false;
     profiles.forEach((profile) => {
       if (profile.code == profileCode) {

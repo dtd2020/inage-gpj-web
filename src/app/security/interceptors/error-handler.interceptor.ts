@@ -17,8 +17,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
 
       catchError(ex => {
-        if (ex instanceof HttpErrorResponse) {          
-          // console.log(ex);
+        if (ex instanceof HttpErrorResponse) { 
           
           if(ex.error.message.includes('JWT expired') || ex.error.message.includes('un authorized access to application')) {
             this.swalManagService.sweetAlterError("A sua sessão expirou!")

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { SecurityService } from '../services/security.service';
 import { SwalManagementService } from 'app/shared/swal-management.service';
 import { Location } from '@angular/common';
+import { SimpleProfileModel } from '../models/local-user';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class BackOfficeGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    let userRoles = this.securityService.localUser.profiles;
+    let userRoles: SimpleProfileModel[] = this.securityService.localUser.profiles;
     let isAuthorized = false;
 
       if(userRoles.some(uRole => {

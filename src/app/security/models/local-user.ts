@@ -9,8 +9,10 @@ export interface LocalUserModel {
     iat: string;
     exp: string;
     authorities: AuthorityModel[];
-    profiles: ProfileModel[];
-    permissions: PermissionModel[];
+    // profiles: ProfileModel[];
+    // permissions: PermissionModel[];
+    profiles: SimpleProfileModel[];
+    permissions: string[];
 }
 
 export interface AuthorityModel {
@@ -22,6 +24,11 @@ export interface ProfileModel {
     code: string;
     description: string;
     permissions: PermissionModel[]
+}
+
+export interface SimpleProfileModel {
+    code: string;
+    description: string;
 }
 
 export interface PermissionModel {

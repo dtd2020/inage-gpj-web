@@ -15,35 +15,18 @@ export class HasPermissionGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    let userPermissions: PermissionModel[] = this.getUserPermissions();
+    let userPermissions: string[] = this.securityService.localUser?.permissions;
     let dataPermissions: string[] = route.data.permissions;
     let isAuthorized: boolean = false;    
 
     dataPermissions.forEach((dataPermission) => {
-      if(userPermissions.some(userPermission => userPermission.code == dataPermission)) {
+      if(userPermissions.some(userPermission => userPermission == dataPermission)) {
         isAuthorized = true;
       } else {
         this.swalManagService.sweetAlterError("Sem permissão!");
       }
     })
     return isAuthorized;
-  }
-
-  private getUserPermissions() : PermissionModel[]{
-    let loggedUser = this.securityService.localUser;
-    let profilePermissions: PermissionModel[];
-    let userPermissions: PermissionModel[] = this.securityService.localUser.permissions;
-
-    loggedUser.profiles.forEach(profile => {
-      profile.permissions.forEach(permission => {
-        if(!userPermissions.some(userPermission => userPermission.code == permission.code)) {
-          userPermissions.push(permission);
-        }
-      })
-    })
-
-    return userPermissions;
-
   }
   
 }

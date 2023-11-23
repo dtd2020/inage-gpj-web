@@ -32,8 +32,8 @@ export class SecurityService {
   ) {
     this.localUser$.next(this.getLocalUserFromToken());
     this.localUser = this.getLocalUserFromToken();
-    if(!isEmpty(this.localUser)) {
-      this.ngxLoadPermissions(); 
+    if (!isEmpty(this.localUser)) {
+      this.ngxLoadPermissions();
     }
   }
 
@@ -50,19 +50,20 @@ export class SecurityService {
           this.localUser$.next(this.getLocalUserFromToken());
           this.localUser = this.getLocalUserFromToken();
           this.ngxLoadPermissions(); 
-          this.redirectAfterLogin(this.getLocalUserFromToken());
+          this.redirectAfterLogin(this.localUser);
         }
       );
   }
+
 
   public register(user: UserRequestModel) {
     this.http.post<LoginResponseModel>(this.clientService.urlAuthWS(`/auth/self-register`), user).pipe(take(1)).subscribe(
       (response) => {
         this.setToken(response.token);
-        this.localUser$.next(this.getLocalUserFromToken()); 
-        this.localUser = this.getLocalUserFromToken();     
+        this.localUser$.next(this.getLocalUserFromToken());
+        this.localUser = this.getLocalUserFromToken();
         this.ngxLoadPermissions();   
-        this.router.navigate(['guest/complainer/create-edit'], { queryParams: {userId: this.localUser?.id} });  
+        this.router.navigate(['guest/complainer/create-edit'], { queryParams: { userId: this.localUser?.id } });
       }
     )
   }
@@ -70,6 +71,7 @@ export class SecurityService {
   public getToken(): string {
     return this.securityUtil.getToken();
   }
+
 
   private setToken(token: string): void {
     this.securityUtil.setToken(token);
@@ -89,68 +91,68 @@ export class SecurityService {
 
   private redirectAfterLogin(user: LocalUserModel) {
 
-    if(user?.profiles.length > 0) { 
-      if(this.securityUtil.isIncludedProfile(user?.profiles, "COMPLAINER")) {
+    if (user?.profiles.length > 0) {
+      if (this.securityUtil.isIncludedProfile(user?.profiles, "COMPLAINER")) {
         this.router.navigate(["/citezen"]);
       } else {
 
         if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.localUser.profiles.some(profile => profile.code == 'COORDINATOR')) && (this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
           // console.log('1 - ADMIN - COORDINATOR - ACCESSOR');       
           this.router.navigate(["/back-office"]);
-         } else if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.localUser.profiles.some(profile => profile.code == 'COORDINATOR'))) {
+        } else if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.localUser.profiles.some(profile => profile.code == 'COORDINATOR'))) {
           //  console.log('2 - ADMIN - COORDINATOR - ACCESSOR'); 
-           this.router.navigate(["/back-office"]);
-         } else if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
+          this.router.navigate(["/back-office"]);
+        } else if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN')) && (this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
           //  console.log('3 - ADMIN - COORDINATOR - ACCESSOR'); 
-           this.router.navigate(["/back-office"]);
-         } else if ((this.localUser.profiles.some(profile => profile.code == 'COORDINATOR')) && (this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
+          this.router.navigate(["/back-office"]);
+        } else if ((this.localUser.profiles.some(profile => profile.code == 'COORDINATOR')) && (this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
           //  console.log('4 - ADMIN - COORDINATOR - ACCESSOR'); 
-           this.router.navigate(["/back-office"]);
-         } else if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN'))) {
+          this.router.navigate(["/back-office"]);
+        } else if ((this.localUser.profiles.some(profile => profile.code == 'ADMIN'))) {
           //  console.log('5 - ADMIN - COORDINATOR - ACCESSOR'); 
-           this.router.navigate(["/back-office"]);
-         } else if ((this.localUser.profiles.some(profile => profile.code == 'COORDINATOR'))) {
+          this.router.navigate(["/back-office"]);
+        } else if ((this.localUser.profiles.some(profile => profile.code == 'COORDINATOR'))) {
           //  console.log('6 - ADMIN - COORDINATOR - ACCESSOR'); 
-           this.router.navigate(["/back-office/processes/list"]);
-         } else if ((this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
+          this.router.navigate(["/back-office/processes/list"]);
+        } else if ((this.localUser.profiles.some(profile => profile.code == 'ACCESSOR'))) {
           //  console.log('7 - ACCESSOR'); 
-           this.router.navigate(["/back-office/allocations/all-mine"]);
-         } else {
+          this.router.navigate(["/back-office/allocations/all-mine"]);
+        } else {
           //  console.log('NENHUM');
-           this.router.navigate(["/back-office"]);
-         }
+          this.router.navigate(["/back-office"]);
+        }
 
-        
+
       }
     } else {
       this.router.navigate(["/auth/login"]);
     }
-    
+
   }
 
-  private ngxLoadPermissions() : void {
-    let permissions = this.getPermissions(this.localUser);
-    this.ngxPermissionService.loadPermissions(permissions);
-    
+  private ngxLoadPermissions(): void {
+    // let permissions = this.getPermissions(this.localUser);
+    this.ngxPermissionService.loadPermissions(this.localUser?.permissions);
+
   }
 
-  private getPermissions(l) : string[] {
-    let permissions : string[] = [];
-    let userPermissions = this.localUser.permissions;
-    let profilePermissions : PermissionModel[] = [];
+  // private getPermissions(l): string[] {
+  //   let permissions: string[] = [];
+  //   let userPermissions = this.localUser.permissions;
+  //   let profilePermissions: PermissionModel[] = [];
 
-    this.localUser.profiles.forEach((profile) => {
-      profile.permissions.forEach((permission) => {
-        if(!userPermissions.some(userPermission => userPermission.code == permission.code)) {
-          userPermissions.push(permission);
-        }
-      })
-    })
+  //   this.localUser.profiles.forEach((profile) => {
+  //     profile.permissions.forEach((permission) => {
+  //       if (!userPermissions.some(userPermission => userPermission.code == permission.code)) {
+  //         userPermissions.push(permission);
+  //       }
+  //     })
+  //   })
 
-    permissions = userPermissions.map(permission => permission.code);
+  //   permissions = userPermissions.map(permission => permission.code);
 
-    return permissions;
-  }
+  //   return permissions;
+  // }
 
   public logout(): void {
     this.securityUtil.removeToken();

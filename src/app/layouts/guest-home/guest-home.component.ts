@@ -1,6 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
 import { LocalUserModel } from 'app/security/models/local-user';
 import { SecurityService } from 'app/security/services/security.service';
+import { isEmpty } from 'app/shared/utils/utils';
 
 @Component({
   selector: 'guest-home',
@@ -39,13 +40,16 @@ export class GuestHomeComponent {
 
         this.securityService.localUserObservar.subscribe((user) => {
             this.loggedUser = user;
-            let profiles = this.loggedUser.profiles;
-            if(profiles.some((profile) => profile.code === 'COMPLAINER')) {
-                this.canShowCitezenSection = true;
-            } else {
-                this.canShowBackOfficeSection = true;
-                this.canShowCitezenSection = true;
+            let profiles = this.loggedUser?.profiles;
+            if(!isEmpty(profiles)) {
+                if(profiles.some((profile) => profile.code === 'COMPLAINER')) {
+                    this.canShowCitezenSection = true;
+                } else {
+                    this.canShowBackOfficeSection = true;
+                    this.canShowCitezenSection = true;
+                }
             }
+            
         })
 
 
