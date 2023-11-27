@@ -18,7 +18,8 @@ export class ComplainerListComponent extends GenericComponent implements OnInit{
   private pageRequest: PageRequestModel = {
     offset: 0,
     pageSize: 10,
-    sortBy: null
+    sortBy: null,
+    filter: null
   };
 
   constructor(private complainerService: ComplainerService, private router: Router, private swalManagService: SwalManagementService) { 

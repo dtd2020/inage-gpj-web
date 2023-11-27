@@ -20,7 +20,8 @@ export class SatffListComponent extends GenericComponent implements OnInit{
   private pageRequest: PageRequestModel = {
     offset: 0,
     pageSize: 10,
-    sortBy: null
+    sortBy: null,
+    filter: null
   };
 
   constructor(private staffService: StaffService, private route: ActivatedRoute, private router: Router, private swalManagService: SwalManagementService) { 

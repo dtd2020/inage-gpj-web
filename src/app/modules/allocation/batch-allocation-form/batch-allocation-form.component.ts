@@ -27,7 +27,8 @@ export class BatchAllocationFormComponent extends GenericComponent implements On
   private pageRequest: PageRequestModel = {
     offset: 0,
     pageSize: 10,
-    sortBy: null
+    sortBy: null,
+    filter: null
   };
 
 

@@ -25,7 +25,8 @@ export class AllocationListComponent extends GenericComponent implements OnInit 
   private pageRequest: PageRequestModel = {
     offset: 0,
     pageSize: 10,
-    sortBy: null
+    sortBy: null,
+    filter: null
   };
 
   public canShowFollowUpOption: boolean = false;

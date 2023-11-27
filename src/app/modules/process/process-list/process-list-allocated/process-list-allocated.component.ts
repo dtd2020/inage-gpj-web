@@ -17,7 +17,8 @@ export class ProcessListAllocatedComponent extends GenericComponent implements O
   private pageRequest: PageRequestModel = {
     offset: 0,
     pageSize: 10,
-    sortBy: null
+    sortBy: null,
+    filter: null
   };
 
   constructor(private router: Router, private processService: ProcessService) {

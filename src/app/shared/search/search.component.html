@@ -1,0 +1,20 @@
+<div>
+    <form [formGroup]="form" method="#" action="#" *ngIf="canShowForm">
+    <div class="row">
+        <div class="col-md-6 text-right" style="margin-top: 5px;">          
+          <a href="javascript:void(0)" *ngIf="form?.value?.filter?.length > 0 || (form?.controls?.filter?.status == 'INVALID' && form?.controls?.filter?.touched == true)" class="text-danger"  (click)="onClearFilter()">Limpar filtro</a>
+      </div>
+        <div class="col-md-6">
+            <div class="input-group ">
+                <input type="text" class="form-control" formControlName="filter" placeholder="Pesquisar">
+                <div class="input-group-append">
+                  <button class="btn-success" type="submit" style="border: none;" (click)="onSubmit()">Pesquisar</button>
+                </div>                
+              </div>
+              <error-msg [control]="getFormControl(form, 'filter')"
+                    label="Filtro"></error-msg>
+           
+        </div>
+    </div>
+</form>
+</div>

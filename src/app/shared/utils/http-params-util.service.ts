@@ -20,6 +20,10 @@ export class HttpParamsUtilService {
     if(!isEmpty(pageRequest.pageSize)) {
       params = params.append("pageSize", pageRequest.pageSize);
     }
+
+    if(!isEmpty(pageRequest.filter)) {
+      params = params.append("filter", pageRequest.filter);
+    }
     
     if(!isEmpty(pageRequest.sortBy)) {
       pageRequest.sortBy.forEach(sort => {

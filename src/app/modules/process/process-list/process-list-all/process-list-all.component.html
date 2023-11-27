@@ -1,12 +1,28 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
+            <div class="card-header">
+            <div class="row">
+                <!-- <div class="col-md-6">
+                    <span class="text-muted" *ngIf="pageRequest?.filter?.length > 0 && processes?.length > 0">Resultados da pesquisa por </span><span class="text-info"><strong>{{pageRequest?.filter}}</strong>. </span>
+                    <a href="javascript:void(0)" *ngIf="pageRequest?.filter?.length > 0 && processes?.length > 0" class="text-danger" (click)="onClearFilter()">Limpar filtro</a>
+                </div> -->
+                <div class="col-md-4">
+                    <span class="text-muted text-righ"  *ngIf="pageRequest?.filter?.length > 0">Resultados da pesquisa por </span><span class="text-info"><strong>{{pageRequest?.filter}}</strong>. </span>
+                </div>
+                <div class="col-md-8">                    
+                    <search (onSearchEvent)="onSearchEvent($event)"></search>
+                </div>
+            </div>
+           
+                
+            </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table">
                         <thead class="text-primary">
                            <tr>
-                            <th class="text-center">
+                            <th class="text-left">
                                 Processo
                             </th>
                             <th>
@@ -25,7 +41,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let process of processes">
-                                <td class="text-center">
+                                <td class="text-left">
                                     {{process?.code}}
                                 </td>
                                 <td>

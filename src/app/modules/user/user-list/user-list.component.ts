@@ -22,7 +22,8 @@ export class UserListComponent extends GenericComponent implements OnInit {
   private pageRequest: PageRequestModel = {
     offset: 0,
     pageSize: 10,
-    sortBy: null
+    sortBy: null,
+    filter: null
   };
 
   constructor(private userService: UserService, private ngxPermissionService: NgxPermissionsService, private router: Router, private swalManagService: SwalManagementService) { 

@@ -12,6 +12,7 @@ export interface PageRequestModel {
 	offset: number;
 	pageSize: number;
 	sortBy: SortByModel[];
+	filter: string;
 }
 
 export interface SortByModel {

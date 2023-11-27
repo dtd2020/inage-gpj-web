@@ -16,6 +16,7 @@ import { ProcessListComplainerComponent } from './process-list/process-list-comp
 import { ComplainerModule } from '../complainer/complainer.module';
 import { PipeModule } from 'app/pipes/pipe.module';
 import { PaginationModule } from 'app/shared/pagination/pagination.module';
+import { SearchModule } from 'app/shared/search/search.module';
 
 
 
@@ -37,6 +38,7 @@ import { PaginationModule } from 'app/shared/pagination/pagination.module';
     RouterModule,
     ErrorMsgModule,
     PaginationModule,
+    SearchModule,
     PipeModule,
     ComplainerModule,
     AttachmentModule

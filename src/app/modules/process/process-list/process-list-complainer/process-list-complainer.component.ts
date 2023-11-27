@@ -22,7 +22,8 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
   private pageRequest: PageRequestModel = {
     offset: 0,
     pageSize: 10,
-    sortBy: null
+    sortBy: null,
+    filter: null
   };
   public loggedUser: LocalUserModel;
   private readonly AWAITINIG_COMPLAINER_RESPONSE: string = ProcessStatusEnum.AWAITING_COMPLAINER_RESPONSE.key;

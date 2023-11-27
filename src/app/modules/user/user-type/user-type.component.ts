@@ -38,9 +38,15 @@ export class UserTypeComponent extends GenericComponent implements OnInit {
     });
   }
 
+  
   public onSubmit() {
-    this.router.navigate(['/back-office/users/create-edit'], { queryParams: {userType: this.form?.value.userType }});
+    if (this.isValidForm(this.form)) {
+      this.router.navigate(['/back-office/users/create-edit'], { queryParams: {userType: this.form?.value.userType }});
+    } else {
+      return;
+    }
   }
+  
 
 
   public getFormRequestData(form: any) : UserTypeModel{
