@@ -54,6 +54,22 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
     this.fetchAllComplainerProcessesByUserIdPageable(this.loggedUser?.id);
   }
 
+  private onSearchEvent(event: string): void {
+    if(!isEmpty(event)) {
+      this.pageRequest.offset = 0;
+      this.pageRequest.filter = event;
+      this.fetchAllComplainerProcessesByUserIdPageable(this.loggedUser?.id);
+    } else {
+      this.onClearFilter();
+    }
+  }
+
+  private onClearFilter() : void {
+    this.pageRequest.offset = 0;
+    this.pageRequest.filter = null;
+    this.fetchAllComplainerProcessesByUserIdPageable(this.loggedUser?.id);
+  }
+
   public createProcess(userId: number): void { 
     this.router.navigate(['/citezen/processes/create-edit'], { queryParams: { userId: userId}});
   }

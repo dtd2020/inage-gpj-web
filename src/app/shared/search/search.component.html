@@ -1,8 +1,9 @@
 <div>
     <form [formGroup]="form" method="#" action="#" *ngIf="canShowForm">
     <div class="row">
-        <div class="col-md-6 text-right" style="margin-top: 5px;">          
-          <a href="javascript:void(0)" *ngIf="form?.value?.filter?.length > 0 || (form?.controls?.filter?.status == 'INVALID' && form?.controls?.filter?.touched == true)" class="text-danger"  (click)="onClearFilter()">Limpar filtro</a>
+        <div class="col-md-6 text-right" style="margin-top: 4px;">          
+          <a href="javascript:void(0)" *ngIf="form?.value?.filter?.length > 0 || (form?.controls?.filter?.status == 'INVALID' && form?.controls?.filter?.touched == true)" class="text-danger nav-link"  (click)="onClearFilter()"><i class="fa fa-times" aria-hidden="true"></i>
+            Limpar filtro</a>
       </div>
         <div class="col-md-6">
             <div class="input-group ">

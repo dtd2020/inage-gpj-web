@@ -2,42 +2,38 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-            <div class="row">
-                <!-- <div class="col-md-6">
-                    <span class="text-muted" *ngIf="pageRequest?.filter?.length > 0 && processes?.length > 0">Resultados da pesquisa por </span><span class="text-info"><strong>{{pageRequest?.filter}}</strong>. </span>
-                    <a href="javascript:void(0)" *ngIf="pageRequest?.filter?.length > 0 && processes?.length > 0" class="text-danger" (click)="onClearFilter()">Limpar filtro</a>
-                </div> -->
-                <div class="col-md-4">
-                    <span class="text-muted text-righ"  *ngIf="pageRequest?.filter?.length > 0">Resultados da pesquisa por </span><span class="text-info"><strong>{{pageRequest?.filter}}</strong>. </span>
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="text-muted text-righ" *ngIf="pageRequest?.filter?.length > 0">Resultados da
+                            pesquisa por </span><span class="text-info"><strong>{{pageRequest?.filter}}</strong>.
+                        </span>
+                    </div>
+                    <div class="col-md-8">
+                        <search (onSearchEvent)="onSearchEvent($event)"></search>
+                    </div>
                 </div>
-                <div class="col-md-8">                    
-                    <search (onSearchEvent)="onSearchEvent($event)"></search>
-                </div>
-            </div>
-           
-                
             </div>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table">
                         <thead class="text-primary">
-                           <tr>
-                            <th class="text-left">
-                                Processo
-                            </th>
-                            <th>
-                                Tipo
-                            </th>
-                            <th>
-                                Estado
-                            </th>
-                            <th class="text-center">
-                                Requerente
-                            </th>
-                            <th class="text-right">
-                                Acções
-                            </th>
-                           </tr>
+                            <tr>
+                                <th class="text-left">
+                                    Processo
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                                <th>
+                                    Estado
+                                </th>
+                                <th class="text-center">
+                                    Requerente
+                                </th>
+                                <th class="text-right">
+                                    Acções
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let process of processes">
@@ -59,8 +55,8 @@
                                         <i class="fa fa-eye"></i>
                                     </button> -->
 
-                                    <button type="button" 
-                                        class="btn btn-info btn-icon btn-round btn-sm btn-neutral" (click)="processDetails(process?.id)">
+                                    <button type="button" class="btn btn-info btn-icon btn-round btn-sm btn-neutral"
+                                        (click)="processDetails(process?.id)">
                                         <i class="fa fa-eye"></i>
                                     </button>
                                     <!-- <button type="button" 
@@ -79,14 +75,8 @@
             </div>
 
             <div class="card-footer">
-                <pagination
-                    [pageableMeta]="pageableMeta"
-                    [pageRequest]="pageRequest"
-                    [maxSize]="2"
-                    [firstLastButtons]="true"
-                    
-                    (onPaginationEvent)="onPaginationEvent($event)"
-                    >
+                <pagination [pageableMeta]="pageableMeta" [pageRequest]="pageRequest" [maxSize]="2"
+                    [firstLastButtons]="true" (onPaginationEvent)="onPaginationEvent($event)">
                 </pagination>
             </div>
         </div>

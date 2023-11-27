@@ -9,6 +9,19 @@
                         <i class="fa fa-plus mr-2"></i>
                         Criar processo</a>
                 </h6>
+
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <span class="text-muted text-righ" *ngIf="pageRequest?.filter?.length > 0">Resultados da
+                                pesquisa por </span><span class="text-info"><strong>{{pageRequest?.filter}}</strong>.
+                            </span>
+                        </div>
+                        <div class="col-md-8">
+                            <search (onSearchEvent)="onSearchEvent($event)"></search>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">

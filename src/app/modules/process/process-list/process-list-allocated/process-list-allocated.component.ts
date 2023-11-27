@@ -4,6 +4,7 @@ import { PageRequestModel, PageableMetaModel } from 'app/models/pageable-meta-mo
 import { ProcessModel } from 'app/models/process-model';
 import { ProcessService } from 'app/services/process.service';
 import { GenericComponent } from 'app/shared/generic/generic.component';
+import { isEmpty } from 'app/shared/utils/utils';
 
 @Component({
   selector: 'process-list-allocated',
@@ -50,6 +51,22 @@ export class ProcessListAllocatedComponent extends GenericComponent implements O
 
   private onPaginationEvent(event: PageRequestModel): void {
     this.pageRequest = event;
+    this.fetchAllAllocatedProcessesPageable();
+  }
+
+  private onSearchEvent(event: string): void {
+    if(!isEmpty(event)) {
+      this.pageRequest.offset = 0;
+      this.pageRequest.filter = event;
+      this.fetchAllAllocatedProcessesPageable();
+    } else {
+      this.onClearFilter();
+    }
+  }
+
+  private onClearFilter() : void {
+    this.pageRequest.offset = 0;
+    this.pageRequest.filter = null;
     this.fetchAllAllocatedProcessesPageable();
   }
 
