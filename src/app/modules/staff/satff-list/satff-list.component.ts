@@ -54,6 +54,22 @@ export class SatffListComponent extends GenericComponent implements OnInit{
     this.fetchAllStaffsPageable();
   }
 
+  private onSearchEvent(event: string): void {
+    if(!isEmpty(event)) {
+      this.pageRequest.offset = 0;
+      this.pageRequest.filter = event;
+      this.fetchAllStaffsPageable();
+    } else {
+      this.onClearFilter();
+    }
+  }
+
+  private onClearFilter() : void {
+    this.pageRequest.offset = 0;
+    this.pageRequest.filter = null;
+    this.fetchAllStaffsPageable();
+  }
+
   
   public staffDetails(staffId: number) {
     this.router.navigate([`back-office/public-server/staffs/details/${staffId}`]);

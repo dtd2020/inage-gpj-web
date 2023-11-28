@@ -9,6 +9,7 @@ import { switchMap } from 'rxjs';
 import Swal from "sweetalert2";
 import { NgxPermissionsService } from 'ngx-permissions';
 import { PageRequestModel, PageableMetaModel } from 'app/models/pageable-meta-model';
+import { isEmpty } from 'app/shared/utils/utils';
 
 @Component({
   selector: 'user-list',
@@ -47,6 +48,22 @@ export class UserListComponent extends GenericComponent implements OnInit {
 
   private onPaginationEvent(event: PageRequestModel): void {
     this.pageRequest = event;
+    this.fetchAllUsersPageable();
+  }
+
+  private onSearchEvent(event: string): void {
+    if(!isEmpty(event)) {
+      this.pageRequest.offset = 0;
+      this.pageRequest.filter = event;
+      this.fetchAllUsersPageable();
+    } else {
+      this.onClearFilter();
+    }
+  }
+
+  private onClearFilter() : void {
+    this.pageRequest.offset = 0;
+    this.pageRequest.filter = null;
     this.fetchAllUsersPageable();
   }
 

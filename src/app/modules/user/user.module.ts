@@ -11,10 +11,11 @@ import { UserComponent } from './user.component';
 import { UserTypeComponent } from './user-type/user-type.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { PaginationModule } from 'app/shared/pagination/pagination.module';
+import { SearchModule } from 'app/shared/search/search.module';
 
 @NgModule({
   declarations: [UserComponent, UserListComponent, UserFormComponent, UserDetailsComponent, UserTypeComponent],
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, ErrorMsgModule, PaginationModule, NgxPermissionsModule.forChild()],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, ErrorMsgModule, PaginationModule, SearchModule, NgxPermissionsModule.forChild()],
   exports: [UserListComponent, UserFormComponent, UserDetailsComponent],
 })
 export class UserModule {}

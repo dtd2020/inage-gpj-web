@@ -4,6 +4,7 @@ import { PageRequestModel, PageableMetaModel } from 'app/models/pageable-meta-mo
 import { ProcessModel } from 'app/models/process-model';
 import { ProcessService } from 'app/services/process.service';
 import { GenericComponent } from 'app/shared/generic/generic.component';
+import { FilterSearchMapUtilService } from 'app/shared/utils/filter-search-map-util.service';
 import { isEmpty } from 'app/shared/utils/utils';
 
 @Component({
@@ -56,7 +57,7 @@ export class ProcessListAllComponent extends GenericComponent implements OnInit 
   private onSearchEvent(event: string): void {
     if(!isEmpty(event)) {
       this.pageRequest.offset = 0;
-      this.pageRequest.filter = event;
+      this.pageRequest.filter =  FilterSearchMapUtilService.getFilter(event, 'process');
       this.fetchAllProcessesPageable();
     } else {
       this.onClearFilter();

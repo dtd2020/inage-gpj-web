@@ -8,6 +8,7 @@ import { BatchAllocationModel } from 'app/models/allocation-model';
 import { SwalManagementService } from 'app/shared/swal-management.service';
 import { Router } from '@angular/router';
 import { PageRequestModel, PageableMetaModel } from 'app/models/pageable-meta-model';
+import { isEmpty } from 'app/shared/utils/utils';
 
 @Component({
   selector: 'batch-allocation-form',
@@ -67,6 +68,22 @@ export class BatchAllocationFormComponent extends GenericComponent implements On
 
   private onPaginationEvent(event: PageRequestModel): void {
     this.pageRequest = event;
+    this.findAllocationResourcesPageable();
+  }
+
+  private onSearchEvent(event: string): void {
+    if(!isEmpty(event)) {
+      this.pageRequest.offset = 0;
+      this.pageRequest.filter = event;
+      this.findAllocationResourcesPageable();
+    } else {
+      this.onClearFilter();
+    }
+  }
+
+  private onClearFilter() : void {
+    this.pageRequest.offset = 0;
+    this.pageRequest.filter = null;
     this.findAllocationResourcesPageable();
   }
 

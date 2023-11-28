@@ -20,6 +20,7 @@ import { PipeModule } from 'app/pipes/pipe.module';
 import { AllocationDetailsComponent } from './allocation-details/allocation-details.component';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { PaginationModule } from 'app/shared/pagination/pagination.module';
+import { SearchModule } from 'app/shared/search/search.module';
 
 
 
@@ -44,6 +45,7 @@ import { PaginationModule } from 'app/shared/pagination/pagination.module';
     NgbModule,
     JwBootstrapSwitchNg2Module,
     PaginationModule,
+    SearchModule,
    
     ErrorMsgModule,
     PipeModule,

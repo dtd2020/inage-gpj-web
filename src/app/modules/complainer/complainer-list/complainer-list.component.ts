@@ -5,6 +5,7 @@ import { PageRequestModel, PageableMetaModel } from 'app/models/pageable-meta-mo
 import { ComplainerService } from 'app/services/complainer.service';
 import { GenericComponent } from 'app/shared/generic/generic.component';
 import { SwalManagementService } from 'app/shared/swal-management.service';
+import { isEmpty } from 'app/shared/utils/utils';
 
 @Component({
   selector: 'complainer-list',
@@ -41,6 +42,22 @@ export class ComplainerListComponent extends GenericComponent implements OnInit{
 
   private onPaginationEvent(event: PageRequestModel): void {
     this.pageRequest = event;
+    this.fetchAllComplainersPageable();
+  }
+
+  private onSearchEvent(event: string): void {
+    if(!isEmpty(event)) {
+      this.pageRequest.offset = 0;
+      this.pageRequest.filter = event;
+      this.fetchAllComplainersPageable();
+    } else {
+      this.onClearFilter();
+    }
+  }
+
+  private onClearFilter() : void {
+    this.pageRequest.offset = 0;
+    this.pageRequest.filter = null;
     this.fetchAllComplainersPageable();
   }
 

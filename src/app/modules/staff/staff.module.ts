@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { SatffListComponent } from './satff-list/satff-list.component';
 import { StaffDetailsComponent } from './staff-details/staff-details.component';
 import { PaginationModule } from 'app/shared/pagination/pagination.module';
+import { SearchModule } from 'app/shared/search/search.module';
 
 
 
@@ -23,7 +24,8 @@ import { PaginationModule } from 'app/shared/pagination/pagination.module';
     ReactiveFormsModule,
     RouterModule,
     ErrorMsgModule,
-    PaginationModule
+    PaginationModule,
+    SearchModule
   ],
   exports: [StaffComponent,
     StaffFormComponent,

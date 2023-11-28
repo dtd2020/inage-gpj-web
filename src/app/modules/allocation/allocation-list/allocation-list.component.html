@@ -2,11 +2,29 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
+
                 <div class="card-header">
-                    <h6 class="card-title text-left text-primary">
-                        Alocações
-                    </h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6 class="card-title text-info">
+                                Alocações
+                            </h6>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-4" >
+                                    <span class="text-muted text-righ" *ngIf="pageRequest?.filter?.length > 0">Resultados da
+                                        pesquisa por </span><span class="text-info"><strong>{{pageRequest?.filter}}</strong>.
+                                    </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <search (onSearchEvent)="onSearchEvent($event)"></search>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">

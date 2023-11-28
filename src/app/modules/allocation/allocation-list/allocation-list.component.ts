@@ -76,6 +76,22 @@ export class AllocationListComponent extends GenericComponent implements OnInit 
     }
   }
 
+  private onSearchEvent(event: string): void {
+    if(!isEmpty(event)) {
+      this.pageRequest.offset = 0;
+      this.pageRequest.filter = event;
+      this.fetchAllAllocationsPageable();
+    } else {
+      this.onClearFilter();
+    }
+  }
+
+  private onClearFilter() : void {
+    this.pageRequest.offset = 0;
+    this.pageRequest.filter = null;
+    this.fetchAllAllocationsPageable();
+  }
+
   public fetchAllMyAllocationsPageable(userId: number): void {
     this.allocationService.fetchAllMyAllocationsPageable(userId, this.pageRequest).subscribe(
       (allocationPageable) => {

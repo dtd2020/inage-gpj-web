@@ -47,7 +47,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     ],
     declarations: [
         AppComponent,
-        GenericComponent,
+        GenericComponent
         
         
     ],

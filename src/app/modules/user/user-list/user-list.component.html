@@ -2,12 +2,31 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
-                    <h6 class="card-title text-right">
-                        <a class="btn btn-default" [routerLink]="['/back-office/users/user-type']">
-                            <i class="fa fa-plus mr-2"></i>
-                             Adicionar Utilizador</a>
-                    </h6>
+                <div class="card-header">    
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6 class="card-title">
+                                <a class="btn btn-default" [routerLink]="['/back-office/users/user-type']">
+                                    <i class="fa fa-plus mr-2"></i>
+                                     Adicionar Utilizador</a>
+                            </h6>
+                        </div>
+                        <div class="col-md-8" style="margin-top: 20px;">
+                            <div class="row">
+                                <div class="col-md-4" style="margin-top: 12px;">
+                                    <span class="text-muted text-righ" *ngIf="pageRequest?.filter?.length > 0">Resultados da
+                                        pesquisa por </span><span class="text-info"><strong>{{pageRequest?.filter}}</strong>.
+                                    </span>
+                                </div>
+                                <div class="col-md-8">
+                                    <search (onSearchEvent)="onSearchEvent($event)"></search>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

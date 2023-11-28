@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { ComplainerListComponent } from './complainer-list/complainer-list.component';
 import { ComplainerDetailsComponent } from './complainer-details/complainer-details.component';
 import { PaginationModule } from 'app/shared/pagination/pagination.module';
+import { SearchModule } from 'app/shared/search/search.module';
 
 
 
@@ -18,7 +19,8 @@ import { PaginationModule } from 'app/shared/pagination/pagination.module';
     ReactiveFormsModule,
     RouterModule,
     ErrorMsgModule,
-    PaginationModule
+    PaginationModule,
+    SearchModule
   ],
   exports: [ComplainerFormComponent, ComplainerComponent, ComplainerListComponent, ComplainerDetailsComponent]
 })
