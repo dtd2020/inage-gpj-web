@@ -17,11 +17,11 @@ import { RouteService } from '../services/route.service';
 export class BusinessAlertComponent implements OnInit{
 
   private loggedUser : LocalUserModel;
-  private showAlert: boolean = true;
+  // private showAlert: boolean = true;
   private alertTimer: any;
   private length = [1,2,3,4];
 
-  @Input() alert: BusinessAlertModel;
+  @Input() alerts: BusinessAlertModel[];
   @Output() alertRemoved: EventEmitter<BusinessAlertModel> = new EventEmitter<BusinessAlertModel>();
 
 
@@ -32,10 +32,9 @@ constructor(private router: Router, private securityService: SecurityService, pr
   ngOnInit(): void {
     this.securityService.localUser; 
 
-    setTimeout(() => {
-      
-      this.removeAlert(this.alert);
-    }, 120 * 1000)
+    setTimeout(() => {      
+      this.cleanAlerts();
+    }, 5 * 1000)
 
   }
 
@@ -50,7 +49,7 @@ constructor(private router: Router, private securityService: SecurityService, pr
 
   private goTo(alert: BusinessAlertModel) {
 
-    this.removeAlert(this.alert);
+    this.removeAlert(alert);
     
     if(this.routeService.getCurrentUrl().includes('back-office')) {
       if(alert?.nextStep.toLocaleLowerCase() === AlertNextStepEnum.FOLLOW_UP_ALLOCATION.key.toLocaleLowerCase()) {
@@ -68,8 +67,23 @@ constructor(private router: Router, private securityService: SecurityService, pr
   }
 
   private removeAlert(alert: BusinessAlertModel) {
-    this.showAlert = false; 
-    this.alertRemoved.emit(this.alert); 
+    this.alerts = this.alerts.filter(thiAlert => thiAlert?.id !== alert?.id);
+  }
+
+  private cleanAlerts() {
+
+    this.alertTimer = setInterval(() => {
+      if(this.alerts.length > 0) {
+        this.alerts.shift();
+      }
+    }, 3 * 1000);
+    // this.showAlert = false; 
+    // this.alertRemoved.emit(alert); 
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.alertTimer);
+    
   }
 
 

@@ -28,7 +28,7 @@ export class BackOfficeLayoutComponent implements OnInit{
   @ViewChild(BackOfficeNavbarComponent, {static: false}) navbar: BackOfficeNavbarComponent;
 
   public loggedUser: LocalUserModel;
-  private alert: any;
+  private getAlertTimer: any;
   private alerts: BusinessAlertModel[];
 
   constructor( private router: Router, location:Location, private securityService: SecurityService, private businessAlertService: BusinessAlertService) {
@@ -76,7 +76,8 @@ export class BackOfficeLayoutComponent implements OnInit{
     });
 
     if(!isEmpty(this.loggedUser)){
-      this.showAlertsOnInit(this.loggedUser?.id);
+      // this.showAlertsOnInit(this.loggedUser?.id);
+      this.findAllUnreadAlertsByUserId(this.loggedUser?.id);
     }
 
     this.getAlerts();
@@ -104,23 +105,24 @@ export class BackOfficeLayoutComponent implements OnInit{
 
   private getAlerts() : void {
 
-    this.alert = setInterval(() => {
+    this.getAlertTimer = setInterval(() => {
 
       if(!isEmpty(this.loggedUser)){
-        this.showAlertsOnInterval(this.loggedUser?.id);
+        // this.showAlertsOnInterval(this.loggedUser?.id);
+        this.findAllUnreadAlertsByUserId(this.loggedUser?.id);
       }
       
-    }, 440*1000);
+    }, 15*1000);
 
   }
 
-  // private findAllAlertsByUserId() : void {
-  //   this.businessAlertService.findAllAlertsByUserId(this.loggedUser?.id).subscribe(
-  //     (alerts) => {
-  //       this.alerts = alerts;
-  //     }
-  //   )
-  // }
+  private findAllUnreadAlertsByUserId(userId: number) : void {
+    this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
+      (alerts) => {
+        this.alerts = alerts;
+      }
+    )
+  }
 
 
 
@@ -136,13 +138,7 @@ export class BackOfficeLayoutComponent implements OnInit{
 //   }
 // }
 
-  private showAlertsOnInit(userId: number) : void {
-    this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
-      (alerts: BusinessAlertModel[]) => {
-       this.alerts = alerts;     
-      }
-    )
-}
+
 
   // private showAlertsOnInterval(userId: number) : void {
   //   this.businessAlertService.findAllAlertsByUserId(userId).subscribe(
@@ -160,33 +156,43 @@ export class BackOfficeLayoutComponent implements OnInit{
   // }
 
 
-  private showAlertsOnInterval(userId: number) : void {
-    this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
-      (alerts: BusinessAlertModel[]) => {
-        this.addAlert(alerts);     
-      }
-    )
-  }
 
-  private addAlert(alerts: BusinessAlertModel[]) : void {
-    alerts.forEach((alert: BusinessAlertModel) => {
-      if(!this.alerts.some(thiAlert => thiAlert?.id === alert?.id)) {
-        this.alerts.push(alert);        
-      }
-    })
-  }
 
-  private removeAlert(alert: BusinessAlertModel) : void {
-    this.alerts = this.alerts.filter(thiAlert => thiAlert?.id !== alert?.id);
-    console.log("removido");
-    console.log(this.alerts);
+// ================================================================
+
+//   private showAlertsOnInit(userId: number) : void {
+//     this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
+//       (alerts: BusinessAlertModel[]) => {
+//        this.alerts = alerts;     
+//       }
+//     )
+// }
+//   private showAlertsOnInterval(userId: number) : void {
+//     this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
+//       (alerts: BusinessAlertModel[]) => {
+//         this.addAlert(alerts);     
+//       }
+//     )
+//   }
+
+//   private addAlert(alerts: BusinessAlertModel[]) : void {
+//     alerts.forEach((alert: BusinessAlertModel) => {
+//       if(!this.alerts.some(thiAlert => thiAlert?.id === alert?.id)) {
+//         this.alerts.push(alert);        
+//       }
+//     })
+//   }
+
+//   private removeAlert(alert: BusinessAlertModel) : void {
+//     this.alerts = this.alerts.filter(thiAlert => thiAlert?.id !== alert?.id);
+//     console.log("removido");
+//     console.log(this.alerts);
     
     
-  }
+//   }
 
   ngOnDestroy() {
-    clearInterval(this.alert);  
-    console.log("DESTROY");
+    clearInterval(this.getAlertTimer); 
       
   }
 

@@ -5,7 +5,7 @@
     </div>
     <div class="main-panel">
         <citezen-navbar></citezen-navbar>
-        <business-alert *ngFor="let alert of alerts" [alert]="alert" (alertRemoved)="removeAlert($event)"></business-alert>
+        <business-alert [alerts]="alerts"></business-alert>
         <router-outlet></router-outlet>
         <div *ngIf="!isMap()">
             <!-- <footer-cmp></footer-cmp> -->

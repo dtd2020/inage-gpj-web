@@ -30,7 +30,7 @@ export class CitezenLayoutComponent implements OnInit{
 
 
   public loggedUser: LocalUserModel;
-  private alert: any;
+  private getAlertTimer: any;
   private alerts: BusinessAlertModel[];
 
 
@@ -81,11 +81,17 @@ export class CitezenLayoutComponent implements OnInit{
     });
 
     if(!isEmpty(this.loggedUser)){
-      this.showAlertsOnInit(this.loggedUser?.id);
+      // this.showAlertsOnInit(this.loggedUser?.id);
+      this.findAllUnreadAlertsByUserId(this.loggedUser?.id);
     }
 
     this.getAlerts();
   }
+
+
+
+
+
   public isMap(){
       // console.log(this.location.prepareExternalUrl(this.location.path()));
       if(this.location.prepareExternalUrl(this.location.path()) == '#/maps/fullscreen'){
@@ -105,51 +111,51 @@ export class CitezenLayoutComponent implements OnInit{
 
   private getAlerts() : void {
 
-    this.alert = setInterval(() => {
+    this.getAlertTimer = setInterval(() => {
 
       if(!isEmpty(this.loggedUser)){
-        this.showAlertsOnInterval(this.loggedUser?.id);
+        this.findAllUnreadAlertsByUserId(this.loggedUser?.id);
       }
       
-    }, 30*1000);
+    }, 15*1000);
 
   }
 
-  private showAlertsOnInit(userId: number) : void {
+  private findAllUnreadAlertsByUserId(userId: number) : void {
     this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
-      (alerts: BusinessAlertModel[]) => {
-       this.alerts = alerts;     
-      }
-    )
-}
-
-  private showAlertsOnInterval(userId: number) : void {
-    this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
-      (alerts: BusinessAlertModel[]) => {
-        this.addAlert(alerts);     
+      (alerts) => {
+        this.alerts = alerts;
       }
     )
   }
 
-  private addAlert(alerts: BusinessAlertModel[]) : void {
-    alerts.forEach((alert: BusinessAlertModel) => {
-      if(!this.alerts.some(thiAlert => thiAlert?.id === alert?.id)) {
-        this.alerts.push(alert);        
-      }
-    })
-  }
+//   private showAlertsOnInit(userId: number) : void {
+//     this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
+//       (alerts: BusinessAlertModel[]) => {
+//        this.alerts = alerts;     
+//       }
+//     )
+// }
 
-  private removeAlert(alert: BusinessAlertModel) : void {
-    this.alerts = this.alerts.filter(thiAlert => thiAlert?.id !== alert?.id);
-    console.log("removido");
-    console.log(this.alerts);
-    
-    
-  }
+//   private showAlertsOnInterval(userId: number) : void {
+//     this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
+//       (alerts: BusinessAlertModel[]) => {
+//         this.addAlert(alerts);     
+//       }
+//     )
+//   }
+
+//   private addAlert(alerts: BusinessAlertModel[]) : void {
+//     alerts.forEach((alert: BusinessAlertModel) => {
+//       if(!this.alerts.some(thiAlert => thiAlert?.id === alert?.id)) {
+//         this.alerts.push(alert);        
+//       }
+//     })
+//   }
+
 
   ngOnDestroy() {
-    clearInterval(this.alert);  
-    console.log("DESTROY");
+    clearInterval(this.getAlertTimer);  
       
   }
 

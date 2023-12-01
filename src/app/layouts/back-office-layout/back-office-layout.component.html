@@ -7,7 +7,8 @@
     <div class="main-panel">
         
         <back-office-navbar></back-office-navbar>
-        <business-alert *ngFor="let alert of alerts" [alert]="alert" (alertRemoved)="removeAlert($event)"></business-alert>
+        <business-alert [alerts]="alerts"></business-alert>
+        <!-- <business-alert *ngFor="let alert of alerts" [alert]="alert" (alertRemoved)="removeAlert($event)"></business-alert> -->
         <!-- <business-alert [alert]="alert" (alertRemoved)="removeAlert($event)"></business-alert> -->
         <router-outlet></router-outlet>
         <div *ngIf="!isMap()">
