@@ -61,8 +61,11 @@ export class ProcessService {
   }
 
   // TODO: create a separate service that finds a process by id
-  public fetchProcessById(processId: number): Observable<ProcessModel> {
+  public fetchProcessById(processId: number, alertId?: number): Observable<ProcessModel> {    
     this.url = this.clientService.urlProcessingWS(`${this.processContext}/fetch-by-id/${processId}`);
+    if(!isEmpty(alertId)) {
+      return this.http.get<ProcessModel>(this.url, {params: {alertId: alertId}}).pipe(take(1));
+    }
     return this.http.get<ProcessModel>(this.url).pipe(take(1));
   }
 

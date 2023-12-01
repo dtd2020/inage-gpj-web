@@ -26,6 +26,7 @@ export class StaffFollowUpAllocationProcessComponent extends GenericComponent im
   private allocation: AllocationModel;
   private allocations: AllocationModel[] = [];
   private allocationComments: AllocationCommentModel[] = [];
+  private alertId: number;
 
   public allocationStatuses: ProcessStatusModel[] = ProcessStatusEnum.asArray;
   public closureTypes: ClosureTypeModel[] = ClosureTypeEnum.asArray;
@@ -41,22 +42,36 @@ export class StaffFollowUpAllocationProcessComponent extends GenericComponent im
     this.loggedUser = this.securityService.localUser;
     
 
-    this.route.params.subscribe(params => {
-      
+    this.route.params.subscribe(params => {   
+
       if (!isEmpty(params?.allocationId)) {
-        this.fetchAllocationById(params?.allocationId);
+
+        let allocationId = params?.allocationId;
+
+        this.route.queryParams.subscribe(params => {
+
+          this.alertId = params?.alertId;
+          if (!isEmpty(this.alertId)) {
+            this.fetchAllocationById(allocationId, params?.alertId);
+          } else {
+            this.fetchAllocationById(params?.allocationId);
+          }
+        })
+        
       }
     })
+
   }
 
 
-  private fetchAllocationById(allocationId: number): void {
-    this.allocationService.fetchAllocationByIdWithCommentHistory(allocationId).subscribe(
+  private fetchAllocationById(allocationId: number, alertId?: number): void {
+    this.allocationService.fetchAllocationByIdWithCommentHistory(allocationId, alertId).subscribe(
       (allocation) => {
         this.setInitData(allocation);
       }
     )
   }
+
 
   // private fetchProcessById(processId: number) : void {
   //   this.processService.fetchProcessById(processId).subscribe(

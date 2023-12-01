@@ -23,6 +23,7 @@ export class ComplainerFollowUpAllocationProcessComponent extends GenericCompone
   private allocation: AllocationModel;
   private allocations: AllocationModel[] = [];
   private allocationComments: AllocationCommentModel[] = [];
+  private alertId: number;
   
 
   public allocationStatuses: ProcessStatusModel[] = ProcessStatusEnum.asArray;
@@ -36,18 +37,39 @@ export class ComplainerFollowUpAllocationProcessComponent extends GenericCompone
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.processId = params.processId;
-      if (!isEmpty(params.processId)) {
-        this.fetchProcessById(params.processId);
+
+    this.route.params.subscribe(params => {   
+
+      if (!isEmpty(params?.processId)) {
+
+        let processId = params?.processId;
+        
+        this.route.queryParams.subscribe(params => {
+
+          this.alertId = params?.alertId;
+          if (!isEmpty(this.alertId)) {
+            this.fetchProcessById(processId, params?.alertId);
+          } else {
+            this.fetchProcessById(params?.processId);
+          }
+        })
+        
       }
-    });
+    })
+
+
+    // this.route.params.subscribe(params => {
+    //   this.processId = params.processId;
+    //   if (!isEmpty(params.processId)) {
+    //     this.fetchProcessById(params.processId);
+    //   }
+    // });
   }
 
   // TODO fetch process by id using processSerive 
 
-  public fetchProcessById(processId: number): void {
-    this.processService.fetchProcessById(processId).subscribe(
+  public fetchProcessById(processId: number, alertId?: number): void {
+    this.processService.fetchProcessById(processId, alertId).subscribe(
       (process) => {
 
         this.process = process;
@@ -57,6 +79,8 @@ export class ComplainerFollowUpAllocationProcessComponent extends GenericCompone
       }
     );
   }
+
+  
 
   private setInitData(process: ProcessModel): void {
 

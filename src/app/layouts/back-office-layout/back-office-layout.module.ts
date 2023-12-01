@@ -12,6 +12,7 @@ import { BackOfficeSidebarComponent } from './back-office-sidebar/back-office-si
 import { AllocationModule } from 'app/modules/allocation/allocation.module';
 import { StaffModule } from 'app/modules/staff/staff.module';
 import { NgxPermissionsModule } from 'ngx-permissions';
+import { BusinessAlertModule } from 'app/shared/business-alert/business-alert.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { NgxPermissionsModule } from 'ngx-permissions';
     AllocationModule,
     UserModule,
     StaffModule,
+    BusinessAlertModule,
   ]
 })
 export class BackOfficeLayoutModule { }

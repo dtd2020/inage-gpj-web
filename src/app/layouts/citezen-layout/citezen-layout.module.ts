@@ -10,6 +10,7 @@ import { CitezenSidebarComponent } from './citezen-sidebar/citezen-sidebar.compo
 import { CitezenLayoutComponent } from './citezen-layout.component';
 import { CitezenHomeComponent } from './citezen-home/citezen-home.component';
 import { AllocationModule } from 'app/modules/allocation/allocation.module';
+import { BusinessAlertModule } from 'app/shared/business-alert/business-alert.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { AllocationModule } from 'app/modules/allocation/allocation.module';
     CommonModule,
     RouterModule.forChild(CitezenLayoutRouting),
     ProcessModule,
-    AllocationModule
+    AllocationModule,
+    BusinessAlertModule,
   ],
   exports: [
   ]

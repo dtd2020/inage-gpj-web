@@ -163,7 +163,7 @@ export const BackOfficeLayoutRouting: Routes = [
         component: AllocationListComponent
       },
       {
-        path: 'allocation-follow-up/:allocationId',
+        path: 'follow-up/:allocationId',
         component: StaffFollowUpAllocationProcessComponent,
         canActivate: [HasPermissionGuard],
         data: {

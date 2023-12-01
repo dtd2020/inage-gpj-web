@@ -1,10 +1,14 @@
 
 <div class="wrapper">
+    
     <div class="sidebar" data-color="brown" data-active-color="danger">
         <back-office-sidebar></back-office-sidebar>
     </div>
     <div class="main-panel">
+        
         <back-office-navbar></back-office-navbar>
+        <business-alert *ngFor="let alert of alerts" [alert]="alert" (alertRemoved)="removeAlert($event)"></business-alert>
+        <!-- <business-alert [alert]="alert" (alertRemoved)="removeAlert($event)"></business-alert> -->
         <router-outlet></router-outlet>
         <div *ngIf="!isMap()">
             <!-- <footer-cmp></footer-cmp> -->

@@ -103,7 +103,7 @@ export class AllocationListComponent extends GenericComponent implements OnInit 
   }
 
   public followUpAllocation(allocationId: number) {
-    this.router.navigate([`/back-office/allocations/allocation-follow-up/${allocationId}`]);
+    this.router.navigate([`/back-office/allocations/follow-up/${allocationId}`]);
     
   }
 }

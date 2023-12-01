@@ -5,6 +5,11 @@ import { BackOfficeNavbarComponent } from './back-office-navbar/back-office-navb
 import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { BusinessAlertService } from 'app/services/business-alert.service';
+import { BusinessAlertModel } from 'app/models/business-alert-model';
+import { SecurityService } from 'app/security/services/security.service';
+import { LocalUserModel } from 'app/security/models/local-user';
+import { isEmpty } from 'app/shared/utils/utils';
 
 @Component({
   selector: 'back-office-layout',
@@ -21,7 +26,12 @@ export class BackOfficeLayoutComponent implements OnInit{
      private yScrollStack: number[] = [];
   @ViewChild('back-office-sidebar', {static: false}) sidebar;
   @ViewChild(BackOfficeNavbarComponent, {static: false}) navbar: BackOfficeNavbarComponent;
-  constructor( private router: Router, location:Location ) {
+
+  public loggedUser: LocalUserModel;
+  private alert: any;
+  private alerts: BusinessAlertModel[];
+
+  constructor( private router: Router, location:Location, private securityService: SecurityService, private businessAlertService: BusinessAlertService) {
     this.location = location;
   }
 
@@ -60,6 +70,18 @@ export class BackOfficeLayoutComponent implements OnInit{
     this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       this.navbar.sidebarClose();
     });
+    // ====================================================================================================================
+    this.securityService.localUserObservar.subscribe((user) => {
+      this.loggedUser = user;
+    });
+
+    if(!isEmpty(this.loggedUser)){
+      this.showAlertsOnInit(this.loggedUser?.id);
+    }
+
+    this.getAlerts();
+
+    
   }
   public isMap(){
       // console.log(this.location.prepareExternalUrl(this.location.path()));
@@ -77,5 +99,96 @@ export class BackOfficeLayoutComponent implements OnInit{
       }
       return bool;
   }
+
+
+
+  private getAlerts() : void {
+
+    this.alert = setInterval(() => {
+
+      if(!isEmpty(this.loggedUser)){
+        this.showAlertsOnInterval(this.loggedUser?.id);
+      }
+      
+    }, 440*1000);
+
+  }
+
+  // private findAllAlertsByUserId() : void {
+  //   this.businessAlertService.findAllAlertsByUserId(this.loggedUser?.id).subscribe(
+  //     (alerts) => {
+  //       this.alerts = alerts;
+  //     }
+  //   )
+  // }
+
+
+
+//   private showAlertsOnInit() : void {
+//     if(!isEmpty(this.loggedUser)){
+//     this.businessAlertService.findAllAlertsByUserId(this.loggedUser?.id).subscribe(
+//       (alerts: BusinessAlertModel[]) => {
+//         alerts.forEach((alert: BusinessAlertModel) => {
+//           this.businessAlertComponentService.showAlert('info', 'bottom', 'left', alert.description);
+//         })      
+//       }
+//     )
+//   }
+// }
+
+  private showAlertsOnInit(userId: number) : void {
+    this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
+      (alerts: BusinessAlertModel[]) => {
+       this.alerts = alerts;     
+      }
+    )
+}
+
+  // private showAlertsOnInterval(userId: number) : void {
+  //   this.businessAlertService.findAllAlertsByUserId(userId).subscribe(
+  //     (alerts: BusinessAlertModel[]) => {
+        
+        
+  //       alerts.forEach((alert: BusinessAlertModel) => {
+  //         console.log(userId);
+  //         let message = alert.description;
+  //         let link = 'http://localhost:4200/#/back-office/allocations/follow-up/11?alertId=' + alert.id;
+  //         this.businessAlertComponentService.showAlert('info', 'top', 'right', message, link);
+  //       })      
+  //     }
+  //   )
+  // }
+
+
+  private showAlertsOnInterval(userId: number) : void {
+    this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
+      (alerts: BusinessAlertModel[]) => {
+        this.addAlert(alerts);     
+      }
+    )
+  }
+
+  private addAlert(alerts: BusinessAlertModel[]) : void {
+    alerts.forEach((alert: BusinessAlertModel) => {
+      if(!this.alerts.some(thiAlert => thiAlert?.id === alert?.id)) {
+        this.alerts.push(alert);        
+      }
+    })
+  }
+
+  private removeAlert(alert: BusinessAlertModel) : void {
+    this.alerts = this.alerts.filter(thiAlert => thiAlert?.id !== alert?.id);
+    console.log("removido");
+    console.log(this.alerts);
+    
+    
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.alert);  
+    console.log("DESTROY");
+      
+  }
+
 
 }

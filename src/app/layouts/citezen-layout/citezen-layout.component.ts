@@ -6,6 +6,11 @@ import { filter } from 'rxjs/operators';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { PopStateEvent } from '@angular/common';
 import { CitezenNavbarComponent } from './citezen-navbar/citezen-navbar.component';
+import { SecurityService } from 'app/security/services/security.service';
+import { LocalUserModel } from 'app/security/models/local-user';
+import { BusinessAlertModel } from 'app/models/business-alert-model';
+import { isEmpty } from 'app/shared/utils/utils';
+import { BusinessAlertService } from 'app/services/business-alert.service';
 
 @Component({
   selector: 'citezen-layout',
@@ -22,7 +27,14 @@ export class CitezenLayoutComponent implements OnInit{
      private yScrollStack: number[] = [];
   @ViewChild('citezen-sidebar', {static: false}) sidebar;
   @ViewChild(CitezenNavbarComponent, {static: false}) navbar: CitezenNavbarComponent;
-  constructor( private router: Router, location:Location ) {
+
+
+  public loggedUser: LocalUserModel;
+  private alert: any;
+  private alerts: BusinessAlertModel[];
+
+
+  constructor( private router: Router, location:Location, private securityService: SecurityService, private businessAlertService: BusinessAlertService) {
     this.location = location;
   }
 
@@ -61,6 +73,18 @@ export class CitezenLayoutComponent implements OnInit{
     this._router = this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe((event: NavigationEnd) => {
       this.navbar.sidebarClose();
     });
+
+
+     // ====================================================================================================================
+     this.securityService.localUserObservar.subscribe((user) => {
+      this.loggedUser = user;
+    });
+
+    if(!isEmpty(this.loggedUser)){
+      this.showAlertsOnInit(this.loggedUser?.id);
+    }
+
+    this.getAlerts();
   }
   public isMap(){
       // console.log(this.location.prepareExternalUrl(this.location.path()));
@@ -77,6 +101,56 @@ export class CitezenLayoutComponent implements OnInit{
           bool = true;
       }
       return bool;
+  }
+
+  private getAlerts() : void {
+
+    this.alert = setInterval(() => {
+
+      if(!isEmpty(this.loggedUser)){
+        this.showAlertsOnInterval(this.loggedUser?.id);
+      }
+      
+    }, 30*1000);
+
+  }
+
+  private showAlertsOnInit(userId: number) : void {
+    this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
+      (alerts: BusinessAlertModel[]) => {
+       this.alerts = alerts;     
+      }
+    )
+}
+
+  private showAlertsOnInterval(userId: number) : void {
+    this.businessAlertService.findAllUnreadAlertsByUserId(userId).subscribe(
+      (alerts: BusinessAlertModel[]) => {
+        this.addAlert(alerts);     
+      }
+    )
+  }
+
+  private addAlert(alerts: BusinessAlertModel[]) : void {
+    alerts.forEach((alert: BusinessAlertModel) => {
+      if(!this.alerts.some(thiAlert => thiAlert?.id === alert?.id)) {
+        this.alerts.push(alert);        
+      }
+    })
+  }
+
+  private removeAlert(alert: BusinessAlertModel) : void {
+    this.alerts = this.alerts.filter(thiAlert => thiAlert?.id !== alert?.id);
+    console.log("removido");
+    console.log(this.alerts);
+    
+    
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.alert);  
+    console.log("DESTROY");
+      
   }
 
 }
