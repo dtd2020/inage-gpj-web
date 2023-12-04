@@ -23,6 +23,8 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
             this.swalManagService.sweetAlterError("A sua sessão expirou!")
             this.securityService.logout();
             this.router.navigate["/auth/login"];
+          } else if(ex.error.message.includes('Access Denied')) {
+            this.swalManagService.sweetAlterError("Credenciais inválidas!")
           } else {
             this.swalManagService.sweetAlterError(ex.error.message)
           }
