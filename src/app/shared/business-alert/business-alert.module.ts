@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BusinessAlertComponent } from './business-alert.component';
+import { PipeModule } from 'app/pipes/pipe.module';
 
 
 
@@ -9,7 +10,8 @@ import { BusinessAlertComponent } from './business-alert.component';
     BusinessAlertComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    PipeModule
   ],
   exports: [
     BusinessAlertComponent

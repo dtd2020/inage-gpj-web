@@ -8,6 +8,7 @@ export class WhiteListService {
 
   private whiteListRoutes = new Map();
   private documentWhiteListRoutes = new Map();
+  private spinnerWhiteListRoutes = new Map();
   private POST = 'POST';
   private GET = 'GET';
   private PUT = 'PUT';
@@ -24,6 +25,10 @@ export class WhiteListService {
     // Document whitelist routes
     this.documentWhiteListRoutes.set(this.clientService.urlProcessingWS('/processes/attachment/single-upload'), this.POST);
     this.documentWhiteListRoutes.set(this.clientService.urlProcessingWS('/processes/attachment/batch-upload'), this.POST);
+
+
+    // 
+    this.spinnerWhiteListRoutes.set(this.clientService.urlProcessingWS('/alert/find-all-unread-by-user-id'), this.GET);
   }
 
   isWhiteListRoute(path: string, method: string) : boolean {    
@@ -39,6 +44,14 @@ export class WhiteListService {
     if(httpMethod && httpMethod === method) {
       return true;
     }
+    return false;
+  }
+  
+  
+  isSPinnerWhiteListRoute(path: string, method: string) : boolean {  
+    if(path.includes('complainws/alert/find-all-unread-by-user-id') && method === this.GET) {
+      return true;
+    } 
     return false;
   }
 }

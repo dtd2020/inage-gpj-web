@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { BusinessAlertModel } from 'app/models/business-alert-model';
 import { AlertNextStepEnum } from 'app/models/enums/alert-next-step-enum';
@@ -14,28 +14,31 @@ import { RouteService } from '../services/route.service';
   templateUrl: './business-alert.component.html',
   styleUrls: ['./business-alert.component.scss']
 })
-export class BusinessAlertComponent implements OnInit{
+export class BusinessAlertComponent implements OnInit, OnChanges{
 
   private loggedUser : LocalUserModel;
-  // private showAlert: boolean = true;
-  private alertTimer: any;
-  private length = [1,2,3,4];
+  
 
   @Input() alerts: BusinessAlertModel[];
   @Output() alertRemoved: EventEmitter<BusinessAlertModel> = new EventEmitter<BusinessAlertModel>();
 
 
 
+
 constructor(private router: Router, private securityService: SecurityService, private routeService: RouteService, private businessAlertService: BusinessAlertService) { }
+  
   
 
   ngOnInit(): void {
     this.securityService.localUser; 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
 
     setTimeout(() => {      
       this.cleanAlerts();
-    }, 5 * 1000)
-
+            
+    }, 10 * 1000)
   }
 
   private markAsRead(alertId: number) {
@@ -72,20 +75,27 @@ constructor(private router: Router, private securityService: SecurityService, pr
 
   private cleanAlerts() {
 
-    this.alertTimer = setInterval(() => {
-      if(this.alerts.length > 0) {
-        this.alerts.shift();
-      }
-    }, 3 * 1000);
-    // this.showAlert = false; 
-    // this.alertRemoved.emit(alert); 
-  }
 
-  ngOnDestroy(): void {
-    clearInterval(this.alertTimer);
+    setTimeout(() => {
+      console.log("Waited For: " + this.alerts.length/1000 + " seconds");
+
+      if(this.alerts.length > 0) {
+        this.alerts.shift();  
+        this.cleanAlerts();      
+      }
+      
+    }, (this.alerts.length) * 1000)
+
     
   }
 
+  ngOnDestroy(): void {
+    
+  }
+
+
+
+  
 
 
 

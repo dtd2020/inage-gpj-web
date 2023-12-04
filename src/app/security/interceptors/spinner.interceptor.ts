@@ -9,14 +9,19 @@ import {
 } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { SpinnerService } from 'app/shared/spinner/spinner.service';
+import { WhiteListService } from '../services/white-list.service';
 
 @Injectable()
 export class SpinnerInterceptor implements HttpInterceptor {
 
-  constructor(private spinnerService: SpinnerService) { }
+  constructor(private spinnerService: SpinnerService, private whiteListService: WhiteListService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    this.spinnerService.requestStarted();
+    
+    if(!this.whiteListService.isSPinnerWhiteListRoute(request.url, request.method)) {
+      this.spinnerService.requestStarted();      
+    }
+    
     return this.handler(next, request)
   }
 

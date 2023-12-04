@@ -117,7 +117,7 @@ export class CitezenLayoutComponent implements OnInit{
         this.findAllUnreadAlertsByUserId(this.loggedUser?.id);
       }
       
-    }, 15*1000);
+    }, 30*1000);
 
   }
 

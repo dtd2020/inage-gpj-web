@@ -108,11 +108,10 @@ export class BackOfficeLayoutComponent implements OnInit{
     this.getAlertTimer = setInterval(() => {
 
       if(!isEmpty(this.loggedUser)){
-        // this.showAlertsOnInterval(this.loggedUser?.id);
         this.findAllUnreadAlertsByUserId(this.loggedUser?.id);
       }
       
-    }, 15*1000);
+    }, 30*1000);
 
   }
 
