@@ -56,12 +56,13 @@ constructor(private router: Router, private securityService: SecurityService, pr
     
     if(this.routeService.getCurrentUrl().includes('back-office')) {
       if(alert?.nextStep.toLocaleLowerCase() === AlertNextStepEnum.FOLLOW_UP_ALLOCATION.key.toLocaleLowerCase()) {
-        let segmentRoute = `${AlertNextStepEnum.FOLLOW_UP_ALLOCATION.backOfficeRoute}/${alert?.contextEntityId}`;
+        let segmentRoute = alert?.link;
         this.router.navigate([segmentRoute], { queryParams: { alertId: alert?.id }});
       }
     } else if(this.routeService.getCurrentUrl().includes('citezen')) {
+      // ERRADO, aqui estou passando o id da alocacao e nao do processo
       if(alert?.nextStep.toLocaleLowerCase() === AlertNextStepEnum.FOLLOW_UP_ALLOCATION.key.toLocaleLowerCase()) {
-        let segmentRoute = `${AlertNextStepEnum.FOLLOW_UP_ALLOCATION.complainerRoute}/${alert?.contextEntityId}`;
+        let segmentRoute = alert?.link;
         this.router.navigate([segmentRoute], { queryParams: { alertId: alert?.id }});
       }
     } else {

@@ -50,7 +50,7 @@ export class ComplainerFollowUpAllocationProcessComponent extends GenericCompone
           if (!isEmpty(this.alertId)) {
             this.fetchProcessById(processId, params?.alertId);
           } else {
-            this.fetchProcessById(params?.processId);
+            this.fetchProcessById(processId);
           }
         })
         

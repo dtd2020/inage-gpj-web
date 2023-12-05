@@ -54,7 +54,7 @@ export class StaffFollowUpAllocationProcessComponent extends GenericComponent im
           if (!isEmpty(this.alertId)) {
             this.fetchAllocationById(allocationId, params?.alertId);
           } else {
-            this.fetchAllocationById(params?.allocationId);
+            this.fetchAllocationById(allocationId);
           }
         })
         
@@ -64,7 +64,7 @@ export class StaffFollowUpAllocationProcessComponent extends GenericComponent im
   }
 
 
-  private fetchAllocationById(allocationId: number, alertId?: number): void {
+  private fetchAllocationById(allocationId: number, alertId?: number): void {    
     this.allocationService.fetchAllocationByIdWithCommentHistory(allocationId, alertId).subscribe(
       (allocation) => {
         this.setInitData(allocation);

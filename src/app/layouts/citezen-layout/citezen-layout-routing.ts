@@ -44,13 +44,7 @@ export const CitezenLayoutRouting: Routes = [
         data: {
           permissions: ['GET_PROCESS']
         }
-      }
-    ],
-  },
-  {
-    path: 'allocations',
-    component: AllocationComponent,
-    children: [
+      },
       {
         path: 'follow-up/:processId',
         component: ComplainerFollowUpAllocationProcessComponent,
@@ -59,7 +53,7 @@ export const CitezenLayoutRouting: Routes = [
           permissions: ['FOLLOW_UP_PROCESS']
         }
       }
-    ]
+    ],
   }
   
 ];

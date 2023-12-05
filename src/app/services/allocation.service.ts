@@ -23,6 +23,8 @@ export class AllocationService {
   }
 
   public fetchAllocationByIdWithCommentHistory(allocationId: number, alertId?: number): Observable<AllocationModel> {
+    console.log(allocationId);
+    
     this.url = this.clientService.urlProcessingWS(`${this.allocationContext}/fetch-by-id/${allocationId}/with-comment-history`);
     if(!isEmpty(alertId)) {
       return this.http.get<AllocationModel>(this.url, {params: {alertId: alertId}}).pipe(take(1));

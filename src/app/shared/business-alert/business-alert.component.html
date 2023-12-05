@@ -45,9 +45,9 @@
             </button>
         
             <p style="display: inline-block;">
-               <span *ngIf="alert?.contextEntityId" class="alert-hover" (click)="goTo(alert)"> <b> {{alert.context | alertContext}} - </b> {{alert.description}} </span>
+               <span *ngIf="alert?.link" class="alert-hover" (click)="goTo(alert)"> <b> {{alert.context | alertContext}} - </b> {{alert.description}} </span>
                
-                <span *ngIf="!alert?.contextEntityId"> <b> {{alert.context | alertContext}} - </b> {{alert.description}} </span>
+                <span *ngIf="!alert?.link"> <b> {{alert.context | alertContext}} - </b> {{alert.description}} </span>
                
                 <button class="btn btn-sm btn-warning" (click)="markAsRead(alert?.id)" data-dismiss="alert" aria-label="Close">Marcar como lida</button>
             </p>

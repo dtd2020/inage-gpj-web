@@ -3,6 +3,7 @@ export interface BusinessAlertModel {
     context: string;
     contextEntityId: string;
     description: string;
+    link: string;
     takenAction: string;
     nextStep: string;
     marked: boolean;

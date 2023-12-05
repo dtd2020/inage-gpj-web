@@ -79,7 +79,7 @@ export class ProcessListComplainerComponent extends GenericComponent implements 
   }
 
   private followUpAllocation(processId: number) : void {
-    this.router.navigate([`citezen/allocations/follow-up/${processId}`]);
+    this.router.navigate([`citezen/processes/follow-up/${processId}`]);
   }
 
 }
