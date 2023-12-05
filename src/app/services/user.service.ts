@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ChangePasswordRequestModel } from 'app/models/change-password-request-model';
 import { PageRequestModel } from 'app/models/pageable-meta-model';
 import { UserModel, UserPageModel, UserRequestModel, UserResourceModel } from 'app/models/user-model';
 import { ClientService } from 'app/security/services/client.service';
@@ -59,5 +60,10 @@ export class UserService {
   public deleteUser(userId: number): Observable<void> {
     this.url = this.clientService.urlAuthWS(`${this.userContext}/delete/${userId}`);
     return this.http.delete<void>(this.url).pipe(take(1));
+  }
+
+  public changePassword(changePassword: ChangePasswordRequestModel): Observable<void> {
+    this.url = this.clientService.urlAuthWS(`${this.userContext}/change-password`);
+    return this.http.post<void>(this.url, changePassword);
   }
 }

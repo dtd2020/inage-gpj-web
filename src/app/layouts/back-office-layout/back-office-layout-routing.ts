@@ -26,6 +26,8 @@ import {
 import { FollowUpAllocationProcessComponent } from 'app/modules/allocation/follow-up-allocation-process/follow-up-allocation-process.component';
 import { StaffFollowUpAllocationProcessComponent } from 'app/modules/allocation/staff-follow-up-allocation-process/staff-follow-up-allocation-process.component';
 import { HasPermissionGuard } from 'app/security/guards/has-permission.guard';
+import { ChangePasswordComponent } from 'app/modules/change-password/change-password.component';
+import { AuthGuard } from 'app/security/guards/auth-guard';
 
 export const BackOfficeLayoutRouting: Routes = [
   {
@@ -33,6 +35,10 @@ export const BackOfficeLayoutRouting: Routes = [
     // component: BackOfficeHomeComponent,
     redirectTo: "users/list",
     pathMatch: "full",
+  },
+  {
+    path: "change-password",
+    component: ChangePasswordComponent
   },
   {
     path: 'users',

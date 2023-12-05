@@ -13,6 +13,7 @@ import { AllocationModule } from 'app/modules/allocation/allocation.module';
 import { StaffModule } from 'app/modules/staff/staff.module';
 import { NgxPermissionsModule } from 'ngx-permissions';
 import { BusinessAlertModule } from 'app/shared/business-alert/business-alert.module';
+import { ChangePasswordModule } from 'app/modules/change-password/change-password.module';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { BusinessAlertModule } from 'app/shared/business-alert/business-alert.mo
     AllocationModule,
     UserModule,
     StaffModule,
+    ChangePasswordModule,
     BusinessAlertModule,
   ]
 })
