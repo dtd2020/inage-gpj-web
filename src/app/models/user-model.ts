@@ -50,3 +50,9 @@ export interface UserTypeModel {
     key: string;
     value: string;
 }
+
+
+export interface ResetPasswordRequestModel {
+    username: string;
+    email: string;
+}

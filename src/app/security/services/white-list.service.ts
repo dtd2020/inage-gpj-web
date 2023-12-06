@@ -21,6 +21,7 @@ export class WhiteListService {
     this.whiteListRoutes.set(this.clientService.urlAuthWS('/auth/login'), this.POST);
     this.whiteListRoutes.set(this.clientService.urlAuthWS('/auth/self-register'), this.POST);
     this.whiteListRoutes.set(this.clientService.urlAuthWS('/users/fetch-resources'), this.GET);
+    this.whiteListRoutes.set(this.clientService.urlAuthWS('/users/reset-password'), this.POST);
 
     // Document whitelist routes
     this.documentWhiteListRoutes.set(this.clientService.urlProcessingWS('/processes/attachment/single-upload'), this.POST);

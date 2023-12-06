@@ -8,6 +8,7 @@ import { AuthLayoutComponent } from './auth-layout.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordRecoverComponent } from 'app/modules/password-recover/password-recover.component';
 import { ChangePasswordModule } from 'app/modules/change-password/change-password.module';
+import { ErrorMsgModule } from 'app/shared/error-msg/error-msg.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { ChangePasswordModule } from 'app/modules/change-password/change-passwor
     RouterModule.forChild(AuthLayoutRouting),
     FormsModule,
     ReactiveFormsModule,
-    ChangePasswordModule
+    ChangePasswordModule,
+    ErrorMsgModule
   ]
 })
 export class AuthLayoutModule { }

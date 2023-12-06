@@ -1,14 +1,22 @@
+import { Location } from "@angular/common";
 import { Component, ElementRef, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { ResetPasswordRequestModel } from "app/models/user-model";
 import { LocalUserModel } from "app/security/models/local-user";
 import { SecurityService } from "app/security/services/security.service";
+import { UserService } from "app/services/user.service";
+import { FormValidation } from "app/shared/form-validation/form-validation.component";
+import { GenericComponent } from "app/shared/generic/generic.component";
+import { RouteService } from "app/shared/services/route.service";
+import { SwalManagementService } from "app/shared/swal-management.service";
 
 @Component({
   selector: "password-recover",
   templateUrl: "./password-recover.component.html",
   styleUrls: ["./password-recover.component.scss"],
 })
-export class PasswordRecoverComponent implements OnInit {
+export class PasswordRecoverComponent extends GenericComponent implements OnInit {
   focus;
   focus1;
   focus2;
@@ -23,7 +31,8 @@ export class PasswordRecoverComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private element: ElementRef, private formBuilder: FormBuilder, private securityService: SecurityService) {
+  constructor(private element: ElementRef, private formBuilder: FormBuilder, private location: Location, private router: Router, private routeService: RouteService, private userService: UserService, private swalManagService: SwalManagementService, private securityService: SecurityService) {
+    super()
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
   }
@@ -58,9 +67,9 @@ export class PasswordRecoverComponent implements OnInit {
 
   public createForm(): void {
     this.form = this.formBuilder.group({
-      username: [""],
-      email: [""],
-      celular: [""]
+      username: [null, [Validators.required, FormValidation.nuit]],
+      email: [null, [Validators.required, Validators.email]],
+      // celular: [""]
     })
   }
 
@@ -95,6 +104,35 @@ export class PasswordRecoverComponent implements OnInit {
       this.sidebarVisible = false;
       body.classList.remove("nav-open");
     }
+  }
+
+
+
+
+
+  private getFormRequestData(form: any): ResetPasswordRequestModel {
+    let formData: ResetPasswordRequestModel = {
+      username: form.value.username,
+      email: form.value.email,
+    };
+    
+    return formData;
+  }
+
+  private onSubmit() {
+    if(!this.isValidForm(this.form)){
+      return;
+    }
+    this.userService.ResetPassword(this.getFormRequestData(this.form)).subscribe(
+      (staff) => {
+        this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
+      }
+    )
+    
+  }
+
+  private cancel() {
+    this.router.navigate(["auth/login"]);
   }
   ngOnDestroy() {
     var body = document.getElementsByTagName("body")[0];

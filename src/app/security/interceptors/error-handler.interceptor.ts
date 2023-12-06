@@ -19,12 +19,10 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
       catchError(ex => {
         if (ex instanceof HttpErrorResponse) { 
           
-          if(ex.error.message.includes('JWT expired') || ex.error.message.includes('un authorized access to application')) {
+          if(ex.error.message.includes('JWT expired')) {
             this.swalManagService.sweetAlterError("A sua sessão expirou!")
             this.securityService.logout();
             this.router.navigate["/auth/login"];
-          } else if(ex.error.message.includes('Access Denied')) {
-            this.swalManagService.sweetAlterError("Credenciais inválidas!")
           } else {
             this.swalManagService.sweetAlterError(ex.error.message)
           }
