@@ -125,7 +125,8 @@ export class PasswordRecoverComponent extends GenericComponent implements OnInit
     }
     this.userService.ResetPassword(this.getFormRequestData(this.form)).subscribe(
       (staff) => {
-        this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.", "back-office/users/list")
+        this.swalManagService.sweetAlterSuccess("Operação realizada com sucesso.")
+        this.router.navigate(["auth/login"]);
       }
     )
     
